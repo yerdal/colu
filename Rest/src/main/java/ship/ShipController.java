@@ -1,6 +1,5 @@
 package ship;
 
-import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,9 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ShipController {
 
-
     //Request a ship with a certain name?
-    @RequestMapping(value="/skepp/{name}")
+    @RequestMapping(value="/ship/{name}")
 
     public Ship getShip(@PathVariable String name) {
 
