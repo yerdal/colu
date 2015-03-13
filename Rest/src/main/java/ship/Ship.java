@@ -2,21 +2,22 @@ package ship;
 
 public class Ship {
 
-	private int id = 3;
+	private int id;
+	//Static for now
 	private double lati = 30.587745;
 	private double longi = 16.192421;	
-	private String name = "Baten";
+	private String name;;
 
 	public Ship(int i, String s){
+		id = i;
 		name = s;
-		id = i;
 	}
 
+	// For now, this is a "didn't find" ship
 	public Ship(int i){
-		name = "Not found";
 		id = i;
+		name = "Not found";	
 	}
-
 
 	public void setName(String s){
 		name = s;
@@ -31,15 +32,11 @@ public class Ship {
 	}
 
 	public void setLati(double d){
-
 		lati = d;
-
 	}
 	
 	public void setLongi(double d){
-
 		longi = d;
-
 	}
 
 	public double getLati(){
@@ -49,6 +46,5 @@ public class Ship {
 	public double getLongi(){
 		return longi;
 	}
-
 
 }
