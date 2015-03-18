@@ -12,10 +12,10 @@ public class Contact {
   
   public Contact(){
     contactId = 0;
-    shipAddressActive = 'undefined';
-    communicationType = 'undefined';
-    address = 'undefined';
-    fullAddress = 'undefined';
+    shipAddressActive = "undefined";
+    communicationType = "undefined";
+    address = "undefined";
+    fullAddress = "undefined";
 
   }
 
@@ -26,6 +26,7 @@ public class Contact {
     address = theAddress;
     fullAddress = theFullAddress;
   }
+
 
 
   
