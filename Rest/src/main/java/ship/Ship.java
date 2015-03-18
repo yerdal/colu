@@ -8,6 +8,7 @@ public class Ship {
 	private double longi = 16.192421;	
 	private String name;
 
+	//According to the XML file 	
 	private String operator_operator_id;
 	private String contract_contract_id;
 	private String hull_hull_id;
@@ -116,35 +117,135 @@ public class Ship {
 		ship_state = the_ship_state;
 	}
 
-	// For now, this is a "didn't find" ship
-
-
-	public void setName(String s){
-		name = s;
+	public String getOperatorId(){
+		return 	operator_operator_id;
+	}
+	public String getContractId(){
+		return contract_contract_id;
+	}
+	public String getHullId(){
+		return hull_hull_id;
+	}
+	public String getEngineId(){
+		return engine_engine_id;
+	}
+	public String getShipName(){
+		return ship_ship_name;
 	}
 
-	public String getName(){
-		return name;
+	public String getShipTypeName(){
+		return shiptype_shiptypename;
+	}
+	public String getShipSigns(){
+		return ship_ship_signs;
+	}
+	public String getShipEmployment(){
+		return ship_employment;
+	}
+	public String getHullModelNo(){
+		return hull_model_no;
+	}
+	public String getHullLenOa(){
+		return hull_hull_len_oa;
+	}
+	public String getHullLenPp(){
+		return hull_hull_len_pp;
+	}
+	public String getHullBeam(){
+		return hull_hull_beam;
+	}
+	public String getHullFront(){
+		return hull_hull_front;
 	}
 
-	public int getId(){
-		return id;
+	public String getHullSide(){
+		return hull_hull_side;
+	}
+	public String getHullFactor(){
+		return hull_hull_factor;
+	}
+	public String getShipNt(){
+		return ship_ship_nt;
+	}
+	public String getDraftDesign(){
+		return ship_draft_design;
+	}
+	public String getDraftScantling(){
+		return ship_draft_scantling;
+	}
+	public String getEngineMaxContinRating(){
+		return engine_eng_max_contin_rating;
+	}
+	public String getEngineNormContinRating(){
+		return engine_eng_norm_contin_rating;
+	}
+	public String getEngineNomRpmAtMcr(){
+		return engine_eng_nom_rpm_at_mcr;
+	}
+	public String getEngineNomRpmAtNcr(){
+		return engine_eng_nom_rpm_at_ncr;	
+	}
+	public String getShipSpeed(){
+		return ship_ship_speed;
+	}
+	public String getShipDwt(){
+		return ship_ship_dwt;
+	}
+	public String getShipCriteriaWind(){
+		return ship_criteria_wind;
 	}
 
-	public void setLati(double d){
-		lati = d;
+	public String getShipMinLoadSpeed(){
+		return ship_min_load_speed;
 	}
+	public String getShipMaxLoadSpeed(){
+		return ship_max_load_speed;
+	}
+	public String getShipMinBallastSpeed(){
+		return ship_min_ballast_speed;
+	}
+	public String getShipMaxBallastSpeed(){
+		return ship_max_ballast_speed;
+	}
+	public String getShipMinMediumSpeed(){
+		return ship_min_medium_speed;
+	}
+
+	public String getShipMaxMediumSpeed(){
+		return ship_max_medium_speed;
+	}
+	public String getShipRoutingType(){
+		return ship_routingtype;
+	}
+	public String getShipSuppportedOnboardsystem(){
+		return ship_supported_onboardsystem;
+	}
+	public String getShipState(){
+		return ship_state;
+	}
+	// // For now, this is a "didn't find" ship
+	// public String getName(){
+	// 	return name;
+	// }
+
+	// public int getId(){
+	// 	return id;
+	// }
+
+	// public void setLati(double d){
+	// 	lati = d;
+	// }
 	
-	public void setLongi(double d){
-		longi = d;
-	}
+	// public void setLongi(double d){
+	// 	longi = d;
+	// }
 
-	public double getLati(){
-		return lati;
-	}
+	// public double getLati(){
+	// 	return lati;
+	// }
 
-	public double getLongi(){
-		return longi;
-	}
+	// public double getLongi(){
+	// 	return longi;
+	// }
 
 }
