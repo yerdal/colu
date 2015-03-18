@@ -1,4 +1,2 @@
-ship/ShipList.class
-ship/ShipController.class
-ship/Application.class
-ship/Ship.class
+ship\Operator.class
+ship\Contract.class

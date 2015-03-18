@@ -8,7 +8,6 @@ public class ShipList {
 	private ArrayList<Ship> ships;
 
 	public ShipList(){
-
 		ships = new ArrayList();
 	}
 
@@ -26,10 +25,10 @@ public class ShipList {
 
 	public Ship getShip(int i){
 		return ships.get(i);
-	 }
+	}
 
 	//Loop the list and find a matching name
-	public Ship findShip(String s){
+/*	public Ship findShip(String s){
 
 		for(int i = 0; i < ships.size(); i++){
 
@@ -39,5 +38,5 @@ public class ShipList {
 		//For now, return a did-not-found ship 
 
 		return new Ship(-1);
-	}
+	}*/
 }
