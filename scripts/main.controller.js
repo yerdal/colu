@@ -1,7 +1,16 @@
 
 
 angular.module('coluApp')
-  .controller('MainController', function($scope){
+  .controller('MainController', function($scope, $http){
+
+    //Get data from backend
+    $http.get('http://localhost:8080/ship/test').success(function(data,status,headers,config)
+    {
+      console.log('Got some values ', data);
+      $scope.shipData = data;
+    }).error(function(data,status,headers,config){
+      console.log('ERROR getting from backend' , status);
+    });
 
     //Starting Coordinates, Los Angeles
     var citymap ={};
