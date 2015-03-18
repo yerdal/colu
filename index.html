@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="coluApp">
+<html>
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script> 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-sanitize.js"></script>
@@ -9,10 +9,19 @@
     <link rel="stylesheet" type="text/css" href="styles/main.css"> </link>
     <link rel='stylesheet' href='styles/ol.css'> </link>   
   </head>
-  <body>
-    <openlayers lat="-33.86" lon="151.20" zoom="9" height="400px">
-        <ol-layer source-type="TileJSON" source-url="https://api.tiles.mapbox.com/v3/examples.map-i86nkdio.jsonp"></ol-layer>
-    </openlayers>
-    <h1> Hej </h1>
+
+  <body ng-app="coluApp">
+    <h1> Colu </h1>
+
+
+    <div ng-controller="mainController">
+
+      <openlayers ol-center="center">
+          <ol-marker ng-repeat="ship in ships" lat="ship.lat" lon="ship.lon"></ol-marker>
+      </openlayers>
+
+    </div>
+
   </body>
+
 </html>
