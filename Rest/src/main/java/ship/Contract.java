@@ -34,9 +34,10 @@ public class Contract {
 
 
 
-  public Contract(int theId)
-    operatorId = theId;
+  public Contract(int theId) {
+    contract_id = theId;
   }
+  
     
 
 }

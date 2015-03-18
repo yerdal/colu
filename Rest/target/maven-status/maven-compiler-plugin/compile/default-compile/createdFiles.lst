@@ -1,5 +1,2 @@
-ship\ShipController.class
-ship\Ship.class
-ship\Application.class
-ship\ShipList.class
-ship\SimpleCORSFilter.class
+ship/Operator.class
+ship/Contract.class

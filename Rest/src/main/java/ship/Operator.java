@@ -15,9 +15,10 @@ public class Operator {
   private String contactOperator;
 
 
-  public Operator(int theId)
+  public Operator(int theId) {
     operatorId = theId;
   }
+  
   
 
 }

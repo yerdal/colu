@@ -13,7 +13,7 @@ public class Ship {
 	private String hull_hull_id;
 	private String engine_engine_id;
 	private String ship_ship_name;
-	private Stirng shiptype_shiptypename;
+	private String shiptype_shiptypename;
 	private String ship_ship_signs;
 	private String ship_employment;
 	private String hull_model_no;
@@ -117,10 +117,7 @@ public class Ship {
 	}
 
 	// For now, this is a "didn't find" ship
-	public Ship(int i){
-		id = i;
-		name = "Not found";	
-	}
+
 
 	public void setName(String s){
 		name = s;
