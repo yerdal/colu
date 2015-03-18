@@ -45,8 +45,9 @@ public class Ship {
 	private String ship_state;
 
 	private String ship_comment;
+	private String ship_description;
 
-	public Ship(int the_id, String the_operator_operator_id,
+	public Ship(int the_id,	String the_operator_operator_id,
 													String the_contract_contract_id,
 													String the_hull_hull_id,
 													String the_engine_engine_id,
@@ -79,7 +80,9 @@ public class Ship {
 													String the_ship_max_medium_speed,
 													String the_ship_routingtype,
 													String the_ship_supported_onboardsystem,
-													String the_ship_state){
+													String the_ship_state,
+													String the_ship_comment,
+													String the_ship_desc){
 		id = the_id;
 		operator_operator_id = the_operator_operator_id;
 		contract_contract_id = the_contract_contract_id;
@@ -115,6 +118,9 @@ public class Ship {
 		ship_routingtype = the_ship_routingtype;
 		ship_supported_onboardsystem = the_ship_supported_onboardsystem;
 		ship_state = the_ship_state;
+		ship_comment = the_ship_comment;
+		ship_description = the_ship_comment;
+
 	}
 
 	public String getOperatorId(){
@@ -222,6 +228,12 @@ public class Ship {
 	}
 	public String getShipState(){
 		return ship_state;
+	}
+	public String getShipComment(){
+		return ship_comment;
+	}
+	public String getShipDescription(){
+		return ship_description;
 	}
 	// // For now, this is a "didn't find" ship
 	// public String getName(){
