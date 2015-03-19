@@ -1,4 +1,5 @@
 package ship;
+import java.util.ArrayList;
 
 public class Ship {
 
@@ -43,9 +44,51 @@ public class Ship {
 	private String ship_routingtype;
 	private String ship_supported_onboardsystem;
 	private String ship_state;
-
 	private String ship_comment;
 	private String ship_description;
+	private ArrayList<SatCPollPosition> satCPollPositions;
+
+	//This is temporary, only the interering values set.
+	public Ship(int theId, Operator theOperator, String theShipname){
+		id = theId;
+		operator = theOperator;
+		ship_ship_name = theShipname;
+		contract_contract_id = "undefined";
+		hull_hull_id = "undefined";
+		engine_engine_id = "undefined";
+		shiptype_shiptypename = "undefined";
+		ship_ship_signs = "undefined";
+		ship_employment = "undefined";
+		hull_model_no = "undefined";
+		hull_hull_len_oa = "undefined";
+		hull_hull_len_pp = "undefined";
+		hull_hull_beam = "undefined";
+		hull_hull_front = "undefined";
+		hull_hull_side = "undefined";
+		hull_hull_factor = "undefined";
+		ship_ship_nt = "undefined";
+		ship_draft_design = "undefined";
+		ship_draft_scantling = "undefined";
+		engine_eng_max_contin_rating = "undefined";
+		engine_eng_norm_contin_rating = "undefined";
+		engine_eng_nom_rpm_at_mcr = "undefined";
+		engine_eng_nom_rpm_at_ncr = "undefined";
+		ship_ship_speed = "undefined";
+		ship_ship_dwt = "undefined";
+		ship_criteria_wind = "undefined";
+		ship_min_load_speed = "undefined";
+		ship_max_load_speed = "undefined";
+		ship_min_ballast_speed = "undefined";
+		ship_max_ballast_speed = "undefined";
+		ship_min_medium_speed = "undefined";
+		ship_max_medium_speed = "undefined";
+		ship_routingtype = "undefined";
+		ship_supported_onboardsystem = "undefined";
+		ship_state = "undefined";
+		ship_comment = "undefined";
+		ship_description = "undefined";
+		satCPollPositions = new ArrayList<SatCPollPosition>();
+	}
 
 	public Ship(int the_id,	Operator theOperator,
 													String the_contract_contract_id,
@@ -120,6 +163,7 @@ public class Ship {
 		ship_state = the_ship_state;
 		ship_comment = the_ship_comment;
 		ship_description = the_ship_comment;
+		satCPollPositions = new ArrayList<SatCPollPosition>();
 	}
 
 	public Operator getOperatorObject(){
@@ -233,6 +277,12 @@ public class Ship {
 	}
 	public String getShipDescription(){
 		return ship_description;
+	}
+	public ArrayList<SatCPollPosition> getSatCPollPositions(){
+		return satCPollPositions;
+	}
+	public void setPollPositions(ArrayList<SatCPollPosition> thePositions){
+		satCPollPositions = thePositions;
 	}
 	// // For now, this is a "didn't find" ship
 	// public String getName(){

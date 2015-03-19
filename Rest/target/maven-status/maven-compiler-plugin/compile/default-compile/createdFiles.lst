@@ -1,8 +1,9 @@
 ship\ShipController.class
-ship\Application.class
 ship\Operator.class
+ship\Application.class
 ship\Ship.class
 ship\ShipList.class
 ship\Contact.class
 ship\SimpleCORSFilter.class
+ship\SatCPollPosition.class
 ship\Contract.class
