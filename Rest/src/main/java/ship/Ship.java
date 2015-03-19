@@ -255,7 +255,7 @@ public class Ship {
 		return lati;
 	}
 
-	public double getLong(){
+	public double getLon(){
 		return longi;
 	}
 

@@ -1,8 +1,8 @@
-ship/ShipController.class
-ship/Application.class
-ship/SimpleCORSFilter.class
-ship/ShipList.class
-ship/Operator.class
-ship/Contact.class
-ship/Contract.class
-ship/Ship.class
+ship\ShipController.class
+ship\Application.class
+ship\Operator.class
+ship\Ship.class
+ship\ShipList.class
+ship\Contact.class
+ship\SimpleCORSFilter.class
+ship\Contract.class
