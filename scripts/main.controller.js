@@ -1,65 +1,34 @@
 
-
 angular.module('coluApp')
-  .controller('MainController', function($scope){
-
-    //Starting Coordinates, Los Angeles
-    var citymap ={};
-    var cityCircle;
-    var map;
-    citymap['losangeles'] = {
-        center: new google.maps.LatLng(37.772323, -122.214897),
-        population: 3857799
-      };
-
-    function initialize() {
-        // Create the map.
-        var mapOptions = {
-          zoom: 4,
-          center: new google.maps.LatLng(37.09024, -122.214897),
-          mapTypeId: google.maps.MapTypeId.TERRAIN
-        };
-
-        map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
-
-    }
-
-    initialize();
-
-    var x = -(37.772323 - 21.291982);
-    var y = -(-122.214897 - -157.821856);
-
-    var stepX = 0;
-    var stepY = 0;
-
-    $scope.moveShip = function(){
+.controller('mainController', function($scope){
+  	
+      	$scope.ships = [
+            {
+                name: 'Jonken1',
+                lat: 51.505,
+                lon: -2.09
+            },
+            {
+                name: 'Jonken2',
+                lat: 51.375,
+                lon: -20.35
+            },
+            {
+                name: 'Jonken3',
+                lat: 51.267,
+                lon: -10.083
+            }
+        ];
         
-      stepX = (x  + stepX) / 1000;
-      stepY = (y + stepY )/ 1000;
-      
-      // console.log('X ', x, ' Y ', y);
+		$scope.center = {
+             lat: $scope.ships[0].lat,
+             lon: $scope.ships[1].lon,
+             zoom: 4
+         }
 
-      //Set latitud and longitud coords to circle
-      citymap.losangeles.center.k =  citymap.losangeles.center.k  + stepX;
-      citymap.losangeles.center.D =  citymap.losangeles.center.D + stepY;
 
-      // console.log('cityCircle ', cityCircle);
-      var populationOptions = {
-          strokeColor: '#FF0000',
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: '#FF0000',
-          fillOpacity: 0.35,
-          map: map,
-          center: citymap['losangeles'].center,
-          radius: Math.sqrt(citymap['losangeles'].population) * 10
-        };
-        // Add the circle for this city to the map.
-      cityCircle = new google.maps.Circle(populationOptions);
-      //Call this function again
-      setTimeout($scope.moveShip,100); 
-       
-  }
-   setTimeout($scope.moveShip,1000); 
+             
+             
+ 
+    
 });

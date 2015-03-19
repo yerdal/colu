@@ -9,11 +9,10 @@
 //5 app controller
 //6 directive link
 
-var app = angular.module('coluApp', ['openlayers-directive']);
 
-  
-// .config(function() {
+ angular.module('coluApp', ['openlayers-directive']);
 
-// .run(function() {
 
-// });
+
+
+
