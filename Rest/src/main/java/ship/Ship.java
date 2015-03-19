@@ -9,7 +9,7 @@ public class Ship {
 	private String name;
 
 	//According to the XML file 	
-	private String operator_operator_id;
+	private Operator operator;
 	private String contract_contract_id;
 	private String hull_hull_id;
 	private String engine_engine_id;
@@ -47,7 +47,7 @@ public class Ship {
 	private String ship_comment;
 	private String ship_description;
 
-	public Ship(int the_id,	String the_operator_operator_id,
+	public Ship(int the_id,	Operator theOperator,
 													String the_contract_contract_id,
 													String the_hull_hull_id,
 													String the_engine_engine_id,
@@ -84,7 +84,7 @@ public class Ship {
 													String the_ship_comment,
 													String the_ship_desc){
 		id = the_id;
-		operator_operator_id = the_operator_operator_id;
+		operator = theOperator;
 		contract_contract_id = the_contract_contract_id;
 		hull_hull_id = the_hull_hull_id;
 		engine_engine_id = the_engine_engine_id;
@@ -120,11 +120,10 @@ public class Ship {
 		ship_state = the_ship_state;
 		ship_comment = the_ship_comment;
 		ship_description = the_ship_comment;
-
 	}
 
-	public String getOperatorId(){
-		return 	operator_operator_id;
+	public Operator getOperatorId(){
+		return 	operator;
 	}
 	public String getContractId(){
 		return contract_contract_id;
@@ -252,12 +251,12 @@ public class Ship {
 	// 	longi = d;
 	// }
 
-	// public double getLati(){
-	// 	return lati;
-	// }
+	public double getLat(){
+		return lati;
+	}
 
-	// public double getLongi(){
-	// 	return longi;
-	// }
+	public double getLong(){
+		return longi;
+	}
 
 }

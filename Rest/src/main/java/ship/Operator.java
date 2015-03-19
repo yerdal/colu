@@ -14,22 +14,22 @@ public class Operator {
   private String routeInformation;
   private String contactOperator;
 
-  public Operator(){
-    operatorId = 0;
+  public Operator(int theId){
+    operatorId = theId;
     name = "undefined";
     copyfcst = "undefined";
     pva = "undefined";
     hasOnBoardSystem = "undefined";
-    comment = "undefined";
-    nationalityOfCrew = "undefined";
+    comment = "This is the operator Comment by ze germans";
+    nationalityOfCrew = "Germany";
     timeOrSafe = "undefined";
     routeInformation = "undefined";
     contactOperator = "undefined";
   }
 
   public Operator(int theId, String theName, String theCopyFcst, String thePva,
-      String theHasOnBoardsystem, String theComment, String theNationalCrew, String theTimeOrSafe,
-      String theRouteInformation, String theContactOperator) {
+    String theHasOnBoardsystem, String theComment, String theNationalCrew, String theTimeOrSafe,
+    String theRouteInformation, String theContactOperator) {
     operatorId = theId;
     name = theName;
     copyfcst = theCopyFcst;
@@ -42,8 +42,36 @@ public class Operator {
     contactOperator = theContactOperator;
   }
 
+  public int getOperatorObject(){
+    return operatorId;
+  }
+  public String getName(){
+    return name;
+  }
+  public String getCopyFcst(){
+    return copyfcst;
+  }
+  public String getPva(){
+    return pva;
+  }
+  public String getHasOnBoardSystem(){
+    return hasOnBoardSystem;
+  }
+  public String getComment(){
+    return comment;
+  }
+  public String getNationalityCrew(){
+    return nationalityOfCrew;
+  }
+  public String getTimeOrSafe(){
+    return timeOrSafe;
+  }
+  public String getRouteInformation(){
+    return routeInformation;
+  }
+  public String getContactOperator(){
+    return contactOperator;
+  }
 
-  
-  
 
 }

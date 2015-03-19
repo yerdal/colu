@@ -27,6 +27,22 @@ public class Contact {
     fullAddress = theFullAddress;
   }
 
+  public int getContactId(){
+    return contactId;
+  }
+  public String getShipAddressActive(){
+    return shipAddressActive;
+  }
+  public String getCommunicationType(){
+    return communicationType;
+  }
+  public String getAddress(){
+    return address;
+  }
+  public String getFullAddress(){
+    return fullAddress;
+  }
+
 
 
   
