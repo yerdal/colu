@@ -165,7 +165,9 @@ public class Ship {
 		ship_description = the_ship_comment;
 		satCPollPositions = new ArrayList<SatCPollPosition>();
 	}
-
+	public int getShipId(){
+		return id;
+	}
 	public Operator getOperatorObject(){
 		return 	operator;
 	}

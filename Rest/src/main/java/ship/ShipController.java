@@ -218,7 +218,7 @@ public class ShipController {
          return null; 
     }
 
-    //Method for returning null if string empty
+    //Method for returning 0 if string empty
   public static double parseDoubleSafely(String str) {
     double result = 0;
     try {
