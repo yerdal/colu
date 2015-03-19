@@ -18,7 +18,7 @@
     <div ng-controller="mainController">
 
       <openlayers ng-if="center" ol-center="center">
-          <ol-marker ng-repeat="ship in ships"ol-marker-properties="ship" ></ol-marker>
+          <ol-marker ng-repeat="ship in ships" lat="ship.satCPollPositions[0].lat" lon="ship.satCPollPositions[0].lon" ></ol-marker>
       </openlayers>
 
     </div>

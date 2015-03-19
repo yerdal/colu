@@ -14,7 +14,7 @@ angular.module('coluApp')
 
                $scope.ships = data;
                
-               console.log('comments', $scope.ships[8])
+               console.log('comments', $scope.ships[15])
               
 
                // console.log('Got some values ', data);
