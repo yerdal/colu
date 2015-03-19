@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class ShipController {
 
     //Request a ship with a certain name?
-    @RequestMapping(value="/ships")
+    @RequestMapping(value="/ships/{name}")
     public ArrayList getShip(@PathVariable String name) {
 
    /*     ShipList ships = new ShipList();
@@ -41,7 +41,8 @@ public class ShipController {
         try {
      
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
-          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/ships.xml");
+          // Mattias /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml
+          File fXmlFile = new File("/Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
