@@ -1,25 +1,10 @@
 
 angular.module('coluApp')
 
+
 .controller('mainController', function($scope, $http){
   	
-      	// $scope.ships = [
-       //      {
-       //          name: 'Jonken1',
-       //          lat: 51.505,
-       //          lon: -2.09
-       //      },
-       //      {
-       //          name: 'Jonken2',
-       //          lat: 51.375,
-       //          lon: -20.35
-       //      },
-       //      {
-       //          name: 'Jonken3',
-       //          lat: 51.267,
-       //          lon: -10.083
-       //      }
-       //  ];
+;
 
        $scope.ship = {name: 'JOnk', lat: 51.04, lon: -20.32};
         
