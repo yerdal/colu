@@ -34,8 +34,43 @@ public class Contract {
 
 
 
-  public Contract(int theId) {
-    contract_id = theId;
+  public Contract(int theId,  String the_cp_speed,
+                              String the_cp_hfo,
+                              String the_cp_mdo,
+                              String the_cp_load_speed,
+                              String the_cp_load_cons_hfo,
+                              String the_cp_load_cons_mdo,
+                              String the_cp_medium_speed,
+                              String the_cp_medium_cons_hfo,
+                              String the_cp_medium_cons_mdo,
+                              String the_cp_ballast_speed,
+                              String the_cp_ballast_cons_hfo,
+                              String the_cp_ballast_cons_mdo,
+                              String the_allowance_hfo_mt,
+                              String the_allowance_hfo_percent,
+                              String the_allowance_cp_speed,
+                              String the_gw_dss,
+                              String the_pvamethod,
+                              String the_routemethod) {
+    contract_id  = theId;
+    cp_speed = cp_speed; 
+    cp_hfo = cp_hfo; 
+    cp_mdo = cp_mdo; 
+    cp_load_speed = cp_load_speed; 
+    cp_load_cons_hfo = cp_load_cons_hfo; 
+    cp_load_cons_mdo = cp_load_cons_mdo; 
+    cp_medium_speed = cp_medium_speed; 
+    cp_medium_cons_hfo = cp_medium_cons_hfo; 
+    cp_medium_cons_mdo = cp_medium_cons_mdo; 
+    cp_ballast_speed = cp_ballast_speed; 
+    cp_ballast_cons_hfo = cp_ballast_cons_hfo; 
+    cp_ballast_cons_mdo = cp_ballast_cons_mdo; 
+    allowance_hfo_mt = allowance_hfo_mt; 
+    allowance_hfo_percent = allowance_hfo_percent; 
+    allowance_cp_speed = allowance_cp_speed; 
+    gw_dss = gw_dss; 
+    pvamethod = pvamethod; 
+    routemethod = routemethod; 
   }
   
     

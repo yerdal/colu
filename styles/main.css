@@ -3,9 +3,22 @@ html, body{
   height: 100%;
   padding: 0;
   margin: 0;
+  
 }
 
 
+.container 
+{
+
+
+}
+.container p{
+  -moz-hyphens:auto;
+  -ms-hyphens:auto;
+  -webkit-hyphens:auto;
+  hyphens:auto;
+  word-wrap:break-word;
+}
 
 #map-canvas{
   height: 100%;

@@ -36,11 +36,11 @@ public class ShipController {
 
 
 
-    public Ship getXMLShip(){
+    private Ship getXMLShip(){
 
         try {
      
-          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/ship_1063.xml");
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/ship_101.xml");
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
           Document doc = dBuilder.parse(fXmlFile);
@@ -51,37 +51,80 @@ public class ShipController {
          
          
           NodeList nList = doc.getElementsByTagName("ship");
-        
+            //System.out.println(nList.getLength() + "\n" + "\n"); 
             for (int temp = 1; temp < nList.getLength(); temp++) 
             {
-         
-                Node nNode = nList.item(temp);
-         
-                // System.out.println("\nCurrent Element :" + nNode.getNodeName());
-         
+                Node nNode = nList.item(temp); //get the second Ship node
+  
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) 
                 {
-         
                     Element eElement = (Element) nNode;
                     int shipID = Integer.parseInt(eElement.getAttribute("id"));
-                    String values = eElement.getAttribute("values");
-                    
-                    String[] parts = values.split(";",34);
-                    // for (int i = 0; i < parts.length; i++)
-                    // {
-                    //     System.out.println(parts[i] + "\n");              
-                    // }
 
-                    Ship theShip = new Ship(shipID, parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], parts[9], parts[10],
-                        parts[11], parts[12], parts[13], parts[14], parts[15], parts[16], parts[17], parts[18], parts[19], parts[20], parts[21], parts[22], 
-                        parts[23], parts[24], parts[25], parts[26], parts[27], parts[28], parts[29], parts[30], parts[31], parts[32], parts[33]);
+                    String shipValues = eElement.getAttribute("values");
+                    
+                    String[] shipParts = shipValues.split(";", 34);
+                    for (int i = 0; i < shipParts.length; i++)
+                    {
+                        //System.out.println(shipParts[i] + "\n");              
+                    }
+                    
+                    String shipComment = eElement.getElementsByTagName("comment").item(0).getTextContent();
+                    String shipDesc = eElement.getElementsByTagName("description").item(0).getTextContent();
+          
+                    Operator operator =  new Operator(Integer.parseInt(shipParts[0]));
+
+                    Ship theShip = new Ship(shipID, operator, shipParts[1], shipParts[2], shipParts[3], shipParts[4], shipParts[5], shipParts[6], shipParts[7], shipParts[8], shipParts[9], shipParts[10],
+                        shipParts[11], shipParts[12], shipParts[13], shipParts[14], shipParts[15], shipParts[16], shipParts[17], shipParts[18], shipParts[19], shipParts[20], shipParts[21], shipParts[22], 
+                        shipParts[23], shipParts[24], shipParts[25], shipParts[26], shipParts[27], shipParts[28], shipParts[29], shipParts[30], shipParts[31], shipParts[32], shipParts[33], shipComment, shipDesc);
                     return theShip;
                 }
+                NodeList contactList = doc.getElementsByTagName("contact");
+                for (int k = 1; k < contactList.getLength(); k++)
+                {
+                    Node contactNode = contactList.item(k);
+
+                    if (contactNode.getNodeType() == Node.ELEMENT_NODE)
+                    {
+                      Element eElement = (Element) contactNode;
+                      int contactID  = Integer.parseInt(eElement.getAttribute("id"));
+                      String contactValues = eElement.getAttribute("values");
+                      String[] contactParts = contactValues.split(";", 4);
+                      for (int i = 0; i < contactParts.length; i++)
+                      {
+                        //System.out.println(contactParts[i] + " ");
+                      }
+
+                    }
+                }
+                NodeList operatorList = doc.getElementsByTagName("operator");
+                for (int j = 1; j < operatorList.getLength(); j++)
+                {
+                    Node operatorNode = operatorList.item(j);
+                    if (operatorNode.getNodeType() == Node.ELEMENT_NODE)
+                    {
+                      Element eElement = (Element) operatorNode;
+                      int operatorID = Integer.parseInt(eElement.getAttribute("id"));
+                      String operatorValues = eElement.getAttribute("values");
+                      String [] operatorParts = operatorValues.split(";", 5);
+                      for (int n = 0; n < operatorParts.length; n++)
+                      {
+                        System.out.println(operatorParts[n] + " ");
+                      }
+                    }
+                }
+
+
+
           }
+
+        
         } catch (Exception e) {
              e.printStackTrace();
         }
          return null; 
     }
+
+
 
 }

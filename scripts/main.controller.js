@@ -1,5 +1,6 @@
 
 angular.module('coluApp')
+
 .controller('mainController', function($scope){
   	
       	$scope.ships = [
@@ -19,7 +20,7 @@ angular.module('coluApp')
                 lon: -10.083
             }
         ];
-        
+
 		$scope.center = {
              lat: $scope.ships[0].lat,
              lon: $scope.ships[1].lon,
