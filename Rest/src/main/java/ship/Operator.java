@@ -42,7 +42,7 @@ public class Operator {
     contactOperator = theContactOperator;
   }
 
-  public int getOperatorObject(){
+  public int getOperatorId(){
     return operatorId;
   }
   public String getName(){

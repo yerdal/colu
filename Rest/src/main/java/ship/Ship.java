@@ -122,7 +122,7 @@ public class Ship {
 		ship_description = the_ship_comment;
 	}
 
-	public Operator getOperatorId(){
+	public Operator getOperatorObject(){
 		return 	operator;
 	}
 	public String getContractId(){
