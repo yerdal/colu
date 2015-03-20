@@ -6,9 +6,9 @@ angular.module('coluApp')
 
     
 
-
-
-
+    $scope.sliderValue = 0
+    var vectorLayer;
+    var shipVectorSource = new ol.source.Vector({});
     var map = new ol.Map({
       layers: [new ol.layer.Tile({ source: new ol.source.OSM() })],
       target: document.getElementById('map'),
@@ -53,7 +53,9 @@ angular.module('coluApp')
          //Get data from backend
     $http.get('http://localhost:8090/ships/test').success(function(data,status,headers,config)
     {
-      initShipPos(data);
+      //Init scope data
+      $scope.ships = data;
+      initShipPos();
 
       //drawLines(data);
 
@@ -62,9 +64,8 @@ angular.module('coluApp')
     });
   
       
-    var initShipPos = function(data){
-      var shipVectorSource = new ol.source.Vector({});
-      $scope.ships = data;
+    var initShipPos = function(){
+      
       // console.log('daata ', data)
       for(var i = 0; i < $scope.ships.length; i++){
         var iconFeature = new ol.Feature({
@@ -120,15 +121,33 @@ angular.module('coluApp')
           src: 'http://icons.iconarchive.com/icons/icons-land/transporter/32/Container-Ship-Top-Red-icon.png'
         }))
       });
+      
 
    
       //add the feature vector to the layer vector, and apply a style to whole layer
-      var vectorLayer = new ol.layer.Vector({
+      vectorLayer = new ol.layer.Vector({
         source: shipVectorSource,
         style: iconStyle
       });
 
       map.addLayer(vectorLayer);
+      
+    }
+    var count = 0;
+    $scope.updateShip = function(){
+        console.log('sliderchange');
+        // console.log('getLayer ', shipVectorSource.getFeatures().length);
+        count++;
+        // shipVectorSource.getFeatures()[20].setGeometry(
+        //       new ol.geom.Point(ol.proj.transform([22,22], 'EPSG:4326',   'EPSG:3857'))
+        //     )
+        // var tempShipArr = shipVectorSource.getFeatures();
+        for(var i = 0; i < shipVectorSource.getFeatures().length; i++){
+          shipVectorSource.getFeatures()[i].setGeometry(
+              new ol.geom.Point(ol.proj.transform([$scope.ships[i].satCPollPositions[count].lon, $scope.ships[i].satCPollPositions[count].lat], 'EPSG:4326',   'EPSG:3857'))
+          )
+        }
+
     }
 
     

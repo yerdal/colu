@@ -34,6 +34,21 @@ html, body{
 .popup-label:hover{
   opacity: 1;
 } 
+.sliderWrapper{
+  margin: 20px auto;
+  position:fixed;
+  top: 10px;
+  z-index: 40;
+  left: 0;
+  right: 0;
+
+  /*//transform: translateX(-50%);*/
+}
+#timeslider{
+  width: 400px;
+  margin: 0 auto;
+  display: block;
+}
 /*
 .shipmarker .shipname{
   opacity: 0;

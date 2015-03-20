@@ -16,6 +16,10 @@
 
 
     <div ng-controller="mainController">
+      <div class="sliderWrapper">
+      <input id="timeslider" ng-model="sliderValue" ng-change="updateShip()" type="range" min="0" max="100" step="5"></input>
+      </div>
+      <!-- <button ng-click="updateShip()"> Update </button> -->
       <div id="map" ></div>
       <div id="info"></div>
     </div>
