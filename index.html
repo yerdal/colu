@@ -16,11 +16,12 @@
 
 
     <div ng-controller="mainController">
-
-      <openlayers ng-if="center" ol-center="center">
+      
+<!--       <openlayers ng-if="center" ol-center="center">
           <ol-marker class="shipmarker" ng-repeat="ship in ships" lat="ship.satCPollPositions[0].lat" lon="ship.satCPollPositions[0].lon" message="{{ship.shipName}}" >
           </ol-marker>
-      </openlayers>
+      </openlayers> -->
+      <div id="map" ></div>
 
     </div>
 
