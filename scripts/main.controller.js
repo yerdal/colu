@@ -36,7 +36,6 @@ angular.module('coluApp')
       });
        
       map.addLayer(gribLayer);
-
       map.on('pointermove', function(evt) {
         document.getElementById('info').innerHTML = '';
         var viewResolution = /** @type {number} */ (view.getResolution());
@@ -50,15 +49,14 @@ angular.module('coluApp')
       });
     }
     initGribData();
-         //Get data from backend
+    //Get data from backend
     $http.get('http://localhost:8090/ships/test').success(function(data,status,headers,config)
     {
+      //Succes getting from backend
       //Init scope data
       $scope.ships = data;
       initShipPos();
-
       //drawLines(data);
-
     }).error(function(data,status,headers,config){
         console.log('ERROR getting from backend' , status);
     });
@@ -135,7 +133,7 @@ angular.module('coluApp')
     }
     var count = 0;
     $scope.updateShip = function(){
-        console.log('sliderchange');
+        console.log('sliderchange', $scope.sliderValue);
         // console.log('getLayer ', shipVectorSource.getFeatures().length);
         count++;
         // shipVectorSource.getFeatures()[20].setGeometry(

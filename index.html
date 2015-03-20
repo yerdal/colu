@@ -6,7 +6,7 @@
     <script src='scripts/ol.js'></script>
     <script src='scripts/app.js'></script>
     <script src='scripts/main.controller.js'></script>  
-    <script src='scripts/angular-openlayers-directive.min.js'></script>
+    <script src='scripts/components/angular-datepicker.js'></script>
     <link rel="stylesheet" type="text/css" href="styles/main.css"> </link>
     <link rel='stylesheet' href='styles/ol.css'> </link>   
   </head>
@@ -17,7 +17,7 @@
 
     <div ng-controller="mainController">
       <div class="sliderWrapper">
-      <input id="timeslider" ng-model="sliderValue" ng-change="updateShip()" type="range" min="0" max="100" step="5"></input>
+      <input id="timeslider" ng-model="sliderValue" ng-change="updateShip()" type="range" min="0" max="100" step="2"></input>
       </div>
       <!-- <button ng-click="updateShip()"> Update </button> -->
       <div id="map" ></div>
