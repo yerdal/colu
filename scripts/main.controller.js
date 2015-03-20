@@ -14,7 +14,7 @@ angular.module('coluApp')
       target: document.getElementById('map'),
       view: new ol.View({
         center: [0, 0],
-        zoom: 2
+        zoom: 2.5
       })
     });
 
@@ -65,7 +65,7 @@ angular.module('coluApp')
     var initShipPos = function(data){
       var shipVectorSource = new ol.source.Vector({});
       $scope.ships = data;
-      console.log('daata ', data)
+      // console.log('daata ', data)
       for(var i = 0; i < $scope.ships.length; i++){
         var iconFeature = new ol.Feature({
         geometry: new                         //LON , LAT 
@@ -111,10 +111,12 @@ angular.module('coluApp')
       //create the style
       var iconStyle = new ol.style.Style({
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-          anchor: [0.5, 46],
-          anchorXUnits: 'fraction',
-          anchorYUnits: 'pixels',
+          // anchor: [0.5, 46],
+          // anchorXUnits: 'fraction',
+          // anchorYUnits: 'pixels',
           opacity: 0.75,
+          // rotation: -3.14/2,
+
           src: 'http://icons.iconarchive.com/icons/icons-land/transporter/32/Container-Ship-Top-Red-icon.png'
         }))
       });
