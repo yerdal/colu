@@ -218,6 +218,214 @@ public class ShipController {
         }
          return null; 
     }
+    private ArrayList getXMLShipVoyage(){
+        ArrayList<Voyage> voyageArray = new ArrayList<Voyage>();
+
+        try {
+          // Mattias: /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/polls.xml
+          // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/voyage_89710.xml");
+
+          DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+          DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+          Document doc = dBuilder.parse(fXmlFile);
+        
+          //optional, but recommended
+          //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+          doc.getDocumentElement().normalize();
+          
+         
+          NodeList nList = doc.getElementsByTagName("voyage");
+            //System.out.println(nList.getLength() + "\n" + "\n"); 
+            for (int temp = 1; temp < nList.getLength(); temp++) 
+            {
+                Node nNode = nList.item(temp); //get the second voyage node the first node for description
+    
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) 
+                {
+
+                  Element tempVoyageEl = (Element) nNode;
+                  int voyageID = Integer.parseInt(tempVoyageEl.getAttribute("id"));
+                  String voyageComment = tempVoyageEl.getElementsByTagName("comment").item(0).getTextContent();
+                  int worklistid = tempVoyageEl.getElementsByTagName("worklistid");
+                  String systemonboardstatus = tempVoyageEl.getElementsByTagName("systemonboardstatus"); 
+                  String state = tempVoyageEl.getElementsByTagName("state");
+                  String pvapdf = tempVoyageEl.getElementsByTagName("pvapdf");
+                  String lastupdate =  tempVoyageEl.getElementsByTagName("lastupdate");
+
+
+
+                  String voyValues = tempVoyageEl.getAttribute("values");
+
+                  String[] voyageValues = voyValues.split(";", 34);
+                  String voyageName = voyageValues[0];
+                  String voyageVoyref = voyageValues[1];
+                  String operatorName; = voyageValues[2];
+                  String personName = voyageValues[3]; 
+                  String shipEmployment = voyageValues[4];
+                  String shipTypeName = voyageValues[5];
+                  String shipVoyage = tempVoyageEl.getElementsByTagName("ship");
+                  String shipId = Integer.parseInt(shipVoyage.getAttribute("id"));
+                  
+                  String ship = new Ship(shipId, theOperator, "defaultName");
+                  String voyageDeparture = voyageValues[6];
+                  String voyageDestination = voyageValues[7];
+                  String voyageEtd = voyageValues[8];
+                  String voyageEta = voyageValues[9];
+                  String voyageRequired_eta = voyageValues[10];
+                  String voyageLoading = voyageValues[11];
+                  String voyageCargoweight = voyageValues[12];
+                  String voyageCargosensitiv = voyageValues[13];
+                  String voyageGmheight = voyageValues[14];
+                  String voyageDisplacement_at_dep = voyageValues[15];
+                  String voyageMaxspeed =  voyageValues[16];
+                  String voyageDraft_aft = voyageValues[17];
+                  String voyageDraft_fwd = voyageValues[18];
+                  String voyageDraft_mean = voyageValues[19];
+                  String voyageDraft_trim = voyageValues[20];
+                  String tradelaneName = voyageValues[21];
+                  String voyagePhase = voyageValues[22];
+                  String voyageHasroute = voyageValues[23];
+                  String voyageNextMessageDate = voyageValues[24];
+                  String voyagePriority =  voyageValues[25];
+                  String seaName = voyageValues[26];
+                  String seaSortOrder = voyageValues[27];
+                  String forecastModifieddate = voyageValues[28];
+                  String forecastState =  voyageValues[29];
+                  String voyageFo_brob_dep = voyageValues[30];
+                  String voyageDo_brob_dep = voyageValues[31];
+                  String voyageFo_brob_latest = voyageValues[32];
+                  String voyageDo_brob_latest =  voyageValues[33];
+                  String voyageHas_pva = voyageValues[34];
+                  //get the operator ID  voyageValues[0]
+                  //Alarms 
+                  NodeList nList_alarms = tempShipElement.getElementsByTagName("alarms");
+                  //System.out.println(nList.getLength() + "\n" + "\n"); 
+                  for (int j = 0; j < nList_alarms.getLength(); j++) 
+                  {
+                    Node alarmNode = nList_alarms.item(j);
+
+                    if (alarmNode.getNodeType() == Node.ELEMENT_NODE)
+                    {
+                      Element alarmEl = (Element) alarmNode;
+                      String warning  = alarmEl.getAttribute("warn"));
+                      String alert = alarmEl.getAttribute("alert"));
+                      String summary  = alarmEl.getAttribute("summary"));
+                      String alarmVal = alarmEl.getAttribute("values");
+                      String[] alarmValues = alarmVal.split(";", 2);
+                      //TODO MAKE ALARM CLASS
+
+                    }
+                  }
+                  //Weather Way points
+                  ArrayList<WeatherWayPoint> weatherWayPointArray = new ArrayList<WeatherWayPoint>();
+                  NodeList nList_weatherWayPoint = tempShipElement.getElementsByTagName("weatherwaypoint");
+                  
+                  for (int j = 0; j < nList_weatherWayPoint.getLength(); j++) 
+                  {
+                    Node weatherwayNode = nList_weatherWayPoint.item(j);
+
+                    if (weatherwayNode.getNodeType() == Node.ELEMENT_NODE)
+                    {
+                      Element weatherWayEl = (Element) weatherwayNode;
+                      String weatherLon  = weatherWayEl.getAttribute("lon"));
+                      String legType = weatherWayEl.getAttribute("legtype"));
+                      String weatherLat  = weatherWayEl.getAttribute("lat"));
+                      String date  = weatherWayEl.getAttribute("date"));
+                      String weatherWayPVal = weatherWayEl.getAttribute("values");
+                      String[] weatherWayPValues = weatherWayEl.split(";", 16);
+                      
+                      double weatherwaypointWindspeed = parseDoubleSafely(weatherWayPValues[0]);
+                      double weatherwaypointWinddir = parseDoubleSafely(weatherWayPValues[1]);
+                      double weatherwaypointSwellh = parseDoubleSafely(weatherWayPValues[2]);
+                      double weatherwaypointSwelldir = parseDoubleSafely(weatherWayPValues[3]);
+                      double weatherwaypointSwellperiod = parseDoubleSafely(weatherWayPValues[4)] 
+                      double weatherwaypointCurrentspeed = parseDoubleSafely(weatherWayPValues[5]);
+                      double weatherwaypointCurrentdir = parseDoubleSafely(weatherWayPValues[6]);
+                      double weatherwaypointPressure = parseDoubleSafely(weatherWayPValues[7]);
+                      double weatherwaypointSignwaveh = parseDoubleSafely(weatherWayPValues[8]);
+                      double weatherwaypointWindwaveh = parseDoubleSafely(weatherWayPValues[9]);
+                      double weatherwaypointWindwaveperiod = parseDoubleSafely(weatherWayPValues[10]);
+                      double weatherwaypointCalcshipspeed = parseDoubleSafely(weatherWayPValues[11]);
+                      double weatherwaypointWeatherfactor = parseDoubleSafely(weatherWayPValues[12]);
+                      double weatherwaypointCurrentfactor = parseDoubleSafely(weatherWayPValues[13]);
+                      double weatherwaypointCalcdistance = parseDoubleSafely(weatherWayPValues[14]);
+                      double weatherwaypointGoodweather = parseDoubleSafely(weatherWayPValues[15]);
+
+                      WeatherWayPoint tempPoint = new WeatherWayPoint(weatherwaypointWindspeed,
+                                                                      weatherwaypointWinddir,
+                                                                      weatherwaypointSwellh,
+                                                                      weatherwaypointSwelldir,
+                                                                      weatherwaypointSwellperiod,
+                                                                      weatherwaypointCurrentspeed,
+                                                                      weatherwaypointCurrentdir,
+                                                                      weatherwaypointPressure,
+                                                                      weatherwaypointSignwaveh,
+                                                                      weatherwaypointWindwaveh,
+                                                                      weatherwaypointWindwaveperiod,
+                                                                      weatherwaypointCalcshipspeed,
+                                                                      weatherwaypointWeatherfactor,
+                                                                      weatherwaypointCurrentfactor,
+                                                                      weatherwaypointCalcdistance,
+                                                                      weatherwaypointGoodweather)
+                      //Einar do magic!
+                      weatherWayPointArray.add(tempPoint);
+
+                    }
+                  }
+                  Voyage voyage = new Voyage(voyageID, voyageComment, worklistid,systemonboards,state,
+                                              pvapdf, lastupdate,
+                                              voyageName,
+                                              voyageVoyref,
+                                              operatorName,
+                                              personName,
+                                              ship,
+                                              voyageDeparture,
+                                              voyageDestination,
+                                              voyageEtd,
+                                              voyageEta,
+                                              voyageRequired_eta,
+                                              voyageLoading,
+                                              voyageCargoweight,
+                                              voyageCargosensitiv,
+                                              voyageGmheight,
+                                              voyageDisplacement_at_dep,
+                                              voyageMaxspeed,
+                                              voyageDraft_aft,
+                                              voyageDraft_fwd,
+                                              voyageDraft_mean,
+                                              voyageDraft_trim,
+                                              tradelaneName,
+                                              voyagePhase,
+                                              voyageHasroute,
+                                              voyageNextMessageDate,
+                                              voyagePriority,
+                                              seaName,
+                                              seaSortOrder,
+                                              forecastModifieddate,
+                                              forecastState,
+                                              voyageFo_brob_dep,
+                                              voyageDo_brob_dep,
+                                              voyageFo_brob_latest,
+                                              voyageDo_brob_latest,
+                                              voyageHas_pva,
+                                              weatherWayPointArray)
+                 
+                  voyageArray.add(voyage);
+
+                }
+
+                        
+
+          }
+          return voyageArray;
+
+        
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+         return null; 
+    }
 
     //Method for returning 0 if string empty
   public static double parseDoubleSafely(String str) {
