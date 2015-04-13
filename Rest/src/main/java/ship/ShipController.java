@@ -35,7 +35,23 @@ public class ShipController {
         return myShips_pos;
     }
 
+      @RequestMapping(value="/voyages/{name}")
+    public ArrayList getVoyage(@PathVariable String name) {
 
+   /*     ShipList ships = new ShipList();
+
+        //Static ships for now
+
+        ships.addShip(new Ship(1, "Jonken1"));
+        ships.addShip(new Ship(2, "Jonken2"));
+        ships.addShip(new Ship(3, "Henki"));*/
+        // ArrayList<Ship> myShips = getXMLShip();
+        ArrayList<Voyage> myVoyage_pos = getXMLShipVoyage();
+
+        // Is the name in the list?
+       // return ships.findShip(name);
+        return myVoyage_pos;
+    }
 
     private ArrayList getXMLShip(){
         ArrayList<Ship> shipsArray = new ArrayList<Ship>();
@@ -43,7 +59,8 @@ public class ShipController {
      
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // Mattias /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml
-          File fXmlFile = new File("/Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml");
+          // EINAR /Users/einarsandberg/Documents/Voyage_ship_data/ship_101.xml
+          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/ship_101.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -224,7 +241,8 @@ public class ShipController {
         try {
           // Mattias: /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/polls.xml
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
-          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/voyage_89710.xml");
+          // EINAR /Users/einarsandberg/Documents/Voyage_ship_data/voyage_89710.xml
+          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/voyage_89710.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -247,27 +265,29 @@ public class ShipController {
                   Element tempVoyageEl = (Element) nNode;
                   int voyageID = Integer.parseInt(tempVoyageEl.getAttribute("id"));
                   String voyageComment = tempVoyageEl.getElementsByTagName("comment").item(0).getTextContent();
-                  int worklistid = tempVoyageEl.getElementsByTagName("worklistid");
-                  String systemonboardstatus = tempVoyageEl.getElementsByTagName("systemonboardstatus"); 
-                  String state = tempVoyageEl.getElementsByTagName("state");
-                  String pvapdf = tempVoyageEl.getElementsByTagName("pvapdf");
-                  String lastupdate =  tempVoyageEl.getElementsByTagName("lastupdate");
+                  int worklistid = parseIntSafely(tempVoyageEl.getAttribute("worklistid"));
+                  String systemonboardstatus = tempVoyageEl.getAttribute("systemonboardstatus"); 
+                  String state = tempVoyageEl.getAttribute("state");
+                  String pvapdf = tempVoyageEl.getAttribute("pvapdf");
+                  String lastupdate =  tempVoyageEl.getAttribute("lastupdate");
 
 
 
                   String voyValues = tempVoyageEl.getAttribute("values");
 
-                  String[] voyageValues = voyValues.split(";", 34);
+                  String[] voyageValues = voyValues.split(";", 35);
                   String voyageName = voyageValues[0];
                   String voyageVoyref = voyageValues[1];
-                  String operatorName; = voyageValues[2];
+                  String operatorName = voyageValues[2];
+                  Operator ope = new Operator(2);
                   String personName = voyageValues[3]; 
                   String shipEmployment = voyageValues[4];
                   String shipTypeName = voyageValues[5];
-                  String shipVoyage = tempVoyageEl.getElementsByTagName("ship");
-                  String shipId = Integer.parseInt(shipVoyage.getAttribute("id"));
+                  Node shipVoyage = tempVoyageEl.getElementsByTagName("ship").item(0);
+                  Element shipVoyageEl = (Element) shipVoyage;
+                  int shipId = Integer.parseInt(shipVoyageEl.getAttribute("id"));
                   
-                  String ship = new Ship(shipId, theOperator, "defaultName");
+                  Ship ship = new Ship(shipId, ope, "defaultName");
                   String voyageDeparture = voyageValues[6];
                   String voyageDestination = voyageValues[7];
                   String voyageEtd = voyageValues[8];
@@ -299,7 +319,7 @@ public class ShipController {
                   String voyageHas_pva = voyageValues[34];
                   //get the operator ID  voyageValues[0]
                   //Alarms 
-                  NodeList nList_alarms = tempShipElement.getElementsByTagName("alarms");
+                  NodeList nList_alarms = tempVoyageEl.getElementsByTagName("alarms");
                   //System.out.println(nList.getLength() + "\n" + "\n"); 
                   for (int j = 0; j < nList_alarms.getLength(); j++) 
                   {
@@ -308,9 +328,9 @@ public class ShipController {
                     if (alarmNode.getNodeType() == Node.ELEMENT_NODE)
                     {
                       Element alarmEl = (Element) alarmNode;
-                      String warning  = alarmEl.getAttribute("warn"));
-                      String alert = alarmEl.getAttribute("alert"));
-                      String summary  = alarmEl.getAttribute("summary"));
+                      String warning  = alarmEl.getAttribute("warn");
+                      String alert = alarmEl.getAttribute("alert");
+                      String summary  = alarmEl.getAttribute("summary");
                       String alarmVal = alarmEl.getAttribute("values");
                       String[] alarmValues = alarmVal.split(";", 2);
                       //TODO MAKE ALARM CLASS
@@ -318,8 +338,8 @@ public class ShipController {
                     }
                   }
                   //Weather Way points
-                  ArrayList<WeatherWayPoint> weatherWayPointArray = new ArrayList<WeatherWayPoint>();
-                  NodeList nList_weatherWayPoint = tempShipElement.getElementsByTagName("weatherwaypoint");
+                  ArrayList<WeatherWaypoint> weatherWayPointArray = new ArrayList<WeatherWaypoint>();
+                  NodeList nList_weatherWayPoint = tempVoyageEl.getElementsByTagName("weatherwaypoint");
                   
                   for (int j = 0; j < nList_weatherWayPoint.getLength(); j++) 
                   {
@@ -328,18 +348,18 @@ public class ShipController {
                     if (weatherwayNode.getNodeType() == Node.ELEMENT_NODE)
                     {
                       Element weatherWayEl = (Element) weatherwayNode;
-                      String weatherLon  = weatherWayEl.getAttribute("lon"));
-                      String legType = weatherWayEl.getAttribute("legtype"));
-                      String weatherLat  = weatherWayEl.getAttribute("lat"));
-                      String date  = weatherWayEl.getAttribute("date"));
+                      double weatherLon  = parseDoubleSafely(weatherWayEl.getAttribute("lon"));
+                      String legType = weatherWayEl.getAttribute("legtype");
+                      double weatherLat  = parseDoubleSafely(weatherWayEl.getAttribute("lat"));
+                      String date  = weatherWayEl.getAttribute("date");
                       String weatherWayPVal = weatherWayEl.getAttribute("values");
-                      String[] weatherWayPValues = weatherWayEl.split(";", 16);
+                      String[] weatherWayPValues = weatherWayPVal.split(";", 16);
                       
                       double weatherwaypointWindspeed = parseDoubleSafely(weatherWayPValues[0]);
                       double weatherwaypointWinddir = parseDoubleSafely(weatherWayPValues[1]);
                       double weatherwaypointSwellh = parseDoubleSafely(weatherWayPValues[2]);
                       double weatherwaypointSwelldir = parseDoubleSafely(weatherWayPValues[3]);
-                      double weatherwaypointSwellperiod = parseDoubleSafely(weatherWayPValues[4)] 
+                      double weatherwaypointSwellperiod = parseDoubleSafely(weatherWayPValues[4]); 
                       double weatherwaypointCurrentspeed = parseDoubleSafely(weatherWayPValues[5]);
                       double weatherwaypointCurrentdir = parseDoubleSafely(weatherWayPValues[6]);
                       double weatherwaypointPressure = parseDoubleSafely(weatherWayPValues[7]);
@@ -352,7 +372,7 @@ public class ShipController {
                       double weatherwaypointCalcdistance = parseDoubleSafely(weatherWayPValues[14]);
                       double weatherwaypointGoodweather = parseDoubleSafely(weatherWayPValues[15]);
 
-                      WeatherWayPoint tempPoint = new WeatherWayPoint(weatherwaypointWindspeed,
+                      WeatherWaypoint tempPoint = new WeatherWaypoint(weatherwaypointWindspeed,
                                                                       weatherwaypointWinddir,
                                                                       weatherwaypointSwellh,
                                                                       weatherwaypointSwelldir,
@@ -367,17 +387,21 @@ public class ShipController {
                                                                       weatherwaypointWeatherfactor,
                                                                       weatherwaypointCurrentfactor,
                                                                       weatherwaypointCalcdistance,
-                                                                      weatherwaypointGoodweather)
+                                                                      weatherwaypointGoodweather,
+                                                                      weatherLon,
+                                                                      legType,
+                                                                      weatherLat,
+                                                                      date);
                       //Einar do magic!
                       weatherWayPointArray.add(tempPoint);
 
                     }
                   }
-                  Voyage voyage = new Voyage(voyageID, voyageComment, worklistid,systemonboards,state,
+                  Voyage voyage = new Voyage(voyageID, worklistid,systemonboardstatus,state,
                                               pvapdf, lastupdate,
                                               voyageName,
                                               voyageVoyref,
-                                              operatorName,
+                                              ope,
                                               personName,
                                               ship,
                                               voyageDeparture,
@@ -409,7 +433,8 @@ public class ShipController {
                                               voyageFo_brob_latest,
                                               voyageDo_brob_latest,
                                               voyageHas_pva,
-                                              weatherWayPointArray)
+                                              weatherWayPointArray,
+                                              voyageComment);
                  
                   voyageArray.add(voyage);
 
@@ -432,6 +457,15 @@ public class ShipController {
     double result = 0;
     try {
         result = Double.parseDouble(str);
+    } catch (NullPointerException npe) {
+    } catch (NumberFormatException nfe) {
+    }
+    return result;
+}
+public static int parseIntSafely(String str) {
+    int result = 0;
+    try {
+        result = Integer.parseInt(str);
     } catch (NullPointerException npe) {
     } catch (NumberFormatException nfe) {
     }
