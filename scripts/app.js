@@ -10,7 +10,7 @@
 //6 directive link
 
 
- angular.module('coluApp', []);
+ angular.module('coluApp', ['angular-datepicker']);
 
 
 
