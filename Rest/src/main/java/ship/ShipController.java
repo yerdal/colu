@@ -13,12 +13,19 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * Handling the rest API and parsing XML files
+ */
 @RestController
 public class ShipController {
-
+     /**
+   * @param  id the id of the ship
+   * @return      a Ship with given ID
+   * @see         None
+   */ 
     //Request a ship with a certain name?
-    @RequestMapping(value="/ships/{name}")
-    public ArrayList getShip(@PathVariable String name) {
+    @RequestMapping(value="/ships/{id}")
+    public ArrayList getShip(@PathVariable String id) {
 
    /*     ShipList ships = new ShipList();
 
@@ -39,7 +46,6 @@ public class ShipController {
     @RequestMapping(value="/ongoingVoyages/{name}")
         public ArrayList getOngoingVoyages(@PathVariable String name){
           ArrayList<OnVoyages> voyages = getOngoingVoyages();
-
           return voyages;
         }
 
