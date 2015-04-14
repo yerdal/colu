@@ -33,8 +33,67 @@ public class ShipController {
         // Is the name in the list?
        // return ships.findShip(name);
         return myShips_pos;
-    }
 
+
+    }
+    @RequestMapping(value="/ongoingVoyages/{name}")
+        public ArrayList getOngoingVoyages(@PathVariable String name){
+          ArrayList<OnVoyages> voyages = getOngoingVoyages();
+
+          return voyages;
+        }
+
+    private ArrayList getOngoingVoyages(){
+        ArrayList<OnVoyages> voyageArray = new ArrayList<OnVoyages>();
+
+        try{
+
+          File fXmlFile = new File("/Users/Yusuf/Documents/LIU/TNM094-KEX/Voyage_and_ship_data/ongoingVoyages.xml");
+
+          DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+          DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+          Document doc = dBuilder.parse(fXmlFile);
+
+          doc.getDocumentElement().normalize();
+
+          NodeList nList = doc.getElementsByTagName("voyage");
+
+
+            for(int temp = 1; temp < nList.getLength(); temp++)
+            {
+                Node nNode = nList.item(temp);
+
+                if(nNode.getNodeType() == Node.ELEMENT_NODE)
+                {
+                  Element eElement = (Element) nNode;
+                  int voyageID = Integer.parseInt(eElement.getAttribute("id"));
+                  String voyageValue = eElement.getAttribute("values");
+
+                  //String[] voyageNames = voyageValue.split(";", 34);
+                  
+
+                  Node shipNode = eElement.getElementsByTagName("ship").item(0);
+
+                 
+                    //Node shipNode = shipList.item(temp1);
+                  Element cElement = (Element) shipNode;
+                  String shipValues = cElement.getAttribute("values");
+                  String[] shipValuesArray = shipValues.split(";", 34);
+
+                  OnVoyages theVoyage = new OnVoyages(voyageID, shipValuesArray[5]); 
+                    voyageArray.add(theVoyage);
+
+                }
+                  
+            }
+
+            return voyageArray;
+        }catch(Exception e){
+            e.printStackTrace();
+          }
+          return null;
+
+    }
 
 
     private ArrayList getXMLShip(){
@@ -43,7 +102,8 @@ public class ShipController {
      
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // Mattias /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml
-          File fXmlFile = new File("/Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml");
+          // Yusuf /Users/Yusuf/Documents/LIU/TNM094-KEX/Voyage_and_ship_data
+          File fXmlFile = new File("/Users/Yusuf/Documents/LIU/TNM094-KEX/Voyage_and_ship_data/ship_1063.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -138,7 +198,8 @@ public class ShipController {
         try {
           // Mattias: /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/polls.xml
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
-          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/polls.xml");
+          // Yusuf /Users/Yusuf/Documents/LIU/TNM094-KEX/Voyage_and_ship_data
+          File fXmlFile = new File("/Users/Yusuf/Documents/LIU/TNM094-KEX/Voyage_and_ship_data/polls.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
