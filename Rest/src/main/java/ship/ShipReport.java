@@ -64,7 +64,7 @@ public class ShipReport
 	private String date;
 
 	public ShipReport(int theReportID,
-							private String cosp_eosp;
+		String cosp_eosp,
 	 String theEtaEarliest,
 	 double theObsWindspeed,
 	 double theObsWindspeedbf,
