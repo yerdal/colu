@@ -352,7 +352,7 @@ public class ShipController {
                       double observationWaveh = parseDoubleSafely(shipReportValues[5]);
                       double observationSwellh = parseDoubleSafely(shipReportValues[6]);
                       double observationSwelldir = parseDoubleSafely(shipReportValues[7]);
-                      double repshipCourse = parseDoubleSafely(shipReportValues[8]);
+                      String repshipCourse = (shipReportValues[8]);
                       double repshipSpeed_avg = parseDoubleSafely(shipReportValues[9]);
                       double repshipRpm_avg = parseDoubleSafely(shipReportValues[10]);
                       double repshipLoad_Avg = parseDoubleSafely(shipReportValues[11]);
@@ -391,7 +391,7 @@ public class ShipController {
                       String repshipOthersAtSeaMdoSLR = (shipReportValues[44]);
                       String repshipOthersAtSeaMgoSLR = (shipReportValues[45]);
                       String repshipInstructedlegcode = (shipReportValues[46]);
-                      String repshipInstructedspeed = (shipReportValues[47]);
+                      double repshipInstructedspeed = parseDoubleSafely(shipReportValues[47]);
                       String repshipPropulsionengines = (shipReportValues[48]);
                       String repshipShaftgenerators = (shipReportValues[49]);
                       String repshipFinstabilizers = (shipReportValues[50]);
@@ -400,7 +400,10 @@ public class ShipController {
                       double repshipProforma_speed = parseDoubleSafely(shipReportValues[53]);
                       double repshipIntended_speed = parseDoubleSafely(shipReportValues[54]);
 
-                      ShipReport tempShipReport = new ShipReport(repshipCosp_eosp,
+
+            
+                      ShipReport tempShipReport = new ShipReport(shipReportID,
+                                                                  repshipCosp_eosp,
                                                                   repshipEta_earliest,
                                                                   observationWindspeed,
                                                                   observationWindspeedbf,
@@ -454,7 +457,11 @@ public class ShipController {
                                                                   repshipSteamTimeSLR,
                                                                   baseline_instructionBaseline_instruction_id,
                                                                   repshipProforma_speed,
-                                                                  repshipIntended_speed);
+                                                                  repshipIntended_speed,
+                                                                  shipLon, 
+                                                                  legType, 
+                                                                  shipLat,
+                                                                  date);
                       shipReportsArray.add(tempShipReport);
 
                     }
@@ -557,7 +564,8 @@ public class ShipController {
                                               voyageDo_brob_latest,
                                               voyageHas_pva,
                                               weatherWayPointArray,
-                                              voyageComment);
+                                              voyageComment,
+                                              shipReportsArray);
                  
                   voyageArray.add(voyage);
 

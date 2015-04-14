@@ -44,6 +44,7 @@ public class Voyage
 	private String doBrobLatest;
 	private String hasPva;
 	private ArrayList <WeatherWaypoint> weatherWaypoints;
+	private ArrayList <ShipReport> shipReports;
 	private String comment;
 	// private bool onGoing; //kanske?
 	public Voyage (int theVoyageID, int theWorklistID, String theSystemOnBoardStatus, 
@@ -85,7 +86,8 @@ public class Voyage
 									String theDoBrobLatest,
 									String theHasPva,
 									ArrayList <WeatherWaypoint> theWeatherWaypoints,
-									String theComment)
+									String theComment,
+									ArrayList <ShipReport> theShipReports)
 	{
 		voyageID = theVoyageID;
 	 	worklistID = theWorklistID;
@@ -131,6 +133,7 @@ public class Voyage
   	hasPva = theHasPva;
   	weatherWaypoints = theWeatherWaypoints;
 	 	comment = theComment;
+	 	shipReports = theShipReports;
 
 	}
 	public int getVoyageId(){
@@ -152,7 +155,12 @@ public class Voyage
 	{
 		return weatherWaypoints;
 	}
-	
+	public ArrayList<ShipReport> getShipReports()
+	{
+		return shipReports;
+	}
+
+
 	public String getSystemOnBoardStatus(){
 		return systemOnBoardStatus;
 	}
