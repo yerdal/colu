@@ -6,7 +6,15 @@
     <script src='scripts/ol.js'></script>
     <script src='scripts/app.js'></script>
     <script src='scripts/main.controller.js'></script>  
-    <script src='scripts/angular-openlayers-directive.min.js'></script>
+    
+    <script src="scripts/components/angular-datepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="scripts/components/themes/classic.css"> </link>
+    <link rel="stylesheet" type="text/css" href="scripts/components/themes/classic.date.css"> </link>
+    <link rel="stylesheet" type="text/css" href="scripts/components/themes/classic.time.css"> </link>
+    <link rel="stylesheet" type="text/css" href="scripts/components/themes/default.css"> </link>
+    <link rel="stylesheet" type="text/css" href="scripts/components/themes/default.date.css"> </link>
+    <link rel="stylesheet" type="text/css" href="scripts/components/themes/default.time.css"> </link>
+    <link rel="stylesheet" type="text/css" href="scripts/components/themes/rtl.css"> </link>
     <link rel="stylesheet" type="text/css" href="styles/main.css"> </link>
     <link rel='stylesheet' href='styles/ol.css'> </link>   
   </head>
@@ -16,9 +24,23 @@
 
 
     <div ng-controller="mainController">
+      <div class="sliderWrapper">
+        <p> {{ sliderDate | date:'medium'}} </p>
+        <p class="inline"> {{minDate | date:'medium'}} </p>
+        <input id="timeslider" ng-model="sliderValue" ng-change="updateShipPos()" type="range" min="0" max="100" step="2"></input>
+        <input type="text" class="datepicker" ng-model="maxDate" pick-a-date="date" pick-a-date-options="options" /> 
+       
+        <p class="inline"> {{maxDate | date:'medium'}} </p>
+        <!-- <input type="text" ng-model="time" pick-a-time="time" pick-a-time-options="options" />  -->
+       </div>
+
+      <!-- <button ng-click="updateShip()"> Update </button> -->
       <div id="map" ></div>
       <div id="info"></div>
+      </div>
     </div>
+
+
 
   </body>
 
