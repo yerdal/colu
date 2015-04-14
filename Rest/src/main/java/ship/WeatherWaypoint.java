@@ -87,6 +87,50 @@ public class WeatherWaypoint
 	{
 		return lon;
 	}
-
+	public double getSwellDir(){
+		return swellDir;
+	} 
+	public double getSwellPeriod(){
+		return swellPeriod;
+	}
+	public double getCurrentSpeed(){
+		return currentSpeed;
+	}
+	public double getCurrentDir(){
+		return currentDir;
+	}
+	public double getPressure(){
+		return pressure;
+	}
+	public double getSignwaveh(){
+		return signwaveh;
+	}
+	public double getWindwaveh(){
+		return windwaveh;
+	}
+	public double getWindWavePeriod(){
+		return windWavePeriod;
+	}
+	public double getCalcShipSpeed(){
+		return calcShipSpeed;
+	}
+	public double getWeatherFactor(){
+		return weatherFactor;
+	}
+	public double getCurrentFactor(){
+		return currentFactor;
+	}
+	public double getCalcDistance(){
+		return calcDistance;
+	}
+	public double getGoodWeather(){
+		return goodWeather;
+	}
+	public String getLegType(){
+		return legType;
+	}
+	public String getDate(){
+		return date;
+	}
 	
 }

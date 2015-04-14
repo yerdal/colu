@@ -44,6 +44,7 @@ public class Voyage
 	private String doBrobLatest;
 	private String hasPva;
 	private ArrayList <WeatherWaypoint> weatherWaypoints;
+	private ArrayList <ShipReport> shipReports;
 	private String comment;
 	// private bool onGoing; //kanske?
 	public Voyage (int theVoyageID, int theWorklistID, String theSystemOnBoardStatus, 
@@ -85,52 +86,54 @@ public class Voyage
 									String theDoBrobLatest,
 									String theHasPva,
 									ArrayList <WeatherWaypoint> theWeatherWaypoints,
-									String theComment)
+									String theComment,
+									ArrayList <ShipReport> theShipReports)
 	{
 		voyageID = theVoyageID;
 	 	worklistID = theWorklistID;
-	  	systemOnBoardStatus = theSystemOnBoardStatus;
-	  	state = theState;
-	  	pvapdfurl = thePvadpfurl;
-	  	lastUpdate = theLastUpdate;
-		//values
-	  	voyageName = theVoyageName;
-	  	voyRef = theVoyRef;
+  	systemOnBoardStatus = theSystemOnBoardStatus;
+  	state = theState;
+  	pvapdfurl = thePvadpfurl;
+  	lastUpdate = theLastUpdate;
+	//values
+  	voyageName = theVoyageName;
+  	voyRef = theVoyRef;
 	 	operator = theOperator;
-	  	personName = thePersonName;
-	  	ship = theShip;
-	  	departure = theDeparture;
-	  	destination = theDestination;
-	  	etd = theEtd;
-	  	eta = theEta;
-	  	requiredEta = theRequiredEta;
-	  	loading = theLoading;
-	  	cargoWeight = theCargoWeight;
-	  	cargoSensitiv = theCargoSensitiv;
-	  	gmHeight = theGmHeight;
-	  	displacementAtDep = theDisplacementAtDep;
+  	personName = thePersonName;
+  	ship = theShip;
+  	departure = theDeparture;
+  	destination = theDestination;
+  	etd = theEtd;
+  	eta = theEta;
+  	requiredEta = theRequiredEta;
+  	loading = theLoading;
+  	cargoWeight = theCargoWeight;
+  	cargoSensitiv = theCargoSensitiv;
+  	gmHeight = theGmHeight;
+  	displacementAtDep = theDisplacementAtDep;
 	 	maxSpeed = theMaxSpeed;
-	  	draftAft = theDraftAft;
-	  	draftFwd = theDraftFwd;
-	  	draftMean = theDraftMean;
-	  	draftTrim = theDraftTrim;
-	  	tradelaneName = theTradelaneName;
-	  	phase = thePhase;
-	  	hasRoute = theHasRoute;
-	  	nextMessageDate = theNextMessageDate;
-	  	priority = thePriority;
-	  	seaName = theSeaName;
-	  	seaSortOrder = theSeaSortOrder;
-	  	forecastModifiedDate = theForecastModifiedDate;
-	  	forecastState = theForecastState;
-	  	foBrobDep = theFoBrobDep;
-	  	doBrobDep = theDoBrobDep;
-	  	foBrobLatest = theFoBrobDep;
-	  	doBrobLatest = theDoBrobLatest;
-	  	foBrobLatest = theFoBrobLatest;
-	  	hasPva = theHasPva;
-	  	weatherWaypoints = theWeatherWaypoints;
+  	draftAft = theDraftAft;
+  	draftFwd = theDraftFwd;
+  	draftMean = theDraftMean;
+  	draftTrim = theDraftTrim;
+  	tradelaneName = theTradelaneName;
+  	phase = thePhase;
+  	hasRoute = theHasRoute;
+  	nextMessageDate = theNextMessageDate;
+  	priority = thePriority;
+  	seaName = theSeaName;
+  	seaSortOrder = theSeaSortOrder;
+  	forecastModifiedDate = theForecastModifiedDate;
+  	forecastState = theForecastState;
+  	foBrobDep = theFoBrobDep;
+  	doBrobDep = theDoBrobDep;
+  	foBrobLatest = theFoBrobDep;
+  	doBrobLatest = theDoBrobLatest;
+  	foBrobLatest = theFoBrobLatest;
+  	hasPva = theHasPva;
+  	weatherWaypoints = theWeatherWaypoints;
 	 	comment = theComment;
+	 	shipReports = theShipReports;
 
 	}
 	public int getVoyageId(){
@@ -151,5 +154,123 @@ public class Voyage
 	public ArrayList<WeatherWaypoint> getWeatherWaypoints()
 	{
 		return weatherWaypoints;
+	}
+	public ArrayList<ShipReport> getShipReports()
+	{
+		return shipReports;
+	}
+
+
+	public String getSystemOnBoardStatus(){
+		return systemOnBoardStatus;
+	}
+	public String getState(){
+		return state;
+	}
+	public String getPvapdfurl(){
+		return pvapdfurl;
+	}
+	public String getLastUpdate(){
+		return lastUpdate;
+	}
+	//values
+	public String getVoyageName(){
+		return voyageName;
+	}
+	public String getVoyRef(){
+		return voyRef;
+	}
+	public String getPersonName(){
+		return personName;
+	}
+	public String getDeparture(){
+		return departure;
+	}
+	public String getDestination(){
+		return destination;
+	}
+	public String getEtd(){
+		return etd;
+	}
+	public String getEta(){
+		return eta;
+	}
+	public String getRequiredEta(){
+		return requiredEta;
+	}
+	public String getLoading(){
+		return loading;
+	}
+	public String getCargoWeight(){
+		return cargoWeight;
+	}
+	public String getCargoSensitiv(){
+		return cargoSensitiv;
+	}
+	public String getGmHeight(){
+		return gmHeight;
+	}
+	public String getDisplacementAtDep(){
+		return displacementAtDep;
+	}
+	public String getMaxSpeed(){
+		return maxSpeed;
+	}
+	public String getDraftAft(){
+		return draftAft;
+	}
+	public String getDraftFwd(){
+		return draftFwd;
+	}
+	public String getDraftMean(){
+		return draftMean;
+	}
+	public String getDraftTrim(){
+		return draftTrim;
+	}
+	public String getTradelaneName(){
+		return tradelaneName;
+	}
+	public String getPhase(){
+		return phase;
+	}
+	public String getHasRoute(){
+		return hasRoute;
+	}
+	public String getNextMessageDate(){
+		return nextMessageDate;
+	}
+	public String getPriority(){
+		return priority;
+	}
+	public String getSeaName(){
+		return seaName;
+	}
+	public String getSeaSortOrder(){
+		return seaSortOrder;
+	}
+	public String getForecastModifiedDate(){
+		return forecastModifiedDate;
+	}
+	public String getForecastState(){
+		return forecastState;
+	}
+	public String getFoBrobDep(){
+		return foBrobDep;
+	}
+	public String getDoBrobDep(){
+		return doBrobDep;
+	}
+	public String getFoBrobLatest(){
+		return foBrobLatest;
+	}
+	public String getDoBrobLatest(){
+		return doBrobLatest;
+	}
+	public String getHasPva(){
+		return hasPva;
+	}
+	public String getComment(){
+		return comment;
 	}
 }
