@@ -336,6 +336,21 @@ public class ShipController {
                     if (shipReportNode.getNodeType() == Node.ELEMENT_NODE)
                     {
                       Element shipReportEl = (Element) shipReportNode;
+                      Node fuelOilNode = shipReportEl.getElementsByTagName("fuel-oil-performance").item(0);
+                      Element fuilOilPerEl = (Element) fuelOilNode;
+
+                      int baselineID = parseIntSafely(fuilOilPerEl.getAttribute("id")); 
+                      String baselineVals = fuilOilPerEl.getAttribute("values");
+                      String[] shipReportValues = baselineVals.split(";", 7);
+                      String baselineSelected = shipReportValues[0];
+                      String baselineOva_cons_performance = shipReportValues[1];
+                      String baselineOva_cons_performance_rep_diff = shipReportValues[2];
+                      String baselineOva_cons_performance_rep_diff_prcnt = shipReportValues[3];
+                      String baselinePva_cons_performance = shipReportValues[4];
+                      String baselinePva_cons_performance_rep_diff = shipReportValues[5];
+                      String baselinePva_cons_performance_rep_diff_prcnt = shipReportValues[6];
+                      
+
                       int shipReportID  = parseIntSafely(shipReportEl.getAttribute("id"));
                       double shipLon  = parseDoubleSafely(shipReportEl.getAttribute("lon"));
                       String legType = shipReportEl.getAttribute("legtype");
