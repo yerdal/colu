@@ -10,7 +10,7 @@
 //6 directive link
 
 
- angular.module('coluApp', ['openlayers-directive']);
+ angular.module('coluApp', ['angular-datepicker']);
 
 
 

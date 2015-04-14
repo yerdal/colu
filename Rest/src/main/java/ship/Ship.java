@@ -286,23 +286,7 @@ public class Ship {
 	public void setPollPositions(ArrayList<SatCPollPosition> thePositions){
 		satCPollPositions = thePositions;
 	}
-	// // For now, this is a "didn't find" ship
-	// public String getName(){
-	// 	return name;
-	// }
-
-	// public int getId(){
-	// 	return id;
-	// }
-
-	// public void setLati(double d){
-	// 	lati = d;
-	// }
 	
-	// public void setLongi(double d){
-	// 	longi = d;
-	// }
-
 	public double getLat(){
 		return lati;
 	}
