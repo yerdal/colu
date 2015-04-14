@@ -35,21 +35,9 @@ public class ShipController {
         return myShips_pos;
     }
 
-      @RequestMapping(value="/voyages/{name}")
+    @RequestMapping(value="/voyages/{name}")
     public ArrayList getVoyage(@PathVariable String name) {
-
-   /*     ShipList ships = new ShipList();
-
-        //Static ships for now
-
-        ships.addShip(new Ship(1, "Jonken1"));
-        ships.addShip(new Ship(2, "Jonken2"));
-        ships.addShip(new Ship(3, "Henki"));*/
-        // ArrayList<Ship> myShips = getXMLShip();
         ArrayList<Voyage> myVoyage_pos = getXMLShipVoyage();
-
-        // Is the name in the list?
-       // return ships.findShip(name);
         return myVoyage_pos;
     }
 
@@ -60,7 +48,7 @@ public class ShipController {
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // Mattias /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml
           // EINAR /Users/einarsandberg/Documents/Voyage_ship_data/ship_101.xml
-          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/ship_101.xml");
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/ship_101.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -242,7 +230,7 @@ public class ShipController {
           // Mattias: /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/polls.xml
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // EINAR /Users/einarsandberg/Documents/Voyage_ship_data/voyage_89710.xml
-          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/voyage_89710.xml");
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/voyage_89710.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -337,6 +325,142 @@ public class ShipController {
 
                     }
                   }
+                  //SHIP REPORTS
+                  ArrayList<ShipReport> shipReportsArray = new ArrayList<ShipReport>();
+                  NodeList nList_shipReport = tempVoyageEl.getElementsByTagName("shipreport");
+                  
+                  for (int j = 0; j < nList_shipReport.getLength(); j++) 
+                  {
+                    Node shipReportNode = nList_shipReport.item(j);
+
+                    if (shipReportNode.getNodeType() == Node.ELEMENT_NODE)
+                    {
+                      Element shipReportEl = (Element) shipReportNode;
+                      int shipReportID  = parseIntSafely(shipReportEl.getAttribute("id"));
+                      double shipLon  = parseDoubleSafely(shipReportEl.getAttribute("lon"));
+                      String legType = shipReportEl.getAttribute("legtype");
+                      double shipLat  = parseDoubleSafely(shipReportEl.getAttribute("lat"));
+                      String date  = shipReportEl.getAttribute("date");
+                      String shipReportVal = shipReportEl.getAttribute("values");
+                      String[] shipReportValues = shipReportVal.split(";", 55);
+                      
+                      String repshipCosp_eosp = (shipReportValues[0]);
+                      String repshipEta_earliest = (shipReportValues[1]);
+                      double observationWindspeed = parseDoubleSafely(shipReportValues[2]);
+                      double observationWindspeedbf = parseDoubleSafely(shipReportValues[3]);
+                      double observationWinddir = parseDoubleSafely(shipReportValues[4]);
+                      double observationWaveh = parseDoubleSafely(shipReportValues[5]);
+                      double observationSwellh = parseDoubleSafely(shipReportValues[6]);
+                      double observationSwelldir = parseDoubleSafely(shipReportValues[7]);
+                      double repshipCourse = parseDoubleSafely(shipReportValues[8]);
+                      double repshipSpeed_avg = parseDoubleSafely(shipReportValues[9]);
+                      double repshipRpm_avg = parseDoubleSafely(shipReportValues[10]);
+                      double repshipLoad_Avg = parseDoubleSafely(shipReportValues[11]);
+                      double repshipDist_since_latest_rep = parseDoubleSafely(shipReportValues[12]);
+                      double repshipDist_rem_to_go = parseDoubleSafely(shipReportValues[13]);
+                      String repshipHfo_brob = (shipReportValues[14]);
+                      String repshipLsfo_brob = (shipReportValues[15]);
+                      String repshipMgo_brob = (shipReportValues[16]);
+                      String repshipMdo_brob = (shipReportValues[17]);
+                      String repshipMeHfoSLR = (shipReportValues[18]);
+                      String repshipMeLsfoSLR = (shipReportValues[19]);
+                      String repshipMeMdoSLR = (shipReportValues[20]);
+                      String repshipMeMgoSLR = (shipReportValues[21]);
+                      String repshipAuxHfoSLR = (shipReportValues[22]);
+                      String repshipAuxLsfoSLR = (shipReportValues[23]);
+                      String repshipAuxMdoSLR = (shipReportValues[24]);
+                      String repshipAuxMgoSLR = (shipReportValues[25]);
+                      String repshipBoilerHfoSLR = (shipReportValues[26]);
+                      String repshipBoilerLsfoSLR = (shipReportValues[27]);
+                      String repshipBoilerMdoSLR = (shipReportValues[28]);
+                      String repshipBoilerMgoSLR = (shipReportValues[29]);
+                      String repshipCleanHfoSLR = (shipReportValues[30]);
+                      String repshipCleanLsfoSLR = (shipReportValues[31]);
+                      String repshipCleanMdoSLR = (shipReportValues[32]);
+                      String repshipCleanMgoSLR = (shipReportValues[33]);
+                      String repshipHeatHfoSLR = (shipReportValues[34]);
+                      String repshipHeatLsfoSLR = (shipReportValues[35]);
+                      String repshipHeatMdoSLR = (shipReportValues[36]);
+                      String repshipHeatMgoSLR = (shipReportValues[37]);
+                      String repshipGenAtSeaHfoSLR = (shipReportValues[38]);
+                      String repshipGenAtSeaLsfoSLR = (shipReportValues[39]);
+                      String repshipGenAtSeaMdoSLR = (shipReportValues[40]);
+                      String repshipGenAtSeaMgoSLR = (shipReportValues[41]);
+                      String repshipOthersAtSeaHfoSLR = (shipReportValues[42]);
+                      String repshipOthersAtSeaLsfoSLR = (shipReportValues[43]);
+                      String repshipOthersAtSeaMdoSLR = (shipReportValues[44]);
+                      String repshipOthersAtSeaMgoSLR = (shipReportValues[45]);
+                      String repshipInstructedlegcode = (shipReportValues[46]);
+                      String repshipInstructedspeed = (shipReportValues[47]);
+                      String repshipPropulsionengines = (shipReportValues[48]);
+                      String repshipShaftgenerators = (shipReportValues[49]);
+                      String repshipFinstabilizers = (shipReportValues[50]);
+                      String repshipSteamTimeSLR = (shipReportValues[51]);
+                      String baseline_instructionBaseline_instruction_id = (shipReportValues[52]);
+                      double repshipProforma_speed = parseDoubleSafely(shipReportValues[53]);
+                      double repshipIntended_speed = parseDoubleSafely(shipReportValues[54]);
+
+                      ShipReport tempShipReport = new ShipReport(repshipCosp_eosp,
+                                                                  repshipEta_earliest,
+                                                                  observationWindspeed,
+                                                                  observationWindspeedbf,
+                                                                  observationWinddir,
+                                                                  observationWaveh,
+                                                                  observationSwellh,
+                                                                  observationSwelldir,
+                                                                  repshipCourse,
+                                                                  repshipSpeed_avg,
+                                                                  repshipRpm_avg,
+                                                                  repshipLoad_Avg,
+                                                                  repshipDist_since_latest_rep,
+                                                                  repshipDist_rem_to_go,
+                                                                  repshipHfo_brob,
+                                                                  repshipLsfo_brob,
+                                                                  repshipMgo_brob,
+                                                                  repshipMdo_brob,
+                                                                  repshipMeHfoSLR,
+                                                                  repshipMeLsfoSLR,
+                                                                  repshipMeMdoSLR,
+                                                                  repshipMeMgoSLR,
+                                                                  repshipAuxHfoSLR,
+                                                                  repshipAuxLsfoSLR,
+                                                                  repshipAuxMdoSLR,
+                                                                  repshipAuxMgoSLR,
+                                                                  repshipBoilerHfoSLR,
+                                                                  repshipBoilerLsfoSLR,
+                                                                  repshipBoilerMdoSLR,
+                                                                  repshipBoilerMgoSLR,
+                                                                  repshipCleanHfoSLR,
+                                                                  repshipCleanLsfoSLR,
+                                                                  repshipCleanMdoSLR,
+                                                                  repshipCleanMgoSLR,
+                                                                  repshipHeatHfoSLR,
+                                                                  repshipHeatLsfoSLR,
+                                                                  repshipHeatMdoSLR,
+                                                                  repshipHeatMgoSLR,
+                                                                  repshipGenAtSeaHfoSLR,
+                                                                  repshipGenAtSeaLsfoSLR,
+                                                                  repshipGenAtSeaMdoSLR,
+                                                                  repshipGenAtSeaMgoSLR,
+                                                                  repshipOthersAtSeaHfoSLR,
+                                                                  repshipOthersAtSeaLsfoSLR,
+                                                                  repshipOthersAtSeaMdoSLR,
+                                                                  repshipOthersAtSeaMgoSLR,
+                                                                  repshipInstructedlegcode,
+                                                                  repshipInstructedspeed,
+                                                                  repshipPropulsionengines,
+                                                                  repshipShaftgenerators,
+                                                                  repshipFinstabilizers,
+                                                                  repshipSteamTimeSLR,
+                                                                  baseline_instructionBaseline_instruction_id,
+                                                                  repshipProforma_speed,
+                                                                  repshipIntended_speed);
+                      shipReportsArray.add(tempShipReport);
+
+                    }
+                  }
+
+
                   //Weather Way points
                   ArrayList<WeatherWaypoint> weatherWayPointArray = new ArrayList<WeatherWaypoint>();
                   NodeList nList_weatherWayPoint = tempVoyageEl.getElementsByTagName("weatherwaypoint");
@@ -392,7 +516,6 @@ public class ShipController {
                                                                       legType,
                                                                       weatherLat,
                                                                       date);
-                      //Einar do magic!
                       weatherWayPointArray.add(tempPoint);
 
                     }
