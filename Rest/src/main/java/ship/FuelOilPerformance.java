@@ -11,7 +11,7 @@ public class FuelOilPerformance
 	private String baselinePvaConsPerformanceRepDiff;
 	private String baselinePvaConsPerformanceRepDiffPrcnt;
 
-	public FuelOilPerformance(int theBaselineID,
+	public FuelOilPerformance(int theBaseLineID,
 								String theBaselineSelected,
 								String theBaselineOvaConsPerformance,
 								String theBaselineOvaConsPerformanceRepDiff,
@@ -22,8 +22,7 @@ public class FuelOilPerformance
 	{
 		baselineID = theBaseLineID;
 		baselineSelected = theBaselineSelected;
-		baselineOvaConsPerformance = theBaseLineOvaConsPerformance;
-		baselineOvaConsPerformance = theBaseLineOvaConsPerformance;
+		baselineOvaConsPerformance = theBaselineOvaConsPerformance;
 		baselineOvaConsPerformanceRepDiff = theBaselineOvaConsPerformanceRepDiff;
 		baselineOvaConsPerformanceRepDiffPrcnt = theBaselineOvaConsPerformanceRepDiffPrcnt;
 		baselinePvaConsPerformance = theBaselinePvaConsPerformance;
@@ -51,13 +50,13 @@ public class FuelOilPerformance
 	{
 		return baselineOvaConsPerformanceRepDiffPrcnt;
 	}
-	public String getBaselineOvaConsPerformance()
+	public String getBaselinePvaConsPerformance()
 	{
 		return baselinePvaConsPerformance;
 	}
 	public String getBaselinePvaConsPerformanceRepDiff()
 	{
-		return baselinePvaConsPerformanceRepDiff
+		return baselinePvaConsPerformanceRepDiff;
 	}
 	public String getBaselinePvaConsPerformanceRepDiffPrcnt()
 	{

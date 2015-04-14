@@ -341,15 +341,22 @@ public class ShipController {
 
                       int baselineID = parseIntSafely(fuilOilPerEl.getAttribute("id")); 
                       String baselineVals = fuilOilPerEl.getAttribute("values");
-                      String[] shipReportValues = baselineVals.split(";", 7);
-                      String baselineSelected = shipReportValues[0];
-                      String baselineOva_cons_performance = shipReportValues[1];
-                      String baselineOva_cons_performance_rep_diff = shipReportValues[2];
-                      String baselineOva_cons_performance_rep_diff_prcnt = shipReportValues[3];
-                      String baselinePva_cons_performance = shipReportValues[4];
-                      String baselinePva_cons_performance_rep_diff = shipReportValues[5];
-                      String baselinePva_cons_performance_rep_diff_prcnt = shipReportValues[6];
-                      
+                      String[] baselineValues = baselineVals.split(";", 7);
+                      String baselineSelected = baselineValues[0];
+                      String baselineOva_cons_performance = baselineValues[1];
+                      String baselineOva_cons_performance_rep_diff = baselineValues[2];
+                      String baselineOva_cons_performance_rep_diff_prcnt = baselineValues[3];
+                      String baselinePva_cons_performance = baselineValues[4];
+                      String baselinePva_cons_performance_rep_diff = baselineValues[5];
+                      String baselinePva_cons_performance_rep_diff_prcnt = baselineValues[6];
+                      FuelOilPerformance fuilOilPerf = new FuelOilPerformance(baselineID,
+                                                                              baselineSelected,
+                                                                              baselineOva_cons_performance,
+                                                                              baselineOva_cons_performance_rep_diff,
+                                                                              baselineOva_cons_performance_rep_diff_prcnt,
+                                                                              baselinePva_cons_performance,
+                                                                              baselinePva_cons_performance_rep_diff,
+                                                                              baselinePva_cons_performance_rep_diff_prcnt);
 
                       int shipReportID  = parseIntSafely(shipReportEl.getAttribute("id"));
                       double shipLon  = parseDoubleSafely(shipReportEl.getAttribute("lon"));
