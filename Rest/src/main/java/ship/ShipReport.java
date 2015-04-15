@@ -2,41 +2,41 @@ package ship;
 import java.util.ArrayList;
 public class ShipReport
 {
-	private int reportID;
-	private String cosp_eosp;
-	private String etaEarliest;
-	private double obsWindspeed;
-	private double obsWindspeedbf;
-	private double obsWindDir;
-	private double obsWaveh;
-	private double obsSwellh;
-	private double obsSwellDir;
-	private String course;
-	private double speedAvg;
-	private double rpmAvg;
-	private double loadAvg;
-	private double distSinceLatestRep; //since latest report
-	private double distRemToGo; //remaining?
-	private String hfoBrob;
-	private String lsfoBrob;
-	private String mgoBrob;
-	private String mdoBrob;
-	private String meHfoSLR;
-	private String meLsfoSLR;
-	private String memDoSLR;
-	private String memGoSLR;
-	private String auxHfoSLR;
-	private String auxLsfoSLR;
-	private String auxMdoSLR;
-	private String auxMgoSLR;
-	private String boilerHfoSLR;
-	private String boilerLsfoSLR;
-	private String boilerMdoSLR;
-	private String boilerMgoSLR;
-	private String cleanHfoSLR;
-	private String cleanLsfoSLR;
-	private String cleanMdoSLR;
-	private String cleanMgoSLR;
+	private int reportID; //Database ID for report, number.
+	private int cosp_eosp; //Indicate if ship report is COSP[commense sea passage] or EOSP[end sea passage], 0,1,2.
+	private String etaEarliest; //Estimated earliest arrival, date string???.
+	private double obsWindspeed; //Reported wind speed
+	private double obsWindspeedbf; //Wind reported by vessel.
+	private double obsWindDir; //Reported wind direction.
+	private double obsWaveh; //Reported wave height.
+	private double obsSwellh; //Reported swell height.
+	private double obsSwellDir; //Reported swell direction.
+	private double course; // Reported ship direction, double, 0-360, degree.
+	private double speedAvg; //Average ship speed, double, 0-23.
+	private double rpmAvg; // Average RPM reported by vessel,
+	private double loadAvg; //Average Main Engine Load [%] reported by vessel, 0-100.
+	private double distSinceLatestRep; //Distance SLR[nm nautic mile] reported by vessel. //since latest report
+	private double distRemToGo; //Distance left, [nm nautic mile]. //remaining?
+	private double hfoBrob; //Heavy fuel Oil Remaining on board, [mt metric tonnes]
+	private double lsfoBrob; //Low sulfur fuel oil Remaining on board, [mt metric tonnes]
+	private double mgoBrob; //Marine gas oil remaining on board, [mt metric tonnes].
+	private double mdoBrob; //Marine diesel oil remaining on board, [mt metric tonnes].
+	private double meHfoSLR; // ME Heavy fuel oil since last report, [mt metric tonnes].
+	private double meLsfoSLR; // ME Low sulfur oil since last report, [mt metric tonnes].
+	private double memDoSLR; //ME marine diesel oil since last report, [mt metric tonnes].
+	private double memGoSLR; //ME marine gas oil since last report, [mt metric tonnes].
+	private double auxHfoSLR; //Auxiliary heavy fuel oil since last report, [mt metric tonnes].
+	private double auxLsfoSLR; //Auxiliary low sulfur oil since last report, [mt metric tonnes].
+	private double auxMdoSLR; //Auxiliary marine diesel oil since last report, [mt metric tonnes].
+	private double auxMgoSLR; //Auxiliary marine gas oil since last report, [mt metric tonnes].
+	private double boilerHfoSLR; //Boiler heavy fuel oil since last report, [mt metric tonnes].
+	private double boilerLsfoSLR; //Boiler Low sulfur oil since last report, [mt metric tonnes].
+	private double boilerMdoSLR; //Boiler marine diesel oil since last report, [mt metric tonnes].
+	private double boilerMgoSLR; //Boiler marine gas oil since last report, [mt metric tonnes].
+	private double cleanHfoSLR; //Clean heavy fuel oil since last report, [mt metric tonnes].
+	private double cleanLsfoSLR; //Clean low sulfur oil since last report, [mt metric tonnes].
+	private double cleanMdoSLR; // Clean marine diesel oil since last report, [mt metric tonnes].
+	private double cleanMgoSLR; //Clean marine gas oil since last report, [mt metric tonnes].
 	private double heatHfoSLR; // HFO == Heavy Fuel Oil  SLR == since last report unit: metric tonnes 
 	private double heatLfsoSLR; // LFSO == Low Sulphur Fuel Oil. unit: metric tonnes
 	private double heatMdoSLR; // MDO == Marine Diesel Oil. unit: metric tonnes
@@ -63,8 +63,10 @@ public class ShipReport
 	private double lat; // latitude
 	private String date; // date of report
 
+
+
 	public ShipReport(int theReportID,
-							String theCosp_eosp,
+						 int theCosp_eosp,
 						 String theEtaEarliest,
 						 double theObsWindspeed,
 						 double theObsWindspeedbf,
@@ -72,32 +74,32 @@ public class ShipReport
 						 double theObsWaveh,
 						 double theObsSwellh,
 						 double theObsSwellDir,
-						 String theCourse,
+						 double theCourse,
 						 double theSpeedAvg,
 						 double theRpmAvg,
 						 double theLoadAvg,
-						 double theDistSinceLatestRep, //since latest report
-						 double theDistRemToGo, //remaining?
-						 String theHfoBrob,
-						 String theLsfoBrob,
-						 String theMgoBrob,
-						 String theMdoBrob,
-						 String theMeHfoSLR,
-						 String theMeLsfoSLR,
-						 String theMemDoSLR,
-						 String theMemGoSLR,
-						 String theAuxHfoSLR,
-						 String theAuxLsfoSLR,
-						 String theAuxMdoSLR,
-						 String theAuxMgoSLR,
-						 String theBoilerHfoSLR,
-						 String theBoilerLsfoSLR,
-						 String theBoilerMdoSLR,
-						 String theBoilerMgoSLR,
-						 String theCleanHfoSLR,
-						 String theCleanLsfoSLR,
-						 String theCleanMdoSLR,
-						 String theCleanMgoSLR,
+						 double theDistSinceLatestRep, 
+						 double theDistRemToGo,
+						 double theHfoBrob,
+						 double theLsfoBrob,
+						 double theMgoBrob,
+						 double theMdoBrob,
+						 double theMeHfoSLR,
+						 double theMeLsfoSLR,
+						 double theMemDoSLR,
+						 double theMemGoSLR,
+						 double theAuxHfoSLR,
+						 double theAuxLsfoSLR,
+						 double theAuxMdoSLR,
+						 double theAuxMgoSLR,
+						 double theBoilerHfoSLR,
+						 double theBoilerLsfoSLR,
+						 double theBoilerMdoSLR,
+						 double theBoilerMgoSLR,
+						 double theCleanHfoSLR,
+						 double theCleanLsfoSLR,
+						 double theCleanMdoSLR,
+						 double theCleanMgoSLR,
 						 double theHeatHfoSLR,
 						 double theHeatLfsoSLR,
 						 double theHeatMdoSLR,
@@ -189,7 +191,7 @@ public class ShipReport
 	public int getReportID(){
 		return reportID;
 	}
-	public String getCosp_eosp(){
+	public int getCosp_eosp(){
 		return cosp_eosp;
 	}
 	public String getEtaEarliest(){
@@ -213,7 +215,7 @@ public class ShipReport
 	public double getObsSwellDir(){
 		return obsSwellDir;
 	}
-	public String getCourse(){
+	public double getCourse(){
 		return course;
 	}
 	public double getSpeedAvg(){
@@ -231,64 +233,64 @@ public class ShipReport
 	public double getDistRemToGo(){
 		return distRemToGo;
 	}
-	public String getHfoBrob(){
+	public double getHfoBrob(){
 		return hfoBrob;
 	}
-	public String getLsfoBrob(){
+	public double getLsfoBrob(){
 		return lsfoBrob;
 	}
-	public String getMgoBrob(){
+	public double getMgoBrob(){
 		return mgoBrob;
 	}
-	public String getMdoBrob(){
+	public double getMdoBrob(){
 		return mdoBrob;
 	}
-	public String getMeHfoSLR(){
+	public double getMeHfoSLR(){
 		return meHfoSLR;
 	}
-	public String getMeLsfoSLR(){
+	public double getMeLsfoSLR(){
 		return meLsfoSLR;
 	}
-	public String getMemDoSLR(){
+	public double getMemDoSLR(){
 		return memDoSLR;
 	}
-	public String getMemGoSLR(){
+	public double getMemGoSLR(){
 		return memGoSLR;
 	}
-	public String getAuxHfoSLR(){
+	public double getAuxHfoSLR(){
 		return auxHfoSLR;
 	}
-	public String getAuxLsfoSLR(){
+	public double getAuxLsfoSLR(){
 		return auxLsfoSLR;
 	}
-	public String getAuxMdoSLR(){
+	public double getAuxMdoSLR(){
 		return auxMdoSLR;
 	}
-	public String getAuxMgoSLR(){
+	public double getAuxMgoSLR(){
 		return auxMgoSLR;
 	}
-	public String getBoilerHfoSLR(){
+	public double getBoilerHfoSLR(){
 		return boilerHfoSLR;
 	}
-	public String getBoilerLsfoSLR(){
+	public double getBoilerLsfoSLR(){
 		return boilerLsfoSLR;
 	}
-	public String getBoilerMdoSLR(){
+	public double getBoilerMdoSLR(){
 		return boilerMdoSLR;
 	}
-	public String getBoilerMgoSLR(){
+	public double getBoilerMgoSLR(){
 		return boilerMgoSLR;
 	}
-	public String getCleanHfoSLR(){
+	public double getCleanHfoSLR(){
 		return cleanHfoSLR;
 	}
-	public String getCleanLsfoSLR(){
+	public double getCleanLsfoSLR(){
 		return cleanLsfoSLR;
 	}
-	public String getCleanMdoSLR(){
+	public double getCleanMdoSLR(){
 		return cleanMdoSLR;
 	}
-	public String getCleanMgoSLR(){
+	public double getCleanMgoSLR(){
 		return cleanMgoSLR;
 	}
 	public double getHeatHfoSLR(){
