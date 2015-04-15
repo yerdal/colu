@@ -7,45 +7,45 @@ public class Ship {
 	//Static for now
 	private double lati = 30.587745;
 	private double longi = 16.192421;	
-	private String name;
+	private String name; //Gammalt???? Finns name där nere med.
 
 	//According to the XML file 	
 	private Operator operator;
-	private String contract_contract_id;
-	private String hull_hull_id;
-	private String engine_engine_id;
-	private String ship_ship_name;
-	private String shiptype_shiptypename;
-	private String ship_ship_signs;
-	private String ship_employment;
-	private String hull_model_no;
-	private String hull_hull_len_oa;
-	private String hull_hull_len_pp;
-	private String hull_hull_beam;
-	private String hull_hull_front;
-	private String hull_hull_side;
-	private String hull_hull_factor;
-	private String ship_ship_nt;
-	private String ship_draft_design;
-	private String ship_draft_scantling;
-	private String engine_eng_max_contin_rating;
-	private String engine_eng_norm_contin_rating;
-	private String engine_eng_nom_rpm_at_mcr;
-	private String engine_eng_nom_rpm_at_ncr;
-	private String ship_ship_speed;
-	private String ship_ship_dwt;
-	private String ship_criteria_wind;
-	private String ship_min_load_speed;
-	private String ship_max_load_speed;
-	private String ship_min_ballast_speed;
-	private String ship_max_ballast_speed;
-	private String ship_min_medium_speed;
-	private String ship_max_medium_speed;
-	private String ship_routingtype;
-	private String ship_supported_onboardsystem;
-	private String ship_state;
-	private String ship_comment;
-	private String ship_description;
+	private String contract_contract_id; //borde egentligen skapa ett new Contract?
+	private int hull_hull_id; // Hull == skrov. DB ID.
+	private int engine_engine_id; // Engine ID from DB.
+	private String ship_ship_name; // Ship name.
+	private String shiptype_shiptypename; // Type of vessel
+	private String ship_ship_signs; // Callsign
+	private String ship_employment; // Values: T/C, Pool, Own, Unknown.
+	private int hull_model_no; // IMO number. IMO == International Maritime Organization.
+	private double hull_hull_len_oa; // Length over all. maxValue=500.0, minValue=10.0. Unit: meter
+	private double hull_hull_len_pp; // LPP, dvs Perpendikel. maxValue=500.0, minValue=10.0 Unit: meter
+	private double hull_hull_beam; // Beam, moulded. maxValue=100.0, minValue=2.0. Unit: meter.
+	private double hull_hull_front; // Hull displacement.  Unit: Metric tonnes
+	private double hull_hull_side; // Hull parameter. Unit: meter
+	private double hull_hull_factor; // Hull factor. No unit specified in XML.
+	private double ship_ship_nt; // Draft. maxValue=25.0, minValue=1.0. Unit: meter
+	private double ship_draft_design; // Draft design. maxValue=25.0, minValue=1.0. Unit: meter.
+	private double ship_draft_scantling; // Draft scantling. maxValue = 25.0, minValue=1.0 Unit: meter
+	private double engine_eng_max_contin_rating; // Max load. Main Engine MCR. maxValue=100000.0, minValue=5000.0. Unit: Kilowatt
+	private double engine_eng_norm_contin_rating; // Normal load. Main Engine NCR. maxValue=100000.0, minValue=5000.0. Unit: Kilowattt
+	private double engine_eng_nom_rpm_at_mcr; // RPM at Max Continous Rating, Main Engine MCR. maxValue=5000.0, minValue=50.0. Unit: RPM
+	private double engine_eng_nom_rpm_at_ncr; // RPM Normal Continous Rating. maxValue=5000.0, minValue=50.0. Unit: RPM
+	private double ship_ship_speed; // WRS Speed. Max speed = WRS speed. Unit: knots
+	private double ship_ship_dwt; // Bulb. Unit: meter.
+	private double ship_criteria_wind; // GW limit below. Wind below. 
+	private double ship_min_load_speed; // Min loaded speed. Unit: knots
+	private double ship_max_load_speed; // Max loaded speed. Unit: knots
+	private double ship_min_ballast_speed; // Ballast=barlast. Min Barlast speed. Unit: knots
+	private double ship_max_ballast_speed; // Max barlast speed. Unit: knots
+	private double ship_min_medium_speed; // min medium speed. Unit: knots.
+	private double ship_max_medium_speed; // max medium speed. Unit: knots
+	private String ship_routingtype; // Default routing type for ship. Classic, Seaware or Undefined.
+	private String ship_supported_onboardsystem; // If ship has supported onboardsystem by SMHI. true or false.
+	private String ship_state; // Active/Archived. Value=0 -> Active. Value=1 -> Archived
+	private String ship_comment; // Ship comment
+	private String ship_description; // Shiptype description.
 	private ArrayList<SatCPollPosition> satCPollPositions;
 
 	//This is temporary, only the interering values set.
@@ -54,34 +54,34 @@ public class Ship {
 		operator = theOperator;
 		ship_ship_name = theShipname;
 		contract_contract_id = "undefined";
-		hull_hull_id = "undefined";
-		engine_engine_id = "undefined";
+		hull_hull_id = 0;
+		engine_engine_id = 0;
 		shiptype_shiptypename = "undefined";
 		ship_ship_signs = "undefined";
 		ship_employment = "undefined";
-		hull_model_no = "undefined";
-		hull_hull_len_oa = "undefined";
-		hull_hull_len_pp = "undefined";
-		hull_hull_beam = "undefined";
-		hull_hull_front = "undefined";
-		hull_hull_side = "undefined";
-		hull_hull_factor = "undefined";
-		ship_ship_nt = "undefined";
-		ship_draft_design = "undefined";
-		ship_draft_scantling = "undefined";
-		engine_eng_max_contin_rating = "undefined";
-		engine_eng_norm_contin_rating = "undefined";
-		engine_eng_nom_rpm_at_mcr = "undefined";
-		engine_eng_nom_rpm_at_ncr = "undefined";
-		ship_ship_speed = "undefined";
-		ship_ship_dwt = "undefined";
-		ship_criteria_wind = "undefined";
-		ship_min_load_speed = "undefined";
-		ship_max_load_speed = "undefined";
-		ship_min_ballast_speed = "undefined";
-		ship_max_ballast_speed = "undefined";
-		ship_min_medium_speed = "undefined";
-		ship_max_medium_speed = "undefined";
+		hull_model_no = 0;
+		hull_hull_len_oa = 0;
+		hull_hull_len_pp = 0;
+		hull_hull_beam = 0;
+		hull_hull_front = 0;
+		hull_hull_side = 0;
+		hull_hull_factor = 0;
+		ship_ship_nt = 0;
+		ship_draft_design = 0;
+		ship_draft_scantling = 0;
+		engine_eng_max_contin_rating = 0;
+		engine_eng_norm_contin_rating = 0;
+		engine_eng_nom_rpm_at_mcr = 0;
+		engine_eng_nom_rpm_at_ncr = 0;
+		ship_ship_speed = 0;
+		ship_ship_dwt = 0;
+		ship_criteria_wind = 0;
+		ship_min_load_speed = 0;
+		ship_max_load_speed = 0;
+		ship_min_ballast_speed = 0;
+		ship_max_ballast_speed = 0;
+		ship_min_medium_speed = 0;
+		ship_max_medium_speed = 0;
 		ship_routingtype = "undefined";
 		ship_supported_onboardsystem = "undefined";
 		ship_state = "undefined";
@@ -92,35 +92,35 @@ public class Ship {
 
 	public Ship(int the_id,	Operator theOperator,
 													String the_contract_contract_id,
-													String the_hull_hull_id,
-													String the_engine_engine_id,
+													int the_hull_hull_id,
+													int the_engine_engine_id,
 													String the_ship_ship_name,
 													String the_shiptype_shiptypename,
 													String the_ship_ship_signs,
 													String the_ship_employment,
-													String the_hull_model_no,
-													String the_hull_hull_len_oa,
-													String the_hull_hull_len_pp,
-													String the_hull_hull_beam,
-													String the_hull_hull_front,
-													String the_hull_hull_side,
-													String the_hull_hull_factor,
-													String the_ship_ship_nt,
-													String the_ship_draft_design,
-													String the_ship_draft_scantling,
-													String the_engine_eng_max_contin_rating,
-													String the_engine_eng_norm_contin_rating,
-													String the_engine_eng_nom_rpm_at_mcr,
-													String the_engine_eng_nom_rpm_at_ncr,
-													String the_ship_ship_speed,
-													String the_ship_ship_dwt,
-													String the_ship_criteria_wind,
-													String the_ship_min_load_speed,
-													String the_ship_max_load_speed,
-													String the_ship_min_ballast_speed,
-													String the_ship_max_ballast_speed,
-													String the_ship_min_medium_speed,
-													String the_ship_max_medium_speed,
+													int the_hull_model_no,
+													double the_hull_hull_len_oa,
+													double the_hull_hull_len_pp,
+													double the_hull_hull_beam,
+													double the_hull_hull_front,
+													double the_hull_hull_side,
+													double the_hull_hull_factor,
+													double the_ship_ship_nt,
+													double the_ship_draft_design,
+													double the_ship_draft_scantling,
+													double the_engine_eng_max_contin_rating,
+													double the_engine_eng_norm_contin_rating,
+													double the_engine_eng_nom_rpm_at_mcr,
+													double the_engine_eng_nom_rpm_at_ncr,
+													double the_ship_ship_speed,
+													double the_ship_ship_dwt,
+													double the_ship_criteria_wind,
+													double the_ship_min_load_speed,
+													double the_ship_max_load_speed,
+													double the_ship_min_ballast_speed,
+													double the_ship_max_ballast_speed,
+													double the_ship_min_medium_speed,
+													double the_ship_max_medium_speed,
 													String the_ship_routingtype,
 													String the_ship_supported_onboardsystem,
 													String the_ship_state,
@@ -174,10 +174,10 @@ public class Ship {
 	public String getContractId(){
 		return contract_contract_id;
 	}
-	public String getHullId(){
+	public int getHullId(){
 		return hull_hull_id;
 	}
-	public String getEngineId(){
+	public int getEngineId(){
 		return engine_engine_id;
 	}
 	public String getShipName(){
@@ -193,76 +193,76 @@ public class Ship {
 	public String getShipEmployment(){
 		return ship_employment;
 	}
-	public String getHullModelNo(){
+	public int getHullModelNo(){
 		return hull_model_no;
 	}
-	public String getHullLenOa(){
+	public double getHullLenOa(){
 		return hull_hull_len_oa;
 	}
-	public String getHullLenPp(){
+	public double getHullLenPp(){
 		return hull_hull_len_pp;
 	}
-	public String getHullBeam(){
+	public double getHullBeam(){
 		return hull_hull_beam;
 	}
-	public String getHullFront(){
+	public double getHullFront(){
 		return hull_hull_front;
 	}
 
-	public String getHullSide(){
+	public double getHullSide(){
 		return hull_hull_side;
 	}
-	public String getHullFactor(){
+	public double getHullFactor(){
 		return hull_hull_factor;
 	}
-	public String getShipNt(){
+	public double getShipNt(){
 		return ship_ship_nt;
 	}
-	public String getDraftDesign(){
+	public double getDraftDesign(){
 		return ship_draft_design;
 	}
-	public String getDraftScantling(){
+	public double getDraftScantling(){
 		return ship_draft_scantling;
 	}
-	public String getEngineMaxContinRating(){
+	public double getEngineMaxContinRating(){
 		return engine_eng_max_contin_rating;
 	}
-	public String getEngineNormContinRating(){
+	public double getEngineNormContinRating(){
 		return engine_eng_norm_contin_rating;
 	}
-	public String getEngineNomRpmAtMcr(){
+	public double getEngineNomRpmAtMcr(){
 		return engine_eng_nom_rpm_at_mcr;
 	}
-	public String getEngineNomRpmAtNcr(){
+	public double getEngineNomRpmAtNcr(){
 		return engine_eng_nom_rpm_at_ncr;	
 	}
-	public String getShipSpeed(){
+	public double getShipSpeed(){
 		return ship_ship_speed;
 	}
-	public String getShipDwt(){
+	public double getShipDwt(){
 		return ship_ship_dwt;
 	}
-	public String getShipCriteriaWind(){
+	public double getShipCriteriaWind(){
 		return ship_criteria_wind;
 	}
 
-	public String getShipMinLoadSpeed(){
+	public double getShipMinLoadSpeed(){
 		return ship_min_load_speed;
 	}
-	public String getShipMaxLoadSpeed(){
+	public double getShipMaxLoadSpeed(){
 		return ship_max_load_speed;
 	}
-	public String getShipMinBallastSpeed(){
+	public double getShipMinBallastSpeed(){
 		return ship_min_ballast_speed;
 	}
-	public String getShipMaxBallastSpeed(){
+	public double getShipMaxBallastSpeed(){
 		return ship_max_ballast_speed;
 	}
-	public String getShipMinMediumSpeed(){
+	public double getShipMinMediumSpeed(){
 		return ship_min_medium_speed;
 	}
 
-	public String getShipMaxMediumSpeed(){
+	public double getShipMaxMediumSpeed(){
 		return ship_max_medium_speed;
 	}
 	public String getShipRoutingType(){

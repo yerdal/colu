@@ -66,7 +66,7 @@ public class ShipController {
           // Mattias /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml
           // Yusuf /Users/Yusuf/Documents/LIU/TNM094-KEX/Voyage_and_ship_data
           // EINAR /Users/einarsandberg/Documents/Voyage_ship_data/ship_101.xml
-          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/ship_101.xml");
+          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/ship_101.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -95,10 +95,46 @@ public class ShipController {
                     String shipDesc = eElement.getElementsByTagName("description").item(0).getTextContent();
           
                     Operator operator =  new Operator(Integer.parseInt(shipParts[0]));
-
-                    Ship theShip = new Ship(shipID, operator, shipParts[1], shipParts[2], shipParts[3], shipParts[4], shipParts[5], shipParts[6], shipParts[7], shipParts[8], shipParts[9], shipParts[10],
-                        shipParts[11], shipParts[12], shipParts[13], shipParts[14], shipParts[15], shipParts[16], shipParts[17], shipParts[18], shipParts[19], shipParts[20], shipParts[21], shipParts[22], 
-                        shipParts[23], shipParts[24], shipParts[25], shipParts[26], shipParts[27], shipParts[28], shipParts[29], shipParts[30], shipParts[31], shipParts[32], shipParts[33], shipComment, shipDesc);
+                    String contract_contract_id = shipParts[1];
+                    int hull_hull_id = parseIntSafely(shipParts[2]);
+                    int engine_engine_id = parseIntSafely(shipParts[3]);
+                    String ship_ship_name = shipParts[4];
+                    String shiptype_shiptypename = shipParts[5];
+                    String ship_ship_signs = shipParts[6];
+                    String ship_employment = shipParts[7];
+                    int hull_model_no = parseIntSafely(shipParts[8]);
+                    double hull_hull_len_oa = parseDoubleSafely(shipParts[9]);
+                    double hull_hull_len_pp = parseDoubleSafely(shipParts[10]);
+                    double hull_hull_beam = parseDoubleSafely(shipParts[11]);
+                    double hull_hull_front = parseDoubleSafely(shipParts[12]);
+                    double hull_hull_side = parseDoubleSafely(shipParts[13]);
+                    double hull_hull_factor = parseDoubleSafely(shipParts[14]);
+                    double ship_ship_nt = parseDoubleSafely(shipParts[15]);
+                    double ship_draft_design = parseDoubleSafely(shipParts[16]);
+                    double ship_draft_scantling = parseDoubleSafely(shipParts[17]);
+                    double engine_eng_max_contin_rating = parseDoubleSafely(shipParts[18]);
+                    double engine_eng_norm_contin_rating = parseDoubleSafely(shipParts[19]);
+                    double engine_eng_nom_rpm_mcr = parseDoubleSafely(shipParts[20]);
+                    double engine_eng_nom_rpm_ncr = parseDoubleSafely(shipParts[21]);
+                    double ship_ship_speed = parseDoubleSafely(shipParts[22]);
+                    double ship_ship_dwt = parseDoubleSafely(shipParts[23]);
+                    double ship_criteria_wind = parseDoubleSafely(shipParts[24]);
+                    double ship_min_load_speed = parseDoubleSafely(shipParts[25]);
+                    double ship_max_load_speed = parseDoubleSafely(shipParts[26]);
+                    double ship_min_ballast_speed = parseDoubleSafely(shipParts[27]);
+                    double ship_max_ballast_speed = parseDoubleSafely(shipParts[28]);
+                    double ship_min_medium_speed = parseDoubleSafely(shipParts[29]);
+                    double ship_max_medium_speed = parseDoubleSafely(shipParts[30]);
+                    String ship_routingtype = shipParts[31];
+                    String ship_supported_onboardsystem = shipParts[32];
+                    String ship_state = shipParts[33];
+                    
+                    Ship theShip = new Ship(shipID, operator, contract_contract_id, hull_hull_id, engine_engine_id, ship_ship_name, shiptype_shiptypename, 
+                                            ship_ship_signs, ship_employment, hull_model_no, hull_hull_len_oa , hull_hull_len_pp,
+                        hull_hull_beam, hull_hull_front, hull_hull_side, hull_hull_factor, ship_ship_nt, ship_draft_design, ship_draft_scantling, 
+                        engine_eng_max_contin_rating, engine_eng_norm_contin_rating, engine_eng_nom_rpm_mcr , engine_eng_nom_rpm_ncr, ship_ship_speed, 
+                        ship_ship_dwt, ship_criteria_wind, ship_min_load_speed, ship_max_load_speed, ship_min_ballast_speed, ship_max_ballast_speed, ship_min_medium_speed, 
+                        ship_max_medium_speed, ship_routingtype, ship_supported_onboardsystem, ship_state, shipComment, shipDesc);
                     shipsArray.add(theShip);
                     
                 }
@@ -161,7 +197,7 @@ public class ShipController {
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // Yusuf /Users/Yusuf/Documents/LIU/TNM094-KEX/Voyage_and_ship_data
           // Einar /Users/einarsandberg/Documents/Voyage_ship_data/polls.xml
-          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/polls.xml");
+          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/polls.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -247,7 +283,7 @@ public class ShipController {
         try{
           //OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/
           // Einar /Users/einarsandberg/Documents/Voyage_ship_data/ongoingVoyages.xml
-          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/ongoingVoyages.xml");
+          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/ongoingVoyages.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -295,7 +331,7 @@ public class ShipController {
           // Mattias: /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/polls.xml
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // EINAR /Users/einarsandberg/Documents/Voyage_ship_data/voyage_89710.xml
-          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/voyage_89710.xml");
+          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/voyage_89710.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
