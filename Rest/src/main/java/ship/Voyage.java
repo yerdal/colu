@@ -9,50 +9,50 @@ public class Voyage
 	private String pvapdfurl;
 	private String lastUpdate;
 	//values
-	private String voyageName;
-	private String voyRef;
+	private String voyageName; //Voyage Name
+	private int voyRef;  //it says  Voyage Id?...
 	private Operator operator;
-	private String personName;
+	private String personName; //Name of master, Captain hook etc.
 	private Ship ship;
-	private String departure;
+	private String departure; 
 	private String destination;
-	private String etd;
-	private String eta;
-	private String requiredEta;
-	private String loading;
-	private String cargoWeight;
-	private String cargoSensitiv;
-	private String gmHeight;
-	private String displacementAtDep;
-	private String maxSpeed;
-	private String draftAft;
-	private String draftFwd;
-	private String draftMean;
-	private String draftTrim;
-	private String tradelaneName;
-	private String phase;
-	private String hasRoute;
-	private String nextMessageDate;
-	private String priority;
-	private String seaName;
-	private String seaSortOrder;
-	private String forecastModifiedDate;
-	private String forecastState;
-	private String foBrobDep;
-	private String doBrobDep;
-	private String foBrobLatest;
-	private String doBrobLatest;
-	private String hasPva;
+	private String etd; //Estimated Time of Departure format="yyyy-MM-dd HH:mm" "Voyage ETD in UTC" 
+	private String eta; //Estimated Time of arrival format="yyyy-MM-dd HH:mm" description="ETA in UTC" 
+	private String requiredEta; //format="yyyy-MM-dd HH:mm" description="Required ETA in UTC"
+	private int loadingStatus; //Loaded/Ballast/Semiloaded  Loading 
+	private double cargoWeight; // "Cargo weight as reported in Departure report
+	private int cargoSensitivStatus; //"Unknown/Normal/Sensitive/Extra sensitive"
+	private double gmHeight; //Metacentric height as reported in the Departure report
+	private double displacementAtDep; //Displacement at departure
+	private double maxSpeed; //WRS speed
+	private double draftAft; //At departure
+	private double draftFwd; //At departure
+	private double draftMean; //(Draft aft + Draft fwd)/2 as reported in the Dep report
+	private double draftTrim; //Draft aft - Draft fwd as reported in the Dep report
+	private String tradelaneName; //Tradelane Name..
+	private String voyagePhase; //Started/Ongoing/Ended
+	private String hasRoute; // Voyage has a defined route, true / false
+	private String nextMessageDate; //format="yyyy-MM-dd" Next message date
+	private String priority; //Manual priority.
+	private String seaName;  //name of the Sea
+	private double seaSortOrder; //Sea sort order 
+	private String forecastModifiedDate; // format="yyyy-MM-dd HH:mm:ss" Modified date
+	private String forecastState; //State of forecast, new, changed, saved ,sent
+	private double foBrobDep; //Fuel Oil remaining on board , incl. IFO, LS, HS if any at departure
+	private double doBrobDep; // Diesel Oil remaining on board incl. MDO, MGO if any) at departure
+	private double foBrobLatest; // Fuel Oil remaining on board incl. IFO, LS, HS if any) at arrival
+	private double doBrobLatest; // Diesel Oil remaining on board incl. MDO, MGO if any) at arrival
+	private String hasPva; //If voyage pva is created , true false, undefined
 	private ArrayList <WeatherWaypoint> weatherWaypoints;
 	private ArrayList <ShipReport> shipReports;
-	private String comment;
+	private String comment; //Comment about the voyage
 	// private bool onGoing; //kanske?
 	public Voyage (int theVoyageID, int theWorklistID, String theSystemOnBoardStatus, 
 									String theState,
 									String thePvadpfurl,
 									String theLastUpdate,
 									String theVoyageName,
-									String theVoyRef,
+									int theVoyRef,
 									Operator theOperator,
 									String thePersonName,
 									Ship theShip,
@@ -61,29 +61,29 @@ public class Voyage
 									String theEtd,
 									String theEta,
 									String theRequiredEta,
-									String theLoading,
-									String theCargoWeight,
-									String theCargoSensitiv,
-									String theGmHeight,
-									String theDisplacementAtDep,
-									String theMaxSpeed,
-									String theDraftAft,
-									String theDraftFwd,
-									String theDraftMean,
-									String theDraftTrim,
+									int theLoading,
+									double theCargoWeight,
+									int theCargoSensitiv,
+									double theGmHeight,
+									double theDisplacementAtDep,
+									double theMaxSpeed,
+									double theDraftAft,
+									double theDraftFwd,
+									double theDraftMean,
+									double theDraftTrim,
 									String theTradelaneName,
 									String thePhase,
 									String theHasRoute,
 									String theNextMessageDate,
 									String thePriority,
 									String theSeaName,
-									String theSeaSortOrder,
+									double theSeaSortOrder,
 									String theForecastModifiedDate,
 									String theForecastState,
-									String theFoBrobDep,
-									String theDoBrobDep,
-									String theFoBrobLatest,
-									String theDoBrobLatest,
+									double theFoBrobDep,
+									double theDoBrobDep,
+									double theFoBrobLatest,
+									double theDoBrobLatest,
 									String theHasPva,
 									ArrayList <WeatherWaypoint> theWeatherWaypoints,
 									String theComment,
@@ -106,9 +106,9 @@ public class Voyage
   	etd = theEtd;
   	eta = theEta;
   	requiredEta = theRequiredEta;
-  	loading = theLoading;
+  	loadingStatus = theLoading;
   	cargoWeight = theCargoWeight;
-  	cargoSensitiv = theCargoSensitiv;
+  	cargoSensitivStatus = theCargoSensitiv;
   	gmHeight = theGmHeight;
   	displacementAtDep = theDisplacementAtDep;
 	 	maxSpeed = theMaxSpeed;
@@ -117,7 +117,7 @@ public class Voyage
   	draftMean = theDraftMean;
   	draftTrim = theDraftTrim;
   	tradelaneName = theTradelaneName;
-  	phase = thePhase;
+  	voyagePhase = thePhase;
   	hasRoute = theHasRoute;
   	nextMessageDate = theNextMessageDate;
   	priority = thePriority;
@@ -127,7 +127,6 @@ public class Voyage
   	forecastState = theForecastState;
   	foBrobDep = theFoBrobDep;
   	doBrobDep = theDoBrobDep;
-  	foBrobLatest = theFoBrobDep;
   	doBrobLatest = theDoBrobLatest;
   	foBrobLatest = theFoBrobLatest;
   	hasPva = theHasPva;
@@ -177,7 +176,7 @@ public class Voyage
 	public String getVoyageName(){
 		return voyageName;
 	}
-	public String getVoyRef(){
+	public int getVoyRef(){
 		return voyRef;
 	}
 	public String getPersonName(){
@@ -198,41 +197,41 @@ public class Voyage
 	public String getRequiredEta(){
 		return requiredEta;
 	}
-	public String getLoading(){
-		return loading;
+	public int getLoadingStatus(){
+		return loadingStatus;
 	}
-	public String getCargoWeight(){
+	public double getCargoWeight(){
 		return cargoWeight;
 	}
-	public String getCargoSensitiv(){
-		return cargoSensitiv;
+	public int getCargoSensitivStatus(){
+		return cargoSensitivStatus;
 	}
-	public String getGmHeight(){
+	public double getGmHeight(){
 		return gmHeight;
 	}
-	public String getDisplacementAtDep(){
+	public double getDisplacementAtDep(){
 		return displacementAtDep;
 	}
-	public String getMaxSpeed(){
+	public double getMaxSpeed(){
 		return maxSpeed;
 	}
-	public String getDraftAft(){
+	public double getDraftAft(){
 		return draftAft;
 	}
-	public String getDraftFwd(){
+	public double getDraftFwd(){
 		return draftFwd;
 	}
-	public String getDraftMean(){
+	public double getDraftMean(){
 		return draftMean;
 	}
-	public String getDraftTrim(){
+	public double getDraftTrim(){
 		return draftTrim;
 	}
 	public String getTradelaneName(){
 		return tradelaneName;
 	}
-	public String getPhase(){
-		return phase;
+	public String getVoyagePhase(){
+		return voyagePhase;
 	}
 	public String getHasRoute(){
 		return hasRoute;
@@ -246,7 +245,7 @@ public class Voyage
 	public String getSeaName(){
 		return seaName;
 	}
-	public String getSeaSortOrder(){
+	public double getSeaSortOrder(){
 		return seaSortOrder;
 	}
 	public String getForecastModifiedDate(){
@@ -255,16 +254,16 @@ public class Voyage
 	public String getForecastState(){
 		return forecastState;
 	}
-	public String getFoBrobDep(){
+	public double getFoBrobDep(){
 		return foBrobDep;
 	}
-	public String getDoBrobDep(){
+	public double getDoBrobDep(){
 		return doBrobDep;
 	}
-	public String getFoBrobLatest(){
+	public double getFoBrobLatest(){
 		return foBrobLatest;
 	}
-	public String getDoBrobLatest(){
+	public double getDoBrobLatest(){
 		return doBrobLatest;
 	}
 	public String getHasPva(){

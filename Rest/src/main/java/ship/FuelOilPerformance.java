@@ -4,7 +4,7 @@ public class FuelOilPerformance
 {
 	//baseline = måttstock(?)
 	private int baselineID; // måttID?
-	private boolean baselineSelected; // valt eller inte valt? oklart.
+	private String baselineSelected; // valt eller inte valt? oklart.
 	private double baselineOvaConsPerformance; //Calculated main engine fuel oil consumption according to baseline. unit: metric tonnes per day
 	private double baselineOvaConsPerformanceRepDiff; //Calculated difference between reported main engine fuel oil consumption and baseline. unit: metric tonnes per day
 	private double baselineOvaConsPerformanceRepDiffPrcnt; //Calculated difference between reported main engine fuel oil consumption and baseline. unit: percent
@@ -13,7 +13,7 @@ public class FuelOilPerformance
 	private double baselinePvaConsPerformanceRepDiffPrcnt; //Analysed difference between reported main engine fuel oil consumption and baseline. unit: percent
 
 	public FuelOilPerformance(int theBaseLineID,
-								boolean theBaselineSelected,
+								String theBaselineSelected,
 								double theBaselineOvaConsPerformance,
 								double theBaselineOvaConsPerformanceRepDiff,
 								double theBaselineOvaConsPerformanceRepDiffPrcnt,
@@ -35,7 +35,7 @@ public class FuelOilPerformance
 	{
 		return baselineID;
 	}
-	public boolean getBaselineSelected()
+	public String getBaselineSelected()
 	{
 		return baselineSelected;
 	}

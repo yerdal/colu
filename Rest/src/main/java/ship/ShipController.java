@@ -247,7 +247,7 @@ public class ShipController {
         try{
           //OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/
           // Einar /Users/einarsandberg/Documents/Voyage_ship_data/ongoingVoyages.xml
-          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/ongoingVoyages.xml");
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/ongoingVoyages.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -330,7 +330,7 @@ public class ShipController {
 
                   String[] voyageValues = voyValues.split(";", 35);
                   String voyageName = voyageValues[0];
-                  String voyageVoyref = voyageValues[1];
+                  int voyageVoyref = parseIntSafely(voyageValues[1]);
                   String operatorName = voyageValues[2];
                   Operator ope = new Operator(2);
                   String personName = voyageValues[3]; 
@@ -346,29 +346,29 @@ public class ShipController {
                   String voyageEtd = voyageValues[8];
                   String voyageEta = voyageValues[9];
                   String voyageRequired_eta = voyageValues[10];
-                  String voyageLoading = voyageValues[11];
-                  String voyageCargoweight = voyageValues[12];
-                  String voyageCargosensitiv = voyageValues[13];
-                  String voyageGmheight = voyageValues[14];
-                  String voyageDisplacement_at_dep = voyageValues[15];
-                  String voyageMaxspeed =  voyageValues[16];
-                  String voyageDraft_aft = voyageValues[17];
-                  String voyageDraft_fwd = voyageValues[18];
-                  String voyageDraft_mean = voyageValues[19];
-                  String voyageDraft_trim = voyageValues[20];
+                  int voyageLoading = parseIntSafely(voyageValues[11]);
+                  double voyageCargoweight = parseDoubleSafely(voyageValues[12]);
+                  int voyageCargosensitiv = parseIntSafely(voyageValues[13]);
+                  double voyageGmheight = parseDoubleSafely(voyageValues[14]);
+                  double voyageDisplacement_at_dep = parseDoubleSafely(voyageValues[15]);
+                  double voyageMaxspeed =  parseDoubleSafely(voyageValues[16]);
+                  double voyageDraft_aft = parseDoubleSafely(voyageValues[17]);
+                  double voyageDraft_fwd = parseDoubleSafely(voyageValues[18]);
+                  double voyageDraft_mean = parseDoubleSafely(voyageValues[19]);
+                  double voyageDraft_trim = parseDoubleSafely(voyageValues[20]);
                   String tradelaneName = voyageValues[21];
                   String voyagePhase = voyageValues[22];
                   String voyageHasroute = voyageValues[23];
                   String voyageNextMessageDate = voyageValues[24];
                   String voyagePriority =  voyageValues[25];
                   String seaName = voyageValues[26];
-                  String seaSortOrder = voyageValues[27];
+                  double seaSortOrder = parseDoubleSafely(voyageValues[27]);
                   String forecastModifieddate = voyageValues[28];
                   String forecastState =  voyageValues[29];
-                  String voyageFo_brob_dep = voyageValues[30];
-                  String voyageDo_brob_dep = voyageValues[31];
-                  String voyageFo_brob_latest = voyageValues[32];
-                  String voyageDo_brob_latest =  voyageValues[33];
+                  double voyageFo_brob_dep = parseDoubleSafely(voyageValues[30]);
+                  double voyageDo_brob_dep = parseDoubleSafely(voyageValues[31]);
+                  double voyageFo_brob_latest = parseDoubleSafely(voyageValues[32]);
+                  double voyageDo_brob_latest =  parseDoubleSafely(voyageValues[33]);
                   String voyageHas_pva = voyageValues[34];
                   //get the operator ID  voyageValues[0]
                   //Alarms 
@@ -407,13 +407,13 @@ public class ShipController {
                       int baselineID = parseIntSafely(fuilOilPerEl.getAttribute("id")); 
                       String baselineVals = fuilOilPerEl.getAttribute("values");
                       String[] baselineValues = baselineVals.split(";", 7);
-                      String baselineSelected = baselineValues[0];
-                      String baselineOva_cons_performance = baselineValues[1];
-                      String baselineOva_cons_performance_rep_diff = baselineValues[2];
-                      String baselineOva_cons_performance_rep_diff_prcnt = baselineValues[3];
-                      String baselinePva_cons_performance = baselineValues[4];
-                      String baselinePva_cons_performance_rep_diff = baselineValues[5];
-                      String baselinePva_cons_performance_rep_diff_prcnt = baselineValues[6];
+                      String baselineSelected = (baselineValues[0]);
+                      double baselineOva_cons_performance = parseDoubleSafely(baselineValues[1]);
+                      double baselineOva_cons_performance_rep_diff = parseDoubleSafely(baselineValues[2]);
+                      double baselineOva_cons_performance_rep_diff_prcnt = parseDoubleSafely(baselineValues[3]);
+                      double baselinePva_cons_performance = parseDoubleSafely(baselineValues[4]);
+                      double baselinePva_cons_performance_rep_diff = parseDoubleSafely(baselineValues[5]);
+                      double baselinePva_cons_performance_rep_diff_prcnt = parseDoubleSafely(baselineValues[6]);
                       FuelOilPerformance fuilOilPerf = new FuelOilPerformance(baselineID,
                                                                               baselineSelected,
                                                                               baselineOva_cons_performance,
@@ -425,13 +425,13 @@ public class ShipController {
 
                       int shipReportID  = parseIntSafely(shipReportEl.getAttribute("id"));
                       double shipLon  = parseDoubleSafely(shipReportEl.getAttribute("lon"));
-                      String legType = shipReportEl.getAttribute("legtype");
+                      int legType = parseIntSafely(shipReportEl.getAttribute("legtype"));
                       double shipLat  = parseDoubleSafely(shipReportEl.getAttribute("lat"));
                       String date  = shipReportEl.getAttribute("date");
                       String shipReportVal = shipReportEl.getAttribute("values");
                       String[] shipReportValues = shipReportVal.split(";", 55);
                       
-                      String repshipCosp_eosp = (shipReportValues[0]);
+                      int repshipCosp_eosp = parseIntSafely(shipReportValues[0]);
                       String repshipEta_earliest = (shipReportValues[1]);
                       double observationWindspeed = parseDoubleSafely(shipReportValues[2]);
                       double observationWindspeedbf = parseDoubleSafely(shipReportValues[3]);
@@ -439,51 +439,51 @@ public class ShipController {
                       double observationWaveh = parseDoubleSafely(shipReportValues[5]);
                       double observationSwellh = parseDoubleSafely(shipReportValues[6]);
                       double observationSwelldir = parseDoubleSafely(shipReportValues[7]);
-                      String repshipCourse = (shipReportValues[8]);
+                      double repshipCourse = parseDoubleSafely(shipReportValues[8]);
                       double repshipSpeed_avg = parseDoubleSafely(shipReportValues[9]);
                       double repshipRpm_avg = parseDoubleSafely(shipReportValues[10]);
                       double repshipLoad_Avg = parseDoubleSafely(shipReportValues[11]);
                       double repshipDist_since_latest_rep = parseDoubleSafely(shipReportValues[12]);
                       double repshipDist_rem_to_go = parseDoubleSafely(shipReportValues[13]);
-                      String repshipHfo_brob = (shipReportValues[14]);
-                      String repshipLsfo_brob = (shipReportValues[15]);
-                      String repshipMgo_brob = (shipReportValues[16]);
-                      String repshipMdo_brob = (shipReportValues[17]);
-                      String repshipMeHfoSLR = (shipReportValues[18]);
-                      String repshipMeLsfoSLR = (shipReportValues[19]);
-                      String repshipMeMdoSLR = (shipReportValues[20]);
-                      String repshipMeMgoSLR = (shipReportValues[21]);
-                      String repshipAuxHfoSLR = (shipReportValues[22]);
-                      String repshipAuxLsfoSLR = (shipReportValues[23]);
-                      String repshipAuxMdoSLR = (shipReportValues[24]);
-                      String repshipAuxMgoSLR = (shipReportValues[25]);
-                      String repshipBoilerHfoSLR = (shipReportValues[26]);
-                      String repshipBoilerLsfoSLR = (shipReportValues[27]);
-                      String repshipBoilerMdoSLR = (shipReportValues[28]);
-                      String repshipBoilerMgoSLR = (shipReportValues[29]);
-                      String repshipCleanHfoSLR = (shipReportValues[30]);
-                      String repshipCleanLsfoSLR = (shipReportValues[31]);
-                      String repshipCleanMdoSLR = (shipReportValues[32]);
-                      String repshipCleanMgoSLR = (shipReportValues[33]);
-                      String repshipHeatHfoSLR = (shipReportValues[34]);
-                      String repshipHeatLsfoSLR = (shipReportValues[35]);
-                      String repshipHeatMdoSLR = (shipReportValues[36]);
-                      String repshipHeatMgoSLR = (shipReportValues[37]);
-                      String repshipGenAtSeaHfoSLR = (shipReportValues[38]);
-                      String repshipGenAtSeaLsfoSLR = (shipReportValues[39]);
-                      String repshipGenAtSeaMdoSLR = (shipReportValues[40]);
-                      String repshipGenAtSeaMgoSLR = (shipReportValues[41]);
-                      String repshipOthersAtSeaHfoSLR = (shipReportValues[42]);
-                      String repshipOthersAtSeaLsfoSLR = (shipReportValues[43]);
-                      String repshipOthersAtSeaMdoSLR = (shipReportValues[44]);
-                      String repshipOthersAtSeaMgoSLR = (shipReportValues[45]);
+                      double repshipHfo_brob = parseDoubleSafely(shipReportValues[14]);
+                      double repshipLsfo_brob = parseDoubleSafely(shipReportValues[15]);
+                      double repshipMgo_brob = parseDoubleSafely(shipReportValues[16]);
+                      double repshipMdo_brob = parseDoubleSafely(shipReportValues[17]);
+                      double repshipMeHfoSLR = parseDoubleSafely(shipReportValues[18]);
+                      double repshipMeLsfoSLR = parseDoubleSafely(shipReportValues[19]);
+                      double repshipMeMdoSLR = parseDoubleSafely(shipReportValues[20]);
+                      double repshipMeMgoSLR = parseDoubleSafely(shipReportValues[21]);
+                      double repshipAuxHfoSLR = parseDoubleSafely(shipReportValues[22]);
+                      double repshipAuxLsfoSLR = parseDoubleSafely(shipReportValues[23]);
+                      double repshipAuxMdoSLR = parseDoubleSafely(shipReportValues[24]);
+                      double repshipAuxMgoSLR = parseDoubleSafely(shipReportValues[25]);
+                      double repshipBoilerHfoSLR = parseDoubleSafely(shipReportValues[26]);
+                      double repshipBoilerLsfoSLR = parseDoubleSafely(shipReportValues[27]);
+                      double repshipBoilerMdoSLR = parseDoubleSafely(shipReportValues[28]);
+                      double repshipBoilerMgoSLR = parseDoubleSafely(shipReportValues[29]);
+                      double repshipCleanHfoSLR = parseDoubleSafely(shipReportValues[30]);
+                      double repshipCleanLsfoSLR = parseDoubleSafely(shipReportValues[31]);
+                      double repshipCleanMdoSLR = parseDoubleSafely(shipReportValues[32]);
+                      double repshipCleanMgoSLR = parseDoubleSafely(shipReportValues[33]);
+                      double repshipHeatHfoSLR = parseDoubleSafely(shipReportValues[34]);
+                      double repshipHeatLsfoSLR = parseDoubleSafely(shipReportValues[35]);
+                      double repshipHeatMdoSLR = parseDoubleSafely(shipReportValues[36]);
+                      double repshipHeatMgoSLR = parseDoubleSafely(shipReportValues[37]);
+                      double repshipGenAtSeaHfoSLR = parseDoubleSafely(shipReportValues[38]);
+                      double repshipGenAtSeaLsfoSLR = parseDoubleSafely(shipReportValues[39]);
+                      double repshipGenAtSeaMdoSLR = parseDoubleSafely(shipReportValues[40]);
+                      double repshipGenAtSeaMgoSLR = parseDoubleSafely(shipReportValues[41]);
+                      double repshipOthersAtSeaHfoSLR = parseDoubleSafely(shipReportValues[42]);
+                      double repshipOthersAtSeaLsfoSLR = parseDoubleSafely(shipReportValues[43]);
+                      double repshipOthersAtSeaMdoSLR = parseDoubleSafely(shipReportValues[44]);
+                      double repshipOthersAtSeaMgoSLR = parseDoubleSafely(shipReportValues[45]);
                       String repshipInstructedlegcode = (shipReportValues[46]);
-                      double repshipInstructedspeed = parseDoubleSafely(shipReportValues[47]);
-                      String repshipPropulsionengines = (shipReportValues[48]);
-                      String repshipShaftgenerators = (shipReportValues[49]);
-                      String repshipFinstabilizers = (shipReportValues[50]);
-                      String repshipSteamTimeSLR = (shipReportValues[51]);
-                      String baseline_instructionBaseline_instruction_id = (shipReportValues[52]);
+                      String repshipInstructedspeed = (shipReportValues[47]);
+                      int repshipPropulsionengines = parseIntSafely(shipReportValues[48]);
+                      int repshipShaftgenerators = parseIntSafely(shipReportValues[49]);
+                      int repshipFinstabilizers = parseIntSafely(shipReportValues[50]);
+                      double repshipSteamTimeSLR = parseDoubleSafely(shipReportValues[51]);
+                      int baseline_instructionBaseline_instruction_id = parseIntSafely(shipReportValues[52]);
                       double repshipProforma_speed = parseDoubleSafely(shipReportValues[53]);
                       double repshipIntended_speed = parseDoubleSafely(shipReportValues[54]);
 
@@ -588,7 +588,7 @@ public class ShipController {
                       double weatherwaypointWeatherfactor = parseDoubleSafely(weatherWayPValues[12]);
                       double weatherwaypointCurrentfactor = parseDoubleSafely(weatherWayPValues[13]);
                       double weatherwaypointCalcdistance = parseDoubleSafely(weatherWayPValues[14]);
-                      String weatherwaypointGoodweather = parseDoubleSafely(weatherWayPValues[15]);
+                      String weatherwaypointGoodweather = weatherWayPValues[15];
 
                       WeatherWaypoint tempPoint = new WeatherWaypoint(weatherwaypointWindspeed,
                                                                       weatherwaypointWinddir,
