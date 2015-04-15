@@ -2,24 +2,24 @@ package ship;
 
 public class Operator {
 
-  private int operatorId;
-  private String name;
-  private String copyfcst;
-  private String pva;
-  private String hasOnBoardSystem;
-  private String comment;
+  private int operatorId; //Operator ID.
+  private String name; //Name of operator.
+  private int copyfcst; //Copy forecast, [undef,no,yes,sometimes].
+  private int pva; // [undef,no,yes,sometimes]
+  private int hasOnBoardSystem; //Has onboard system, [undef,no,yes,sometimes] 
+  private String comment; //Main comment
   //XML Elements - > crew, matters, routeinfo, whentocontact
-  private String nationalityOfCrew;
-  private String timeOrSafe;
-  private String routeInformation;
-  private String contactOperator;
+  private String nationalityOfCrew;// Nation.
+  private String timeOrSafe; //Matters most, fast or safe trip.
+  private String routeInformation; //Specific routes
+  private String contactOperator; //When to contact
 
   public Operator(int theId){
     operatorId = theId;
     name = "undefined";
-    copyfcst = "undefined";
-    pva = "undefined";
-    hasOnBoardSystem = "undefined";
+    copyfcst = 0;//"undefined";
+    pva = 0;//"undefined";
+    hasOnBoardSystem = 0;//"undefined";
     comment = "This is the operator Comment by ze germans";
     nationalityOfCrew = "Germany";
     timeOrSafe = "undefined";
@@ -27,8 +27,8 @@ public class Operator {
     contactOperator = "undefined";
   }
 
-  public Operator(int theId, String theName, String theCopyFcst, String thePva,
-    String theHasOnBoardsystem, String theComment, String theNationalCrew, String theTimeOrSafe,
+  public Operator(int theId, String theName, int theCopyFcst, int thePva,
+    int theHasOnBoardsystem, String theComment, String theNationalCrew, String theTimeOrSafe,
     String theRouteInformation, String theContactOperator) {
     operatorId = theId;
     name = theName;
@@ -48,13 +48,13 @@ public class Operator {
   public String getName(){
     return name;
   }
-  public String getCopyFcst(){
+  public int getCopyFcst(){
     return copyfcst;
   }
-  public String getPva(){
+  public int getPva(){
     return pva;
   }
-  public String getHasOnBoardSystem(){
+  public int getHasOnBoardSystem(){
     return hasOnBoardSystem;
   }
   public String getComment(){
