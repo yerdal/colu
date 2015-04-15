@@ -18,93 +18,42 @@ import java.util.ArrayList;
  */
 @RestController
 public class ShipController {
-     /**
+   /**
    * @param  id the id of the ship
-   * @return      a Ship with given ID
-   * @see         None
+   * @return      a Ship with given id
+   * @see         ArrayList
    */ 
     //Request a ship with a certain name?
-    @RequestMapping(value="/ships/{id}")
+    @RequestMapping(value="/ships/id/{id}")
     public ArrayList getShip(@PathVariable String id) {
-
-   /*     ShipList ships = new ShipList();
-
-        //Static ships for now
-
-        ships.addShip(new Ship(1, "Jonken1"));
-        ships.addShip(new Ship(2, "Jonken2"));
-        ships.addShip(new Ship(3, "Henki"));*/
-        // ArrayList<Ship> myShips = getXMLShip();
+        ArrayList<Ship> myShips = getXMLShip();
+        return myShips;
+    }
+   /**
+   * @return      all ship polls 
+   * @see         ArrayList
+   */ 
+    @RequestMapping(value="/ships/polls")
+    public ArrayList getShipPolls() {
         ArrayList<Ship> myShips_pos = getXMLShipPolls();
-
-        // Is the name in the list?
-       // return ships.findShip(name);
         return myShips_pos;
-
-
     }
-    @RequestMapping(value="/ongoingVoyages/{name}")
-        public ArrayList getOngoingVoyages(@PathVariable String name){
-          ArrayList<OnVoyages> voyages = getOngoingVoyages();
-          return voyages;
-        }
-
-    private ArrayList getOngoingVoyages(){
-        ArrayList<OnVoyages> voyageArray = new ArrayList<OnVoyages>();
-
-        try{
-          //OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/
-          // Einar /Users/einarsandberg/Documents/Voyage_ship_data/ongoingVoyages.xml
-          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/ongoingVoyages.xml");
-
-          DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-          DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-          Document doc = dBuilder.parse(fXmlFile);
-
-          doc.getDocumentElement().normalize();
-
-          NodeList nList = doc.getElementsByTagName("voyage");
-
-
-
-            for(int temp = 1; temp < nList.getLength(); temp++)
-            {
-                Node nNode = nList.item(temp);
-
-                if(nNode.getNodeType() == Node.ELEMENT_NODE)
-                {
-                  Element eElement = (Element) nNode;
-                  int voyageID = Integer.parseInt(eElement.getAttribute("id"));
-                  String voyageValue = eElement.getAttribute("values");
-
-                  //String[] voyageNames = voyageValue.split(";", 34);
-                  
-
-                  Node shipNode = eElement.getElementsByTagName("ship").item(0);
-
-                 
-                    //Node shipNode = shipList.item(temp1);
-                  Element cElement = (Element) shipNode;
-                  String shipValues = cElement.getAttribute("values");
-                  String[] shipValuesArray = shipValues.split(";", 34);
-
-                  OnVoyages theVoyage = new OnVoyages(voyageID, shipValuesArray[5]); 
-                    voyageArray.add(theVoyage);
-
-                }
-                  
-            }
-
-            return voyageArray;
-        }catch(Exception e){
-            e.printStackTrace();
-          }
-          return null;
-
+  /**
+   * @return      all the ongoing voyages
+   * @see         ArrayList
+   */ 
+    @RequestMapping(value="/ongoingVoyages")
+    public ArrayList getOngoingVoyages(){
+      ArrayList<OnVoyages> voyages = getXMLOngoingVoyages();
+      return voyages;
     }
-
-    @RequestMapping(value="/voyages/{name}")
-    public ArrayList getVoyage(@PathVariable String name) {
+    /**
+     * @param  id the id of the voyage
+     * @return      a voyage with given id
+     * @see         ArrayList
+     */ 
+    @RequestMapping(value="/voyages/{id}")
+    public ArrayList getVoyage(@PathVariable String id) {
         ArrayList<Voyage> myVoyage_pos = getXMLShipVoyage();
         return myVoyage_pos;
     }
@@ -117,7 +66,7 @@ public class ShipController {
           // Mattias /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml
           // Yusuf /Users/Yusuf/Documents/LIU/TNM094-KEX/Voyage_and_ship_data
           // EINAR /Users/einarsandberg/Documents/Voyage_ship_data/ship_101.xml
-          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/ship_101.xml");
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/ship_101.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -140,10 +89,8 @@ public class ShipController {
                     int shipID = Integer.parseInt(eElement.getAttribute("id"));
 
                     String shipValues = eElement.getAttribute("values");
-                    
+
                     String[] shipParts = shipValues.split(";", 34);
-                  
-                    
                     String shipComment = eElement.getElementsByTagName("comment").item(0).getTextContent();
                     String shipDesc = eElement.getElementsByTagName("description").item(0).getTextContent();
           
@@ -214,7 +161,7 @@ public class ShipController {
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // Yusuf /Users/Yusuf/Documents/LIU/TNM094-KEX/Voyage_and_ship_data
           // Einar /Users/einarsandberg/Documents/Voyage_ship_data/polls.xml
-          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/polls.xml");
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/polls.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -294,6 +241,53 @@ public class ShipController {
         }
          return null; 
     }
+    private ArrayList getXMLOngoingVoyages(){
+        ArrayList<OnVoyages> voyageArray = new ArrayList<OnVoyages>();
+
+        try{
+          //OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/
+          // Einar /Users/einarsandberg/Documents/Voyage_ship_data/ongoingVoyages.xml
+          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/ongoingVoyages.xml");
+
+          DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+          DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+          Document doc = dBuilder.parse(fXmlFile);
+
+          doc.getDocumentElement().normalize();
+
+          NodeList nList = doc.getElementsByTagName("voyage");
+
+
+
+            for(int temp = 1; temp < nList.getLength(); temp++)
+            {
+                Node nNode = nList.item(temp);
+
+                if(nNode.getNodeType() == Node.ELEMENT_NODE)
+                {
+                  Element eElement = (Element) nNode;
+                  int voyageID = Integer.parseInt(eElement.getAttribute("id"));
+                  String voyageValue = eElement.getAttribute("values");
+
+                  //String[] voyageNames = voyageValue.split(";", 34);
+                  Node shipNode = eElement.getElementsByTagName("ship").item(0);
+                  //Node shipNode = shipList.item(temp1);
+                  Element cElement = (Element) shipNode;
+                  String shipValues = cElement.getAttribute("values");
+                  String[] shipValuesArray = shipValues.split(";", 34);
+
+                  OnVoyages theVoyage = new OnVoyages(voyageID, shipValuesArray[5]); 
+                  voyageArray.add(theVoyage);
+                }
+                  
+            }
+            return voyageArray;
+        }catch(Exception e){
+            e.printStackTrace();
+          }
+          return null;
+
+    }
     private ArrayList getXMLShipVoyage(){
         ArrayList<Voyage> voyageArray = new ArrayList<Voyage>();
 
@@ -301,7 +295,7 @@ public class ShipController {
           // Mattias: /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/polls.xml
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // EINAR /Users/einarsandberg/Documents/Voyage_ship_data/voyage_89710.xml
-          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/voyage_89710.xml");
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/voyage_89710.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -594,7 +588,7 @@ public class ShipController {
                       double weatherwaypointWeatherfactor = parseDoubleSafely(weatherWayPValues[12]);
                       double weatherwaypointCurrentfactor = parseDoubleSafely(weatherWayPValues[13]);
                       double weatherwaypointCalcdistance = parseDoubleSafely(weatherWayPValues[14]);
-                      double weatherwaypointGoodweather = parseDoubleSafely(weatherWayPValues[15]);
+                      String weatherwaypointGoodweather = parseDoubleSafely(weatherWayPValues[15]);
 
                       WeatherWaypoint tempPoint = new WeatherWaypoint(weatherwaypointWindspeed,
                                                                       weatherwaypointWinddir,
