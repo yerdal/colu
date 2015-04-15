@@ -12,7 +12,7 @@ public class Contact {
   
   public Contact(){
     contactId = 0;
-    shipAddressActive = "undefined";
+    shipAddressActive = 0;
     communicationType = "undefined";
     address = "undefined";
     fullAddress = "undefined";
