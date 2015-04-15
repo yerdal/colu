@@ -37,31 +37,31 @@ public class ShipReport
 	private String cleanLsfoSLR;
 	private String cleanMdoSLR;
 	private String cleanMgoSLR;
-	private String heatHfoSLR;
-	private String heatLfsoSLR;
-	private String heatMdoSLR;
-	private String heatMgoSLR;
-	private String genAtSeaHfoSLR;
-	private String genAtSeaLsfoSLR;
-	private String genAtSeaMdoSlr;
-	private String genAtSeaMgoSLR;
-	private String othersAtSeaHfoSLR;
-	private String othersAtSeaLsfoSLR;
-	private String othersAtSeaMdoSLR;
-	private String othersAtSeaMgoSLR;
-	private String instructedLegCode;
-	private double instructedSpeed;
-	private String propulsionEngines;
-	private String shaftGenerators;
-	private String finStabilizers;
-	private String steamTimeSLR;
-	private String baselineInstructionID;
-	private double proformaSpeed;
-	private double intentedSpeed;
-	private double lon;
-	private String legType;
-	private double lat;
-	private String date;
+	private double heatHfoSLR; // HFO == Heavy Fuel Oil  SLR == since last report unit: metric tonnes 
+	private double heatLsfoSLR; // LFSO == Low Sulphur Fuel Oil. unit: metric tonnes
+	private double heatMdoSLR; // MDO == Marine Diesel Oil. unit: metric tonnes
+	private double heatMgoSLR; // MGO == Marine Gas Oil. unit: metric tonnes
+	private double genAtSeaHfoSLR; // unit: metric tonnes
+	private double genAtSeaLsfoSLR; // unit: metric tonnes
+	private double genAtSeaMdoSlr; // unit: metric tonnes
+	private double genAtSeaMgoSLR; // unit: metric tonnes
+	private double othersAtSeaHfoSLR; // unit: metric tonnes
+	private double othersAtSeaLsfoSLR; // unit: metric tonnes
+	private double othersAtSeaMdoSLR; // unit: metric tonnes
+	private double othersAtSeaMgoSLR; // unit: metric tonnes
+	private String instructedLegCode; // legal code? OPTIONAL
+	private String instructedSpeed; // OPTIONAL
+	private int propulsionEngines; // Propulsion engines in use. Dvs antal propulsion engines?
+	private int shaftGenerators; // Shaft generators in use. Dvs antal?
+	private int finStabilizers; // Fin stabilizers in use, yes/no. 0 == No, 1 == Yes.
+	private double steamTimeSLR; // Reported steaming time SLR. Unit: hours
+	private int baselineInstructionID; // Instruction ID.
+	private double proformaSpeed; // proforma == för formens skull på latin. WTF. unit: knots
+	private double intendedSpeed; // intended speed. unit: knots
+	private double lon; // longitude
+	private int legType; // repposition.legtype. Different types of legs. 1 eller 2. 1 == RL. 2 == GC.
+	private double lat; // latitude
+	private String date; // date of report
 
 	public ShipReport(int theReportID,
 							String theCosp_eosp,
@@ -98,29 +98,29 @@ public class ShipReport
 						 String theCleanLsfoSLR,
 						 String theCleanMdoSLR,
 						 String theCleanMgoSLR,
-						 String theHeatHfoSLR,
-						 String theHeatLfsoSLR,
-						 String theHeatMdoSLR,
-						 String theHeatMgoSLR,
-						 String theGenAtSeaHfoSLR,
-						 String theGenAtSeaLsfoSLR,
-						 String theGenAtSeaMdoSlr,
-						 String theGenAtSeaMgoSLR,
-						 String theOthersAtSeaHfoSLR,
-						 String theOthersAtSeaLsfoSLR,
-						 String theOthersAtSeaMdoSLR,
-						 String theOthersAtSeaMgoSLR,
+						 double theHeatHfoSLR,
+						 double theHeatLfsoSLR,
+						 double theHeatMdoSLR,
+						 double theHeatMgoSLR,
+						 double theGenAtSeaHfoSLR,
+						 double theGenAtSeaLsfoSLR,
+						 double theGenAtSeaMdoSlr,
+						 double theGenAtSeaMgoSLR,
+						 double theOthersAtSeaHfoSLR,
+						 double theOthersAtSeaLsfoSLR,
+						 double theOthersAtSeaMdoSLR,
+						 double theOthersAtSeaMgoSLR,
 						 String theInstructedLegCode,
-						 double theInstructedSpeed,
-						 String thePropulsionEngines,
-						 String theShaftGenerators,
-						 String theFinStabilizers,
-						 String theSteamTimeSLR,
-						 String theBaselineInstructionID,
+						 String theInstructedSpeed,
+						 int thePropulsionEngines,
+						 int theShaftGenerators,
+						 int theFinStabilizers,
+						 double theSteamTimeSLR,
+						 int theBaselineInstructionID,
 						 double theProformaSpeed,
 						 double theIntentedSpeed,
 						 double theLon,
-						 String theLegType,
+						 int theLegType,
 						 double theLat,
 						 String theDate)
 	{
@@ -291,61 +291,61 @@ public class ShipReport
 	public String getCleanMgoSLR(){
 		return cleanMgoSLR;
 	}
-	public String getHeatHfoSLR(){
+	public double getHeatHfoSLR(){
 		return heatHfoSLR;
 	}
-	public String getHeatLfsoSLR(){
+	public double getHeatLfsoSLR(){
 		return heatLfsoSLR;
 	}
-	public String getHeatMdoSLR(){
+	public double getHeatMdoSLR(){
 		return heatMdoSLR;
 	}
-	public String getHeatMgoSLR(){
+	public double getHeatMgoSLR(){
 		return heatMgoSLR;
 	}
-	public String getGenAtSeaHfoSLR(){
+	public double getGenAtSeaHfoSLR(){
 		return genAtSeaHfoSLR;
 	}
-	public String getGenAtSeaLsfoSLR(){
+	public double getGenAtSeaLsfoSLR(){
 		return genAtSeaLsfoSLR;
 	}
-	public String getGenAtSeaMdoSlr(){
+	public double getGenAtSeaMdoSlr(){
 		return genAtSeaMdoSlr;
 	}
-	public String getGenAtSeaMgoSLR(){
+	public double getGenAtSeaMgoSLR(){
 		return genAtSeaMgoSLR;
 	}
-	public String getOthersAtSeaHfoSLR(){
+	public double getOthersAtSeaHfoSLR(){
 		return othersAtSeaHfoSLR;
 	}
-	public String getOthersAtSeaLsfoSLR(){
+	public double getOthersAtSeaLsfoSLR(){
 		return othersAtSeaLsfoSLR;
 	}
-	public String getOthersAtSeaMdoSLR(){
+	public double getOthersAtSeaMdoSLR(){
 		return othersAtSeaMdoSLR;
 	}
-	public String getOthersAtSeaMgoSLR(){
+	public double getOthersAtSeaMgoSLR(){
 		return othersAtSeaMgoSLR;
 	}
 	public String getInstructedLegCode(){
 		return instructedLegCode;
 	}
-	public double getInstructedSpeed(){
+	public String getInstructedSpeed(){
 		return instructedSpeed;
 	}
-	public String getPropulsionEngines(){
+	public int getPropulsionEngines(){
 		return propulsionEngines;
 	}
-	public String getShaftGenerators(){
+	public int getShaftGenerators(){
 		return shaftGenerators;
 	}
-	public String getFinStabilizers(){
+	public int getFinStabilizers(){
 		return finStabilizers;
 	}
-	public String getSteamTimeSLR(){
+	public double getSteamTimeSLR(){
 		return steamTimeSLR;
 	}
-	public String getBaselineInstructionID(){
+	public int getBaselineInstructionID(){
 		return baselineInstructionID;
 	}
 	public double getProformaSpeed(){
@@ -357,7 +357,7 @@ public class ShipReport
 	public double getLon(){
 		return lon;
 	}
-	public String getLegType(){
+	public int getLegType(){
 		return legType;
 	}
 	public double getLat(){
