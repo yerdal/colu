@@ -247,7 +247,7 @@ public class ShipController {
         try{
           //OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/
           // Einar /Users/einarsandberg/Documents/Voyage_ship_data/ongoingVoyages.xml
-          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/ongoingVoyages.xml");
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/ongoingVoyages.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -330,7 +330,7 @@ public class ShipController {
 
                   String[] voyageValues = voyValues.split(";", 35);
                   String voyageName = voyageValues[0];
-                  String voyageVoyref = voyageValues[1];
+                  int voyageVoyref = parseIntSafely(voyageValues[1]);
                   String operatorName = voyageValues[2];
                   Operator ope = new Operator(2);
                   String personName = voyageValues[3]; 
@@ -346,29 +346,29 @@ public class ShipController {
                   String voyageEtd = voyageValues[8];
                   String voyageEta = voyageValues[9];
                   String voyageRequired_eta = voyageValues[10];
-                  String voyageLoading = voyageValues[11];
-                  String voyageCargoweight = voyageValues[12];
-                  String voyageCargosensitiv = voyageValues[13];
-                  String voyageGmheight = voyageValues[14];
-                  String voyageDisplacement_at_dep = voyageValues[15];
-                  String voyageMaxspeed =  voyageValues[16];
-                  String voyageDraft_aft = voyageValues[17];
-                  String voyageDraft_fwd = voyageValues[18];
-                  String voyageDraft_mean = voyageValues[19];
-                  String voyageDraft_trim = voyageValues[20];
+                  int voyageLoading = parseIntSafely(voyageValues[11]);
+                  double voyageCargoweight = parseDoubleSafely(voyageValues[12]);
+                  int voyageCargosensitiv = parseIntSafely(voyageValues[13]);
+                  double voyageGmheight = parseDoubleSafely(voyageValues[14]);
+                  double voyageDisplacement_at_dep = parseDoubleSafely(voyageValues[15]);
+                  double voyageMaxspeed =  parseDoubleSafely(voyageValues[16]);
+                  double voyageDraft_aft = parseDoubleSafely(voyageValues[17]);
+                  double voyageDraft_fwd = parseDoubleSafely(voyageValues[18]);
+                  double voyageDraft_mean = parseDoubleSafely(voyageValues[19]);
+                  double voyageDraft_trim = parseDoubleSafely(voyageValues[20]);
                   String tradelaneName = voyageValues[21];
                   String voyagePhase = voyageValues[22];
                   String voyageHasroute = voyageValues[23];
                   String voyageNextMessageDate = voyageValues[24];
                   String voyagePriority =  voyageValues[25];
                   String seaName = voyageValues[26];
-                  String seaSortOrder = voyageValues[27];
+                  double seaSortOrder = parseDoubleSafely(voyageValues[27]);
                   String forecastModifieddate = voyageValues[28];
                   String forecastState =  voyageValues[29];
-                  String voyageFo_brob_dep = voyageValues[30];
-                  String voyageDo_brob_dep = voyageValues[31];
-                  String voyageFo_brob_latest = voyageValues[32];
-                  String voyageDo_brob_latest =  voyageValues[33];
+                  double voyageFo_brob_dep = parseDoubleSafely(voyageValues[30]);
+                  double voyageDo_brob_dep = parseDoubleSafely(voyageValues[31]);
+                  double voyageFo_brob_latest = parseDoubleSafely(voyageValues[32]);
+                  double voyageDo_brob_latest =  parseDoubleSafely(voyageValues[33]);
                   String voyageHas_pva = voyageValues[34];
                   //get the operator ID  voyageValues[0]
                   //Alarms 
@@ -588,7 +588,7 @@ public class ShipController {
                       double weatherwaypointWeatherfactor = parseDoubleSafely(weatherWayPValues[12]);
                       double weatherwaypointCurrentfactor = parseDoubleSafely(weatherWayPValues[13]);
                       double weatherwaypointCalcdistance = parseDoubleSafely(weatherWayPValues[14]);
-                      String weatherwaypointGoodweather = parseDoubleSafely(weatherWayPValues[15]);
+                      String weatherwaypointGoodweather = weatherWayPValues[15];
 
                       WeatherWaypoint tempPoint = new WeatherWaypoint(weatherwaypointWindspeed,
                                                                       weatherwaypointWinddir,
