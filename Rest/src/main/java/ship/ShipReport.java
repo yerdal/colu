@@ -38,7 +38,7 @@ public class ShipReport
 	private String cleanMdoSLR;
 	private String cleanMgoSLR;
 	private double heatHfoSLR; // HFO == Heavy Fuel Oil  SLR == since last report unit: metric tonnes 
-	private double heatLsfoSLR; // LFSO == Low Sulphur Fuel Oil. unit: metric tonnes
+	private double heatLfsoSLR; // LFSO == Low Sulphur Fuel Oil. unit: metric tonnes
 	private double heatMdoSLR; // MDO == Marine Diesel Oil. unit: metric tonnes
 	private double heatMgoSLR; // MGO == Marine Gas Oil. unit: metric tonnes
 	private double genAtSeaHfoSLR; // unit: metric tonnes
@@ -179,7 +179,7 @@ public class ShipReport
 		steamTimeSLR = theSteamTimeSLR;
 		baselineInstructionID = theBaselineInstructionID;
 		proformaSpeed = theProformaSpeed;
-		intentedSpeed = theIntentedSpeed;
+		intendedSpeed = theIntentedSpeed;
 		lon = theLon;
 		legType = theLegType;
 		lat = theLat;
@@ -351,8 +351,8 @@ public class ShipReport
 	public double getProformaSpeed(){
 		return proformaSpeed;
 	}
-	public double getIntentedSpeed(){
-		return intentedSpeed;
+	public double getIntendedSpeed(){
+		return intendedSpeed;
 	}
 	public double getLon(){
 		return lon;

@@ -407,13 +407,13 @@ public class ShipController {
                       int baselineID = parseIntSafely(fuilOilPerEl.getAttribute("id")); 
                       String baselineVals = fuilOilPerEl.getAttribute("values");
                       String[] baselineValues = baselineVals.split(";", 7);
-                      String baselineSelected = baselineValues[0];
-                      String baselineOva_cons_performance = baselineValues[1];
-                      String baselineOva_cons_performance_rep_diff = baselineValues[2];
-                      String baselineOva_cons_performance_rep_diff_prcnt = baselineValues[3];
-                      String baselinePva_cons_performance = baselineValues[4];
-                      String baselinePva_cons_performance_rep_diff = baselineValues[5];
-                      String baselinePva_cons_performance_rep_diff_prcnt = baselineValues[6];
+                      String baselineSelected = (baselineValues[0]);
+                      double baselineOva_cons_performance = parseDouleSafely(baselineValues[1]);
+                      double baselineOva_cons_performance_rep_diff = parseDouleSafely(baselineValues[2]);
+                      double baselineOva_cons_performance_rep_diff_prcnt = parseDouleSafely(baselineValues[3]);
+                      double baselinePva_cons_performance = parseDouleSafely(baselineValues[4]);
+                      double baselinePva_cons_performance_rep_diff = parseDouleSafely(baselineValues[5]);
+                      double baselinePva_cons_performance_rep_diff_prcnt = parseDouleSafely(baselineValues[6]);
                       FuelOilPerformance fuilOilPerf = new FuelOilPerformance(baselineID,
                                                                               baselineSelected,
                                                                               baselineOva_cons_performance,
