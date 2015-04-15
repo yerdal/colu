@@ -2,23 +2,24 @@ package ship;
 
 public class FuelOilPerformance
 {
-	private int baselineID;
-	private String baselineSelected;
-	private String baselineOvaConsPerformance;
-	private String baselineOvaConsPerformanceRepDiff;
-	private String baselineOvaConsPerformanceRepDiffPrcnt;
-	private String baselinePvaConsPerformance;
-	private String baselinePvaConsPerformanceRepDiff;
-	private String baselinePvaConsPerformanceRepDiffPrcnt;
+	//baseline = måttstock(?)
+	private int baselineID; // måttID?
+	private boolean baselineSelected; // valt eller inte valt? oklart.
+	private double baselineOvaConsPerformance; //Calculated main engine fuel oil consumption according to baseline. unit: metric tonnes per day
+	private double baselineOvaConsPerformanceRepDiff; //Calculated difference between reported main engine fuel oil consumption and baseline. unit: metric tonnes per day
+	private double baselineOvaConsPerformanceRepDiffPrcnt; //Calculated difference between reported main engine fuel oil consumption and baseline. unit: percent
+	private double baselinePvaConsPerformance; //Calculated main engine fuel oil consumption according to baseline. unit: metric tonnes per day
+	private double baselinePvaConsPerformanceRepDiff; //Analysed difference between reported main engine fuel oil consumption and baseline. unit: metric tonnes per day
+	private double baselinePvaConsPerformanceRepDiffPrcnt; //Analysed difference between reported main engine fuel oil consumption and baseline. unit: percent
 
 	public FuelOilPerformance(int theBaseLineID,
-								String theBaselineSelected,
-								String theBaselineOvaConsPerformance,
-								String theBaselineOvaConsPerformanceRepDiff,
-								String theBaselineOvaConsPerformanceRepDiffPrcnt,
-								String theBaselinePvaConsPerformance,
-								String theBaselinePvaConsPerformanceRepDiff,
-								String theBaselinePvaConsPerformanceRepDiffPrcnt)
+								boolean theBaselineSelected,
+								double theBaselineOvaConsPerformance,
+								double theBaselineOvaConsPerformanceRepDiff,
+								double theBaselineOvaConsPerformanceRepDiffPrcnt,
+								double theBaselinePvaConsPerformance,
+								double theBaselinePvaConsPerformanceRepDiff,
+								double theBaselinePvaConsPerformanceRepDiffPrcnt)
 	{
 		baselineID = theBaseLineID;
 		baselineSelected = theBaselineSelected;
@@ -34,31 +35,31 @@ public class FuelOilPerformance
 	{
 		return baselineID;
 	}
-	public String getBaselineSelected()
+	public boolean getBaselineSelected()
 	{
 		return baselineSelected;
 	}
-	public String getBaselineOvaConsPerformance()
+	public double getBaselineOvaConsPerformance()
 	{
 		return baselineOvaConsPerformance;
 	}
-	public String getBaselineOvaConsPerformanceRepDiff()
+	public double getBaselineOvaConsPerformanceRepDiff()
 	{
 		return baselineOvaConsPerformanceRepDiff;
 	}
-	public String getBaselineOvaConsPerformanceRepDiffPrcnt()
+	public double getBaselineOvaConsPerformanceRepDiffPrcnt()
 	{
 		return baselineOvaConsPerformanceRepDiffPrcnt;
 	}
-	public String getBaselinePvaConsPerformance()
+	public double getBaselinePvaConsPerformance()
 	{
 		return baselinePvaConsPerformance;
 	}
-	public String getBaselinePvaConsPerformanceRepDiff()
+	public double getBaselinePvaConsPerformanceRepDiff()
 	{
 		return baselinePvaConsPerformanceRepDiff;
 	}
-	public String getBaselinePvaConsPerformanceRepDiffPrcnt()
+	public double getBaselinePvaConsPerformanceRepDiffPrcnt()
 	{
 		return baselinePvaConsPerformanceRepDiffPrcnt;
 	}
