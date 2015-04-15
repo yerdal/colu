@@ -3,9 +3,9 @@ package ship;
 public class Contact {
 
   //According to XML File
-  private int contactId;
-  private String shipAddressActive;
-  private String communicationType;
+  private int contactId;  //ID
+  private int shipAddressActive; //If shipaddress is active, 0 inactive, 1 active
+  private String communicationType; //Type of communication, FAX, IMC, MTX, PHONE, TLX 
   private String address;
   private String fullAddress;
 
@@ -19,7 +19,7 @@ public class Contact {
 
   }
 
-  public Contact(int theId, String theShipAddressActive, String theCommunicationType, String theAddress , String theFullAddress ) {
+  public Contact(int theId, int theShipAddressActive, String theCommunicationType, String theAddress , String theFullAddress ) {
     contactId = theId;
     shipAddressActive = theShipAddressActive;
     communicationType = theCommunicationType;
@@ -30,7 +30,7 @@ public class Contact {
   public int getContactId(){
     return contactId;
   }
-  public String getShipAddressActive(){
+  public int getShipAddressActive(){
     return shipAddressActive;
   }
   public String getCommunicationType(){

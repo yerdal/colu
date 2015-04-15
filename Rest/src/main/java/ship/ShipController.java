@@ -39,7 +39,7 @@ public class ShipController {
         return myShips_pos;
     }
   /**
-   * @return      all the ongoing voyages
+   * @return      all ongoing voyages
    * @see         ArrayList
    */ 
     @RequestMapping(value="/ongoingVoyages")
