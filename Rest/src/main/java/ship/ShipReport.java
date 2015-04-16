@@ -1,10 +1,13 @@
 package ship;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 public class ShipReport
 {
 	private int reportID; //Database ID for report, number.
 	private int cosp_eosp; //Indicate if ship report is COSP[commense sea passage] or EOSP[end sea passage], 0,1,2.
-	private String etaEarliest; //Estimated earliest arrival, date string???.
+	private Date etaEarliest; //Estimated earliest arrival, date string???.
 	private double obsWindspeed; //Reported wind speed
 	private double obsWindspeedbf; //Wind reported by vessel.
 	private double obsWindDir; //Reported wind direction.
@@ -64,6 +67,8 @@ public class ShipReport
 	private String date; // date of report
 
 
+	//Our new vaiables!
+	private String requiredETAStatus; //OK = ontime / BAD 
 
 	public ShipReport(int theReportID,
 						 int theCosp_eosp,
@@ -128,7 +133,17 @@ public class ShipReport
 	{
 		reportID = theReportID;
 		cosp_eosp = theCosp_eosp;
-		etaEarliest = theEtaEarliest;
+		try {
+ 			if(theEtaEarliest.equals(""))
+ 				theEtaEarliest = "00-00-00 00:00";
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+			etaEarliest = formatter.parse(theEtaEarliest);
+			System.out.println("ETA EARLIEST " +  etaEarliest.toString());
+ 
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		obsWindspeed = theObsWindspeed;
 		obsWindspeedbf = theObsWindspeedbf;
 		obsWindDir = theObsWindDir;
@@ -194,7 +209,7 @@ public class ShipReport
 	public int getCosp_eosp(){
 		return cosp_eosp;
 	}
-	public String getEtaEarliest(){
+	public Date getEtaEarliest(){
 		return etaEarliest;
 	}
 	public double getObsWindspeed(){
@@ -367,6 +382,25 @@ public class ShipReport
 	}
 	public String getDate(){
 		return date;
+	}
+
+
+	//Newly added functions for levels on backend
+	public String getRequiredETAStatus(){
+		return requiredETAStatus;
+	}
+	public void setStatusRequiredETA(Date reqEta){
+		if(reqEta.compareTo(etaEarliest)>0){
+        System.out.println("reqEta is after etaEarliest");
+        requiredETAStatus = "BAD";
+    }else if(reqEta.compareTo(etaEarliest)<0){
+        System.out.println("reqEta is before etaEarliest");
+        requiredETAStatus = "BAD";
+    }else{
+        System.out.println("reqEta is equal to etaEarliest");
+        requiredETAStatus = "OK";
+    }
+		
 	}
 
 

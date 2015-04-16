@@ -1,5 +1,8 @@
 package ship;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 public class Voyage
 {
 	private int voyageID;
@@ -46,6 +49,10 @@ public class Voyage
 	private ArrayList <WeatherWaypoint> weatherWaypoints;
 	private ArrayList <ShipReport> shipReports;
 	private String comment; //Comment about the voyage
+
+	//Our new vaiables!
+	private Date requiredETA;
+
 	// private bool onGoing; //kanske?
 	public Voyage (int theVoyageID, int theWorklistID, String theSystemOnBoardStatus, 
 									String theState,
@@ -133,7 +140,8 @@ public class Voyage
   	weatherWaypoints = theWeatherWaypoints;
 	 	comment = theComment;
 	 	shipReports = theShipReports;
-
+	 	setRequiredETA("");
+	 	compareETARequried();
 	}
 	public int getVoyageId(){
 		return voyageID;
@@ -272,4 +280,35 @@ public class Voyage
 	public String getComment(){
 		return comment;
 	}
+
+	// Bränsleåtgång → Bränsle kvar, OCH förbrukad bränsle sen senaste rapport?
+			
+	// Fart -> Definiera fartygets önskade hastighet. Spann? 
+
+	public String getRequiredETA(){
+		return requiredETA.toString();
+	}
+	public void setRequiredETA(String reqEta){
+		try {
+ 			if(reqEta.equals(""))
+ 				reqEta = "00-00-00 00:00";
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+			requiredETA = formatter.parse(reqEta);
+			System.out.println("requiredETA " +  requiredETA.toString());
+ 
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	// Ankomsttid -> Använda ETA variable från shipreport
+	public void compareETARequried(){
+
+		for(int i = 0; i < shipReports.size(); i++){
+			// System.out.println("shipreports.length " + shipReports.size());
+			shipReports.get(i).setStatusRequiredETA(requiredETA);
+		}
+	}
+
+
+
 }

@@ -3,6 +3,9 @@ package ship;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -13,11 +16,20 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.util.ArrayList;
 
+
 /**
  * Handling the rest API and parsing XML files
  */
 @RestController
 public class ShipController {
+
+
+  private ArrayList<Ship> myShip;
+  private ArrayList<Ship> myShipsPos;
+  private ArrayList<OnVoyages> ongoingVoyages;
+  private ArrayList<Voyage> myVoyage;
+
+
    /**
    * @param  id the id of the ship
    * @return      a Ship with given id
@@ -26,8 +38,8 @@ public class ShipController {
     //Request a ship with a certain name?
     @RequestMapping(value="/ships/id/{id}")
     public ArrayList getShip(@PathVariable String id) {
-        ArrayList<Ship> myShips = getXMLShip();
-        return myShips;
+        myShip = getXMLShip();
+        return myShip;
     }
    /**
    * @return      all ship polls 
@@ -35,8 +47,8 @@ public class ShipController {
    */ 
     @RequestMapping(value="/ships/polls")
     public ArrayList getShipPolls() {
-        ArrayList<Ship> myShips_pos = getXMLShipPolls();
-        return myShips_pos;
+        myShipsPos = getXMLShipPolls();
+        return myShipsPos;
     }
   /**
    * @return      all ongoing voyages
@@ -44,8 +56,8 @@ public class ShipController {
    */ 
     @RequestMapping(value="/ongoingVoyages")
     public ArrayList getOngoingVoyages(){
-      ArrayList<OnVoyages> voyages = getXMLOngoingVoyages();
-      return voyages;
+      ongoingVoyages = getXMLOngoingVoyages();
+      return ongoingVoyages;
     }
     /**
      * @param  id the id of the voyage
@@ -54,9 +66,28 @@ public class ShipController {
      */ 
     @RequestMapping(value="/voyages/{id}")
     public ArrayList getVoyage(@PathVariable String id) {
-        ArrayList<Voyage> myVoyage_pos = getXMLShipVoyage();
-        return myVoyage_pos;
+        if(id.equals("fag")) {
+          myVoyage = getXMLShipVoyage();
+          System.out.println("voyage equals fag");
+        }
+        return myVoyage;
     }
+
+    @RequestMapping(value="/voyages/{id}/updatelimits", method = RequestMethod.PUT)  
+    public @ResponseBody RequestedParameters putData(@RequestBody RequestedParameters body, @PathVariable String id) {
+      System.out.println("IN post MEthod JAVA SPRING " + body.getRequiredETA() + id );
+      for(int i = 0; i < myVoyage.size(); i++){
+        System.out.println("heej ");
+        myVoyage.get(i).setRequiredETA(body.getRequiredETA());
+      }
+      return body;
+    }
+    //FOR FUTURE POST METHODS
+    // @RequestMapping(value="/voyages/{id}/requiredETA", method = RequestMethod.POST)  
+    // public @ResponseBody String postData(@RequestBody String eta, @PathVariable String id) {
+    //   System.out.println("IN post MEthod JAVA SPRING " + eta + id );
+    //   return eta;
+    // }
 
     private ArrayList getXMLShip(){
         ArrayList<Ship> shipsArray = new ArrayList<Ship>();
@@ -66,7 +97,7 @@ public class ShipController {
           // Mattias /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml
           // Yusuf /Users/Yusuf/Documents/LIU/TNM094-KEX/Voyage_and_ship_data
           // EINAR /Users/einarsandberg/Documents/Voyage_ship_data/ship_101.xml
-          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/ship_101.xml");
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/ship_101.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -197,7 +228,7 @@ public class ShipController {
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // Yusuf /Users/Yusuf/Documents/LIU/TNM094-KEX/Voyage_and_ship_data
           // Einar /Users/einarsandberg/Documents/Voyage_ship_data/polls.xml
-          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/polls.xml");
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/polls.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -283,7 +314,7 @@ public class ShipController {
         try{
           //OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/
           // Einar /Users/einarsandberg/Documents/Voyage_ship_data/ongoingVoyages.xml
-          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/ongoingVoyages.xml");
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/ongoingVoyages.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -331,7 +362,7 @@ public class ShipController {
           // Mattias: /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/polls.xml
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // EINAR /Users/einarsandberg/Documents/Voyage_ship_data/voyage_89710.xml
-          File fXmlFile = new File("/Users/einarsandberg/Documents/Voyage_ship_data/voyage_89710.xml");
+          File fXmlFile = new File("C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/voyage_89710.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
