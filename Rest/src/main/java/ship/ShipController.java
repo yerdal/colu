@@ -691,6 +691,7 @@ public class ShipController {
                  
                   voyageArray.add(voyage);
 
+
                 }
 
                         

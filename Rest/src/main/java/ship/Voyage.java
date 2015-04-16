@@ -293,11 +293,8 @@ public class Voyage
 		{
 			return 1; //decent
 		}
-		else if (reportedWindSpeed > chosenWindSpeed)
-		{
-			return 2; // bad
-		}
-		return 0;
+		else //reportedWindSpeed > chosenWindSpeed)
+			return 2;
 	}
 
 
