@@ -5,14 +5,22 @@
 
 .list {
 	background-color: @red-base;
+	
 }
 
-.content{
+.content {
 	background-color: @blue-base;
+}
+
+/*For margin between columns*/
+[class*="col-"] {
+    background-clip: padding-box;
+    border-right: 10px solid transparent;
+    border-top: 10px solid transparent;
 }
 
 @media (max-width: 768px){
 	.content{
-		display: none;
+		
 	}
 }
