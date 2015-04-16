@@ -283,89 +283,106 @@ public class Voyage
 
 	public void checkWindSpeed(double chosenWindSpeed)
 	{
-		WeatherWaypoint point = getLatestWeatherWaypoint();
-		double reportedWindSpeed = point.getWindSpeed();
-		if (reportedWindSpeed < chosenWindSpeed)
+		
+		double reportedWindSpeed;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
-			point.setWindSpeedStatus("GOOD");
-		}
-		else if (reportedWindSpeed == chosenWindSpeed)
-		{
-			point.setWindSpeedStatus("OK");
-		}
-		else //reportedWindSpeed > chosenWindSpeed
-		{
-			point.setWindSpeedStatus("BAD");
+			reportedWindSpeed = weatherWaypoints.get(i).getWindSpeed();
+			if (reportedWindSpeed < chosenWindSpeed)
+			{
+				weatherWaypoints.get(i).setWindSpeedStatus("GOOD");
+			}
+			else if (reportedWindSpeed == chosenWindSpeed)
+			{
+				weatherWaypoints.get(i).setWindSpeedStatus("OK");
+			}
+			else //reportedWindSpeed > chosenWindSpeed
+			{
+				weatherWaypoints.get(i).setWindSpeedStatus("BAD");
+			}
 		}
 	}
 	public void checkWindDir(double chosenWindDir)
 	{
-		WeatherWaypoint point = getLatestWeatherWaypoint();
-		double reportedWindDir = point.getWindDir();
-		if (reportedWindDir < chosenWindDir)
+		
+		double reportedWindDir;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
-			point.setWindDirStatus("GOOD");
-		}
-		else if (reportedWindDir == chosenWindDir)
-		{
-			point.setWindDirStatus("OK");
-		}
-		else //reportedWindDir > chosenWindDir
-		{
-			point.setWindDirStatus("BAD");
+			reportedWindDir = weatherWaypoints.get(i).getWindDir();
+			if (reportedWindDir < chosenWindDir)
+			{
+				weatherWaypoints.get(i).setWindDirStatus("GOOD");
+			}
+			else if (reportedWindDir == chosenWindDir)
+			{
+				weatherWaypoints.get(i).setWindDirStatus("OK");
+			}
+			else //reportedWindDir > chosenWindDir
+			{
+				weatherWaypoints.get(i).setWindDirStatus("BAD");
+			}
 		}
 
 	}
 	public void checkSignWaveHeight(double chosenSignWaveHeight)
 	{
-		WeatherWaypoint point = getLatestWeatherWaypoint();
-		double reportedSignWaveHeight = point.getSignWaveHeight();
-		if (reportedSignWaveHeight < chosenSignWaveHeight)
+		double reportedSignWaveHeight;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
-			point.setSignWaveHeightStatus("GOOD");
-		}
-		else if (reportedSignWaveHeight == chosenSignWaveHeight)
-		{
-			point.setSignWaveHeightStatus("OK");
-		}
-		else
-		{
-			point.setSignWaveHeightStatus("BAD");
+			reportedSignWaveHeight = weatherWaypoints.get(i).getSignWaveHeight();
+			if (reportedSignWaveHeight < chosenSignWaveHeight)
+			{
+				weatherWaypoints.get(i).setSignWaveHeightStatus("GOOD");
+			}
+			else if (reportedSignWaveHeight == chosenSignWaveHeight)
+			{
+				weatherWaypoints.get(i).setSignWaveHeightStatus("OK");
+			}
+			else
+			{
+				weatherWaypoints.get(i).setSignWaveHeightStatus("BAD");
+			}
 		}
 	}
 	public void checkCurrentDir (double chosenCurrentDir)
 	{
-		WeatherWaypoint point = getLatestWeatherWaypoint();
-		double reportedCurrentDir = point.getCurrentDir();
-		if (reportedCurrentDir < chosenCurrentDir)
+		double reportedCurrentDir;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
-			point.setCurrentDirStatus("GOOD");
-		}
-		else if (reportedCurrentDir == chosenCurrentDir)
-		{
-			point.setCurrentDirStatus("OK");
-		}
-		else
-		{
-			point.setCurrentDirStatus("BAD");
+			reportedCurrentDir = weatherWaypoints.get(i).getCurrentDir();
+			if (reportedCurrentDir < chosenCurrentDir)
+			{
+				weatherWaypoints.get(i).setCurrentDirStatus("GOOD");
+			}
+			else if (reportedCurrentDir == chosenCurrentDir)
+			{
+				weatherWaypoints.get(i).setCurrentDirStatus("OK");
+			}
+			else
+			{
+				weatherWaypoints.get(i).setCurrentDirStatus("BAD");
+			}
 		}
 
 	}
 	public void checkCurrentSpeed (double chosenCurrentSpeed)
 	{
-		WeatherWaypoint point = getLatestWeatherWaypoint();
-		double reportedCurrentSpeed = point.getCurrentSpeed();
-		if (reportedCurrentSpeed < chosenCurrentSpeed)
+		double reportedCurrentSpeed;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
-			point.setCurrentSpeedStatus("GOOD");
-		}
-		else if (reportedCurrentSpeed == chosenCurrentSpeed)
-		{
-			point.setCurrentSpeedStatus("OK");
-		}
-		else
-		{
-			point.setCurrentSpeedStatus("BAD");
+			reportedCurrentSpeed = weatherWaypoints.get(i).getCurrentSpeed();
+			if (reportedCurrentSpeed < chosenCurrentSpeed)
+			{
+				weatherWaypoints.get(i).setCurrentSpeedStatus("GOOD");
+			}
+			else if (reportedCurrentSpeed == chosenCurrentSpeed)
+			{
+				weatherWaypoints.get(i).setCurrentSpeedStatus("OK");
+			}
+			else
+			{
+				weatherWaypoints.get(i).setCurrentSpeedStatus("BAD");
+			}
 		}
 		
 	}

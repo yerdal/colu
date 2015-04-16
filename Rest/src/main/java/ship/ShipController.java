@@ -690,8 +690,13 @@ public class ShipController {
                                               shipReportsArray);
                  
                   voyageArray.add(voyage);
-                  double chosenWind = 45.4;
+                  double chosenWind = 10;
+                  voyage.checkCurrentSpeed(chosenWind);
+                  voyage.checkWindSpeed(chosenWind);
+                  voyage.checkWindDir(chosenWind);
+                  voyage.checkSignWaveHeight(chosenWind);
                   voyage.checkCurrentDir(chosenWind);
+                  
                 }
 
                         
