@@ -75,8 +75,7 @@ public class ShipController {
           //optional, but recommended
           //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
           doc.getDocumentElement().normalize();
-          
-         
+
           NodeList nList = doc.getElementsByTagName("ship");
             //System.out.println(nList.getLength() + "\n" + "\n"); 
             for (int temp = 1; temp < nList.getLength(); temp++) 

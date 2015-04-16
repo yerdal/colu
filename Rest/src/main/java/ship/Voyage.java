@@ -2,6 +2,7 @@ package ship;
 import java.util.ArrayList;
 public class Voyage
 {
+	//variabler från XML
 	private int voyageID;
 	private int worklistID;
 	private String systemOnBoardStatus;
@@ -46,6 +47,9 @@ public class Voyage
 	private ArrayList <WeatherWaypoint> weatherWaypoints;
 	private ArrayList <ShipReport> shipReports;
 	private String comment; //Comment about the voyage
+
+	//våra variabler
+	private int windStatus;
 	// private bool onGoing; //kanske?
 	public Voyage (int theVoyageID, int theWorklistID, String theSystemOnBoardStatus, 
 									String theState,
@@ -153,6 +157,10 @@ public class Voyage
 	public ArrayList<WeatherWaypoint> getWeatherWaypoints()
 	{
 		return weatherWaypoints;
+	}
+	public WeatherWaypoint getLatestWeatherWaypoint()
+	{
+		return weatherWaypoints.get(weatherWaypoints.size()-1);
 	}
 	public ArrayList<ShipReport> getShipReports()
 	{
@@ -272,4 +280,25 @@ public class Voyage
 	public String getComment(){
 		return comment;
 	}
+
+	public int checkWind(double chosenWindSpeed)
+	{
+		WeatherWaypoint point = getLatestWeatherWaypoint();
+		double reportedWindSpeed = point.getWindSpeed();
+		if (reportedWindSpeed < chosenWindSpeed)
+		{
+			return 0; // good
+		}
+		else if (reportedWindSpeed == chosenWindSpeed)
+		{
+			return 1; //decent
+		}
+		else if (reportedWindSpeed > chosenWindSpeed)
+		{
+			return 2; // bad
+		}
+		return 0;
+	}
+
+
 }
