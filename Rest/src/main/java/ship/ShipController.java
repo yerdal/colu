@@ -690,7 +690,9 @@ public class ShipController {
                                               shipReportsArray);
                  
                   voyageArray.add(voyage);
-
+                  double chosenWind = 17.9;
+                  String status = voyage.checkWind(chosenWind);
+                  System.out.println(status);
 
                 }
 

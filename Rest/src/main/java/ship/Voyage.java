@@ -49,7 +49,7 @@ public class Voyage
 	private String comment; //Comment about the voyage
 
 	//våra variabler
-	private int windStatus;
+	private String windSpeedStatus;
 	// private bool onGoing; //kanske?
 	public Voyage (int theVoyageID, int theWorklistID, String theSystemOnBoardStatus, 
 									String theState,
@@ -281,20 +281,24 @@ public class Voyage
 		return comment;
 	}
 
-	public int checkWind(double chosenWindSpeed)
+	public String checkWind(double chosenWindSpeed)
 	{
 		WeatherWaypoint point = getLatestWeatherWaypoint();
 		double reportedWindSpeed = point.getWindSpeed();
 		if (reportedWindSpeed < chosenWindSpeed)
 		{
-			return 0; // good
+			windSpeedStatus = "GOOD";
+			return windSpeedStatus;
 		}
 		else if (reportedWindSpeed == chosenWindSpeed)
 		{
-			return 1; //decent
+			windSpeedStatus= "OK";
+			return windSpeedStatus;
 		}
-		else //reportedWindSpeed > chosenWindSpeed)
-			return 2;
+		//reportedWindSpeed > chosenWindSpeed
+		windSpeedStatus = "BAD";
+		return windSpeedStatus;
+
 	}
 
 
