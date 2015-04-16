@@ -93,8 +93,8 @@ public class Voyage
 									String theComment,
 									ArrayList <ShipReport> theShipReports)
 	{
-		voyageID = theVoyageID;
-	 	worklistID = theWorklistID;
+	voyageID = theVoyageID;
+	worklistID = theWorklistID;
   	systemOnBoardStatus = theSystemOnBoardStatus;
   	state = theState;
   	pvapdfurl = thePvadpfurl;
@@ -102,7 +102,7 @@ public class Voyage
 	//values
   	voyageName = theVoyageName;
   	voyRef = theVoyRef;
-	 	operator = theOperator;
+	operator = theOperator;
   	personName = thePersonName;
   	ship = theShip;
   	departure = theDeparture;
@@ -135,8 +135,8 @@ public class Voyage
   	foBrobLatest = theFoBrobLatest;
   	hasPva = theHasPva;
   	weatherWaypoints = theWeatherWaypoints;
-	 	comment = theComment;
-	 	shipReports = theShipReports;
+	comment = theComment;
+	shipReports = theShipReports;
 
 	}
 	public int getVoyageId(){
