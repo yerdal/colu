@@ -141,10 +141,13 @@ public class Voyage
   	foBrobLatest = theFoBrobLatest;
   	hasPva = theHasPva;
   	weatherWaypoints = theWeatherWaypoints;
-	 	setRequiredETA("");
+
+  	comment = theComment;
+		shipReports = theShipReports;
+		
+  	requiredETA = new Date();
 	 	compareETARequried();
-	comment = theComment;
-	shipReports = theShipReports;
+	
 
 	}
 	public int getVoyageId(){
