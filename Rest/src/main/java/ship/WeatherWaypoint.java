@@ -24,7 +24,14 @@ public class WeatherWaypoint
 	private double lon;
 	private String legType;
 	private double lat;
-	private String dateETP; // Estimated Time of Passage in UTC format="yyyy-M-dd HH:mm:ss" 
+	private String dateETP; // Estimated Time of Passage in UTC format="yyyy-M-dd HH:mm:ss"
+
+	//våra variabler
+	private String windSpeedStatus; 
+	private String windDirStatus;
+	private String signWaveHeightStatus;
+	private String currentSpeedStatus;
+	private String currentDirStatus;
 
 	public WeatherWaypoint (double theWindSpeed,
 							double theWindDir,
@@ -73,7 +80,7 @@ public class WeatherWaypoint
 	{
 		return windSpeed;
 	}
-	public double GetWindDir()
+	public double getWindDir()
 	{
 		return windDir;
 	}
@@ -133,6 +140,46 @@ public class WeatherWaypoint
 	}
 	public String getETPDate(){
 		return dateETP;
+	}
+	public String getWindSpeedStatus()
+	{
+		return windSpeedStatus;	
+	}
+	public String getWindDirStatus()
+	{
+		return windDirStatus;
+	}
+	public String getSignWaveHeightStatus()
+	{
+		return signWaveHeightStatus;
+	}
+	public String getCurrentDirStatus()
+	{
+		return currentDirStatus;
+	}
+	public String getCurrentSpeedStatus()
+	{
+		return currentSpeedStatus;
+	}
+	public void setWindSpeedStatus(String status)
+	{
+		windSpeedStatus = status;
+	}
+	public void setWindDirStatus(String status)
+	{
+		windDirStatus = status;
+	}
+	public void setSignWaveHeightStatus(String status)
+	{
+		signWaveHeightStatus = status;
+	}
+	public void setCurrentSpeedStatus(String status)
+	{
+		currentSpeedStatus = status;
+	}
+	public void setCurrentDirStatus(String status)
+	{
+		currentDirStatus = status;
 	}
 	
 }

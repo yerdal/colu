@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 public class Voyage
 {
+	//variabler från XML
 	private int voyageID;
 	private int worklistID;
 	private String systemOnBoardStatus;
@@ -50,8 +51,10 @@ public class Voyage
 	private ArrayList <ShipReport> shipReports;
 	private String comment; //Comment about the voyage
 
+
 	//Our new vaiables!
 	private Date requiredETA;
+
 
 	// private bool onGoing; //kanske?
 	public Voyage (int theVoyageID, int theWorklistID, String theSystemOnBoardStatus, 
@@ -96,8 +99,8 @@ public class Voyage
 									String theComment,
 									ArrayList <ShipReport> theShipReports)
 	{
-		voyageID = theVoyageID;
-	 	worklistID = theWorklistID;
+	voyageID = theVoyageID;
+	worklistID = theWorklistID;
   	systemOnBoardStatus = theSystemOnBoardStatus;
   	state = theState;
   	pvapdfurl = thePvadpfurl;
@@ -105,7 +108,7 @@ public class Voyage
 	//values
   	voyageName = theVoyageName;
   	voyRef = theVoyRef;
-	 	operator = theOperator;
+	operator = theOperator;
   	personName = thePersonName;
   	ship = theShip;
   	departure = theDeparture;
@@ -138,10 +141,11 @@ public class Voyage
   	foBrobLatest = theFoBrobLatest;
   	hasPva = theHasPva;
   	weatherWaypoints = theWeatherWaypoints;
-	 	comment = theComment;
-	 	shipReports = theShipReports;
 	 	setRequiredETA("");
 	 	compareETARequried();
+	comment = theComment;
+	shipReports = theShipReports;
+
 	}
 	public int getVoyageId(){
 		return voyageID;
@@ -161,6 +165,10 @@ public class Voyage
 	public ArrayList<WeatherWaypoint> getWeatherWaypoints()
 	{
 		return weatherWaypoints;
+	}
+	public WeatherWaypoint getLatestWeatherWaypoint()
+	{
+		return weatherWaypoints.get(weatherWaypoints.size()-1);
 	}
 	public ArrayList<ShipReport> getShipReports()
 	{
@@ -281,6 +289,7 @@ public class Voyage
 		return comment;
 	}
 
+
 	// Bränsleåtgång → Bränsle kvar, OCH förbrukad bränsle sen senaste rapport?
 			
 	// Fart -> Definiera fartygets önskade hastighet. Spann? 
@@ -310,5 +319,112 @@ public class Voyage
 	}
 
 
+
+
+	public void checkWindSpeed(double chosenWindSpeed)
+	{
+		
+		double reportedWindSpeed;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			reportedWindSpeed = weatherWaypoints.get(i).getWindSpeed();
+			if (reportedWindSpeed < chosenWindSpeed)
+			{
+				weatherWaypoints.get(i).setWindSpeedStatus("GOOD");
+			}
+			else if (reportedWindSpeed == chosenWindSpeed)
+			{
+				weatherWaypoints.get(i).setWindSpeedStatus("OK");
+			}
+			else //reportedWindSpeed > chosenWindSpeed
+			{
+				weatherWaypoints.get(i).setWindSpeedStatus("BAD");
+			}
+		}
+	}
+	public void checkWindDir(double chosenWindDir)
+	{
+		
+		double reportedWindDir;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			reportedWindDir = weatherWaypoints.get(i).getWindDir();
+			if (reportedWindDir < chosenWindDir)
+			{
+				weatherWaypoints.get(i).setWindDirStatus("GOOD");
+			}
+			else if (reportedWindDir == chosenWindDir)
+			{
+				weatherWaypoints.get(i).setWindDirStatus("OK");
+			}
+			else //reportedWindDir > chosenWindDir
+			{
+				weatherWaypoints.get(i).setWindDirStatus("BAD");
+			}
+		}
+
+	}
+	public void checkSignWaveHeight(double chosenSignWaveHeight)
+	{
+		double reportedSignWaveHeight;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			reportedSignWaveHeight = weatherWaypoints.get(i).getSignWaveHeight();
+			if (reportedSignWaveHeight < chosenSignWaveHeight)
+			{
+				weatherWaypoints.get(i).setSignWaveHeightStatus("GOOD");
+			}
+			else if (reportedSignWaveHeight == chosenSignWaveHeight)
+			{
+				weatherWaypoints.get(i).setSignWaveHeightStatus("OK");
+			}
+			else
+			{
+				weatherWaypoints.get(i).setSignWaveHeightStatus("BAD");
+			}
+		}
+	}
+	public void checkCurrentDir (double chosenCurrentDir)
+	{
+		double reportedCurrentDir;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			reportedCurrentDir = weatherWaypoints.get(i).getCurrentDir();
+			if (reportedCurrentDir < chosenCurrentDir)
+			{
+				weatherWaypoints.get(i).setCurrentDirStatus("GOOD");
+			}
+			else if (reportedCurrentDir == chosenCurrentDir)
+			{
+				weatherWaypoints.get(i).setCurrentDirStatus("OK");
+			}
+			else
+			{
+				weatherWaypoints.get(i).setCurrentDirStatus("BAD");
+			}
+		}
+
+	}
+	public void checkCurrentSpeed (double chosenCurrentSpeed)
+	{
+		double reportedCurrentSpeed;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			reportedCurrentSpeed = weatherWaypoints.get(i).getCurrentSpeed();
+			if (reportedCurrentSpeed < chosenCurrentSpeed)
+			{
+				weatherWaypoints.get(i).setCurrentSpeedStatus("GOOD");
+			}
+			else if (reportedCurrentSpeed == chosenCurrentSpeed)
+			{
+				weatherWaypoints.get(i).setCurrentSpeedStatus("OK");
+			}
+			else
+			{
+				weatherWaypoints.get(i).setCurrentSpeedStatus("BAD");
+			}
+		}
+		
+	}
 
 }
