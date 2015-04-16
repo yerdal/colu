@@ -1,26 +1,34 @@
-angular.module('coluApp')
+var coluApp = angular.module('coluApp');
 
+coluApp.service('sharedProperties', function() {
+    var activeShip = "Default";
+    
+    return {
+        getActive: function() {
+            return activeShip;
+        },
+        setActive: function(s) {
+            activeShip = s;
+        }
+    }
+});
 
-.controller('mainController', function($scope, $http ){
+coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
   $http.get('http://localhost:8090/ships/test').success(function(data,status,headers,config)
     {
-      
       console.log("skepp", data[0]);
       $scope.ships = data.slice(1, 10);
       
       }).error(function(data,status,headers,config){
         console.log('ERROR getting from backend' , status);
       });
-  
 
-  $scope.activeShip = "Default";
- 
-
- $scope.showActive = function(s){
-
-    $scope.activeShip = s;  
+  $scope.showActive = function(s){
+    sharedProperties.setActive(s);
+    $scope.activeShip = sharedProperties.getActive();
   }
+
 
   $scope.time = {lowerLimit: '-30',
                    upperLimit: '30'};
