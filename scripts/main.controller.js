@@ -62,7 +62,7 @@ angular.module('coluApp')
     }
     initGribData();
     //Get data from backend
-    $http.get('http://localhost:8090/ships/test').success(function(data,status,headers,config)
+    $http.get('http://localhost:8090/ships/id/notdefined').success(function(data,status,headers,config)
     {
       //Succes getting from backend
       //Init scope data
