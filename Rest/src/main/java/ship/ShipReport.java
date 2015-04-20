@@ -138,7 +138,6 @@ public class ShipReport
  				theEtaEarliest = "00-00-00 00:00";
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm");
 			etaEarliest = formatter.parse(theEtaEarliest);
-			System.out.println("ETA EARLIEST " +  etaEarliest.toString());
  
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -389,15 +388,15 @@ public class ShipReport
 	public String getRequiredETAStatus(){
 		return requiredETAStatus;
 	}
-	public void setStatusRequiredETA(Date reqEta){
+	public void updateRequiredETAStatus(Date reqEta){
 		if(reqEta.compareTo(etaEarliest)>0){
-        System.out.println("reqEta is after etaEarliest");
+        // System.out.println("reqEta is after etaEarliest");
         requiredETAStatus = "BAD";
     }else if(reqEta.compareTo(etaEarliest)<0){
-        System.out.println("reqEta is before etaEarliest");
+        // System.out.println("reqEta is before etaEarliest");
         requiredETAStatus = "BAD";
     }else{
-        System.out.println("reqEta is equal to etaEarliest");
+        // System.out.println("reqEta is equal to etaEarliest");
         requiredETAStatus = "OK";
     }
 		

@@ -66,19 +66,20 @@ public class ShipController {
      */ 
     @RequestMapping(value="/voyages/{id}")
     public ArrayList getVoyage(@PathVariable String id) {
-        if(id.equals("fag")) {
+        //This is so we dont update the voyage with new values and erase required parameters from user
+        if(id.equals("89710")) {
           myVoyage = getXMLShipVoyage();
-          System.out.println("voyage equals fag");
+          System.out.println("voyage equals 89710");
         }
         return myVoyage;
     }
 
     @RequestMapping(value="/voyages/{id}/updatelimits", method = RequestMethod.PUT)  
     public @ResponseBody RequestedParameters putData(@RequestBody RequestedParameters body, @PathVariable String id) {
-      System.out.println("IN post MEthod JAVA SPRING " + body.getRequiredETA() + id );
+      // System.out.println("IN post MEthod JAVA SPRING " + body + id );
+      //Loop through the voyages (only one now) and set Required Parameters from frontend
       for(int i = 0; i < myVoyage.size(); i++){
-        System.out.println("heej ");
-        myVoyage.get(i).setRequiredETA(body.getRequiredETA());
+        myVoyage.get(i).setRequiredParameters(body);
       }
       return body;
     }
@@ -721,13 +722,7 @@ public class ShipController {
                                               shipReportsArray);
                  
                   voyageArray.add(voyage);
-                  double chosenWind = 10;
-                  voyage.checkCurrentSpeed(chosenWind);
-                  voyage.checkWindSpeed(chosenWind);
-                  voyage.checkWindDir(chosenWind);
-                  voyage.checkSignWaveHeight(chosenWind);
-                  voyage.checkCurrentDir(chosenWind);
-                  
+                 
                 }
 
                         

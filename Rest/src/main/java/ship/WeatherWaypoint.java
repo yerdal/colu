@@ -181,5 +181,81 @@ public class WeatherWaypoint
 	{
 		currentDirStatus = status;
 	}
-	
+
+	public void updateWindSpeedStatus(double chosenWindSpeed)
+	{
+		if (windSpeed < chosenWindSpeed)
+		{
+			setWindSpeedStatus("GOOD");
+		}
+		else if (windSpeed == chosenWindSpeed)
+		{
+			setWindSpeedStatus("OK");
+		}
+		else //windSpeed > chosenWindSpeed
+		{
+			setWindSpeedStatus("BAD");
+		}
+		
+	}
+
+	public void updateWindDirStatus(double chosenWindDir){
+
+		if (windDir < chosenWindDir)
+		{
+			setWindDirStatus("GOOD");
+		}
+		else if (windDir == chosenWindDir)
+		{
+			setWindDirStatus("OK");
+		}
+		else //windDir > chosenWindDir
+		{
+			setWindDirStatus("BAD");
+		}
+	}
+
+	public void updateSignWaveHeightStatus(double chosenSignWaveHeight){
+		if (signWaveHeight < chosenSignWaveHeight)
+		{
+			setSignWaveHeightStatus("GOOD");
+		}
+		else if (signWaveHeight == chosenSignWaveHeight)
+		{
+			setSignWaveHeightStatus("OK");
+		}
+		else
+		{
+			setSignWaveHeightStatus("BAD");
+		}
+	}
+
+	public void updateCurrentDirStatus(double chosenCurrentDir){
+		if (currentDir < chosenCurrentDir)
+			{
+				setCurrentDirStatus("GOOD");
+			}
+			else if (currentDir == chosenCurrentDir)
+			{
+				setCurrentDirStatus("OK");
+			}
+			else
+			{
+				setCurrentDirStatus("BAD");
+			}
+	}
+	public void updateCurrentSpeedStatus(double chosenCurrentSpeed){
+		if (currentSpeed < chosenCurrentSpeed)
+		{
+				setCurrentSpeedStatus("GOOD");
+		}
+		else if (currentSpeed == chosenCurrentSpeed)
+		{
+				setCurrentSpeedStatus("OK");
+		}
+		else
+		{
+				setCurrentSpeedStatus("BAD");
+		}
+	}
 }
