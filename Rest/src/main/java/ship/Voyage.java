@@ -54,6 +54,7 @@ public class Voyage
 
 	//Our new vaiables!
 	private Date requiredETA;
+	private String status;
 
 
 	// private bool onGoing; //kanske?
@@ -375,4 +376,114 @@ public class Voyage
 		
 	}
 
+	public String checkStatus()
+	{
+		WeatherWaypoint waypoint = getClosestWeatherWaypoint();
+		//FIXA DENNA FUNKTION EFTER DATEGREJ
+
+		if (waypoint.getWindSpeedStatus() == "BAD" || waypoint.getWindDirStatus() == "BAD"
+			|| waypoint.getSignWaveHeightStatus() == "BAD" || waypoint.getCurrentSpeedStatus() == "BAD"
+			|| waypoint.getCurrentDirStatus() == "BAD")
+		{
+			status = "BAD";
+		}
+		else if(waypoint.getWindSpeedStatus() == "GOOD" && waypoint.getWindDirStatus() == "GOOD"
+			&& waypoint.getSignWaveHeightStatus() == "GOOD" && waypoint.getCurrentSpeedStatus() == "GOOD"
+			&& waypoint.getCurrentDirStatus() == "GOOD")
+		{
+			status = "GOOD";
+		}
+		else
+		{
+			status = "OK";
+		}
+			
+		
+		return status;
+	}
+	public WeatherWaypoint getClosestWeatherWaypoint()
+	{
+		int theCounter = checkClosestWeather();
+		System.out.println(theCounter);
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			if (i == theCounter)
+			{
+				return weatherWaypoints.get(i);
+			}
+		}
+		return null;
+
+	}
+
+	public int checkClosestWeather()
+	{
+		String[] parts;
+		String[] dayPart;
+		//weatherDates format: yyyy-mm-dd hh:mm:ss
+		ArrayList <String> weatherDatesString = new ArrayList <String>();
+		//latestReportDate format: yyyy-mm-dd hh:mm
+		String latestReportDate = shipReports.get(shipReports.size()-1).getDate();
+		System.out.println(latestReportDate);
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			weatherDatesString.add(weatherWaypoints.get(i).getETPDate());
+		}
+		//System.out.println(latestReportDateString + " " + weatherDates.get(2));
+
+		parts = latestReportDate.split("-");
+		// DEN FULASTE LÖSNINGEN IN THE HISTORY OF MANKIND
+		dayPart = parts[2].split(" ");
+		String[] timePart = dayPart[1].split(":");
+		int currentYear = Integer.parseInt(parts[0]);
+		int currentMonth = Integer.parseInt(parts[1]);
+		int currentDay = Integer.parseInt(dayPart[0]);
+		
+		int currentHour = Integer.parseInt(timePart[0]);
+		int currentMin = Integer.parseInt(timePart[1]);
+		Date currentDate = new Date(currentYear, currentMonth, currentDay);
+		long currentTotalTime = ((currentHour * 60) + currentMin) * 1000;
+		ArrayList <Integer> weatherYears = new ArrayList<Integer>();
+		ArrayList <Integer> weatherMonths = new ArrayList<Integer>();
+		ArrayList <Integer> weatherDays = new ArrayList<Integer>();
+		ArrayList <Date> weatherDates = new ArrayList<Date>();
+		ArrayList <Integer> weatherHours = new ArrayList<Integer>();
+		ArrayList <Integer> weatherMins = new ArrayList<Integer>();
+		for (int i = 0; i < weatherDatesString.size(); i++)
+		{
+			parts = weatherDatesString.get(i).split("-");
+			dayPart = parts[2].split(" ");
+			timePart = dayPart[1].split(":");
+
+			weatherYears.add(Integer.parseInt(parts[0]));
+			weatherMonths.add(Integer.parseInt(parts[1]));
+			weatherDays.add(Integer.parseInt(dayPart[0]));
+			weatherDates.add(new Date(weatherYears.get(i), weatherMonths.get(i), weatherDays.get(i)));
+			weatherHours.add(Integer.parseInt(timePart[0]));
+			weatherMins.add(Integer.parseInt(timePart[1]));
+		}
+		 
+		long diffDate;
+		long closest = weatherDates.get(0).getTime(); // set to first
+		Date closestDate = new Date();
+		long totalHourMin;
+		//comparison between the dates
+		int counter = 0;
+		for (int i = 1; i < weatherDates.size(); i++)
+		{
+			totalHourMin = ((weatherHours.get(i) * 60) + weatherMins.get(i)) * 1000; // * 1000 because convert to milliseconds
+
+			diffDate = Math.abs((weatherDates.get(i).getTime() + totalHourMin) - (currentDate.getTime() + currentTotalTime)); // getTime returns the number of milliseconds since January 1, 1970, 00:00:00 GMT
+			if(diffDate < closest)
+			{
+				closest = diffDate;
+				closestDate = new Date(weatherDates.get(i).getTime() + totalHourMin); //using milliseconds constructor
+				counter = i;
+			}
+			
+			System.out.println(closest);
+		}
+		return counter;
+
+	}
 }

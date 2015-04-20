@@ -302,6 +302,7 @@ public class ShipController {
           }
           return shipsArray;
 
+
         
         } catch (Exception e) {
              e.printStackTrace();
@@ -722,11 +723,12 @@ public class ShipController {
                                               shipReportsArray);
                  
                   voyageArray.add(voyage);
-                 
+                  voyage.setRequiredCurrentSpeed(0.3);
+                 System.out.println(voyage.checkStatus());
+
                 }
 
                         
-
           }
           return voyageArray;
 
