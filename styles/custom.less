@@ -1,16 +1,36 @@
 
 @red-base: #B93436;
 @blue-base: #069DBF;
+@green-base: #009C73;
+@yellow-base: #F2EA72;
+@gray-base: #BEBCC0;
 
+
+tbody {
+	border-bottom: 10px solid @gray-base;
+}
 
 .list {
-	background-color: @red-base;
+	background-color: @gray-base;
 	
 }
 
 .content {
 	background-color: @blue-base;
 }
+
+.bad-table{
+	background-color: @red-base;
+}
+
+.good-table{
+	background-color: @green-base;
+}	
+
+.handled-table{
+	background-color: @yellow-base;
+}	
+
 
 /*For margin between columns*/
 [class*="col-"] {
