@@ -1,13 +1,23 @@
-angular.module('coluApp')
+var coluApp = angular.module('coluApp');
 
+coluApp.service('sharedProperties', function() {
+    var activeShip = "Default";
+    
+    return {
+        getActive: function() {
+            return activeShip;
+        },
+        setActive: function(s) {
+            activeShip = s;
+        }
+    }
+});
 
-.controller('mainController', function($scope, $http ){
+coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
-  $scope.shipsBad;
 
   $http.get('http://localhost:8090/ships/test').success(function(data,status,headers,config)
     {
-      
       console.log("skepp", data[0]);
       
       $scope.shipsBad = data.slice(1, 7);
@@ -17,6 +27,7 @@ angular.module('coluApp')
 
     }).error(function(data,status,headers,config){
         console.log('ERROR getting from backend' , status);
+
     });
   
   function main (){
@@ -25,13 +36,14 @@ angular.module('coluApp')
 
 
     $scope.showActive = function(s){
-      $scope.activeShip = s;  
+      sharedProperties.setActive(s);
+      $scope.activeShip = sharedProperties.getActive();
     }
 
     $scope.isBad = function(s){
       return ($scope.shipsBad.indexOf(s) != -1)
     }
-
+    
       $scope.time = {lowerLimit: '-30',
       upperLimit: '30'};
 
@@ -60,7 +72,32 @@ angular.module('coluApp')
         $scope.disableEditor(id);
       };
 
-      $scope.handel = function(s){
+  $scope.fuel = {upperLimit: '250'};
+
+  $scope.combinedWave = {upperLimit: '250'};
+
+  $scope.current = {upperLimit: '250'};
+
+  $scope.wind = {upperLimit: '250'};
+
+  $scope.velocity = {upperLimit: '250'};
+
+
+  $scope.editorEnabled = [false, false, false, false, false, false];
+  
+  $scope.enableEditor = function(id) {
+    $scope.editorEnabled[id] = true;
+  };
+  
+  $scope.disableEditor = function(id) {
+    $scope.editorEnabled[id] = false;
+  };
+  
+  $scope.save = function(id) {
+    $scope.disableEditor(id);
+  };
+
+   $scope.handel = function(s){
         console.log("HANTERAD", s.shipName);
         
         if(!isInArray(s,$scope.shipsHandled))
@@ -77,9 +114,6 @@ angular.module('coluApp')
     function isInArray(value, array) {
       return array.indexOf(value) > -1;
     }
-
-    
-
 
   }
 });
