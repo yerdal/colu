@@ -69,6 +69,8 @@ public class ShipReport
 
 	//Our new vaiables!
 	private String requiredETAStatus; //OK = ontime / BAD 
+	private String requiredAvgSpeedStatus;
+
 
 	public ShipReport(int theReportID,
 						 int theCosp_eosp,
@@ -200,7 +202,8 @@ public class ShipReport
 		legType = theLegType;
 		lat = theLat;
 		date = theDate;
-	
+		requiredETAStatus = "undefined";
+		requiredAvgSpeedStatus = "undefined";
 	}
 	public int getReportID(){
 		return reportID;
@@ -384,10 +387,16 @@ public class ShipReport
 	}
 
 
-	//Newly added functions for levels on backend
+	//Newly added functions for levels on backend/
+	//GET
 	public String getRequiredETAStatus(){
 		return requiredETAStatus;
 	}
+	public String getRequiredAvgSpeedStatus(){
+		return requiredAvgSpeedStatus;
+	}
+
+	//Update
 	public void updateRequiredETAStatus(Date reqEta){
 		if(reqEta.compareTo(etaEarliest)>0){
         // System.out.println("reqEta is after etaEarliest");
@@ -400,6 +409,13 @@ public class ShipReport
         requiredETAStatus = "OK";
     }
 		
+	}
+	public void updateAvgSpeedStatus(double min, double max){
+		if(speedAvg > min && speedAvg < max ){
+			requiredAvgSpeedStatus = "OK";
+		}else{
+			requiredAvgSpeedStatus = "BAD";
+		}
 	}
 
 

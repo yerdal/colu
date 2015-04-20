@@ -54,8 +54,62 @@ public class Voyage
 
 	//Our new vaiables!
 	private Date requiredETA;
+	//Weather
+	private double requiredMaxWindSpeed;
+	private double requiredWindDir;
+	private double requiredMaxSignWaveHeight;
+	private double requiredCurrentDir;
+	private double requiredMaxCurrentSpeed;
+	//Ship
+	private double requiredAvgSpeedMin;
+	private double requiredAvgSpeedMax;
 
 
+	//Default Constructor
+	public Voyage(){
+		voyageID = 0;
+		worklistID = 0;
+		systemOnBoardStatus = "undefined";
+		state = "undefined";
+		pvapdfurl = "undefined";
+		lastUpdate = "undefined";
+		voyageName = "undefined";
+		voyRef = 0;
+		operator = new Operator(0);
+		personName = "undefined";
+		ship = new Ship(0, operator, "undefined");
+		departure = "undefined";
+		destination = "undefined";
+		etd = "undefined";
+		eta = "undefined";
+		requiredEta = "undefined";
+		loadingStatus = 0;
+		cargoWeight = 0.0;
+		cargoSensitivStatus = 0;
+		gmHeight = 0.0;
+		displacementAtDep = 0.0;
+		maxSpeed = 0.0;
+		draftAft = 0.0;
+		draftFwd = 0.0;
+		draftMean = 0.0;
+		draftTrim = 0.0;
+		tradelaneName = "undefined";
+		voyagePhase = "undefined";
+		hasRoute = "undefined";
+		nextMessageDate = "undefined";
+		priority = "undefined";
+		seaName = "undefined";
+		seaSortOrder = 0.0;
+		forecastModifiedDate = "undefined";
+		forecastState = "undefined";
+		foBrobDep = 0.0;
+		doBrobDep = 0.0;
+		foBrobLatest = 0.0;
+		doBrobLatest = 0.0;
+		hasPva = "undefined";
+		comment = "undefined";
+		requiredETA = new Date();
+	}
 	// private bool onGoing; //kanske?
 	public Voyage (int theVoyageID, int theWorklistID, String theSystemOnBoardStatus, 
 									String theState,
@@ -99,8 +153,8 @@ public class Voyage
 									String theComment,
 									ArrayList <ShipReport> theShipReports)
 	{
-	voyageID = theVoyageID;
-	worklistID = theWorklistID;
+		voyageID = theVoyageID;
+		worklistID = theWorklistID;
   	systemOnBoardStatus = theSystemOnBoardStatus;
   	state = theState;
   	pvapdfurl = thePvadpfurl;
@@ -108,7 +162,7 @@ public class Voyage
 	//values
   	voyageName = theVoyageName;
   	voyRef = theVoyRef;
-	operator = theOperator;
+		operator = theOperator;
   	personName = thePersonName;
   	ship = theShip;
   	departure = theDeparture;
@@ -166,10 +220,7 @@ public class Voyage
 	{
 		return weatherWaypoints;
 	}
-	public WeatherWaypoint getLatestWeatherWaypoint()
-	{
-		return weatherWaypoints.get(weatherWaypoints.size()-1);
-	}
+
 	public ArrayList<ShipReport> getShipReports()
 	{
 		return shipReports;
@@ -209,9 +260,6 @@ public class Voyage
 	}
 	public String getEta(){
 		return eta;
-	}
-	public String getRequiredEta(){
-		return requiredEta;
 	}
 	public int getLoadingStatus(){
 		return loadingStatus;
@@ -294,8 +342,41 @@ public class Voyage
 			
 	// Fart -> Definiera fartygets önskade hastighet. Spann? 
 
+
+	//Get own defined variables
+	public double getRequiredMaxWindSpeed(){
+		return requiredMaxWindSpeed;
+	}
+	public double getRequiredWindDir(){
+		return requiredWindDir;
+	}
+	public double getRequiredMaxSignWaveHeight(){
+		return requiredMaxSignWaveHeight;
+	}
+	public double getRequiredCurrentDir(){
+		return requiredCurrentDir;
+	}
+	public double getRequiredMaxCurrentSpeed(){
+		return requiredMaxCurrentSpeed;
+	}
+	public double getRequiredAvgSpeedMin(){
+		return requiredAvgSpeedMin;
+	}
+	public double getRequiredAvgSpeedMax(){
+		return requiredAvgSpeedMax;
+	}
+
+
 	public String getRequiredETA(){
-		return requiredETA.toString();
+		String temp; 
+		try {
+        temp = requiredETA.toString();
+      }   
+      catch (Exception e) {
+      	// e.throw
+         temp = "00-00-00 00:00";
+      }
+		return temp;
 	}
 	public void setRequiredParameters(RequestedParameters body){
 		System.out.println("Requested PArams " +  body.getRequiredETA() +
@@ -312,6 +393,7 @@ public class Voyage
     setRequiredWindDir(body.getRequiredWindDir());
     setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
     setRequiredCurrentDir(body.getRequiredCurrentDir());
+    setRequiredAvgSpeed(body.getRequiredAvgSpeedMin() , body.getRequiredAvgSpeedMin());
 	}
 
 
@@ -331,10 +413,17 @@ public class Voyage
 	}
 	// Ankomsttid -> Använda ETA variable från shipreport
 
-
+	public void setRequiredAvgSpeed(double speedMin, double speedMax){
+		requiredAvgSpeedMin = speedMin;
+		requiredAvgSpeedMax = speedMax;
+		for (int i = 0; i < shipReports.size(); i++)
+		{
+			shipReports.get(i).updateAvgSpeedStatus(speedMin, speedMax);
+		}
+	}
 	public void setRequiredWindSpeed(double chosenWindSpeed)
 	{
-		
+		requiredMaxWindSpeed = chosenWindSpeed;
 		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
 			weatherWaypoints.get(i).updateWindSpeedStatus(chosenWindSpeed);
@@ -342,7 +431,7 @@ public class Voyage
 	}
 	public void setRequiredWindDir(double chosenWindDir)
 	{
-		
+		requiredWindDir = chosenWindDir;
 		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
 			weatherWaypoints.get(i).updateWindDirStatus(chosenWindDir);
@@ -351,7 +440,7 @@ public class Voyage
 	}
 	public void setRequiredSignWaveHeight(double chosenSignWaveHeight)
 	{
-		double reportedSignWaveHeight;
+		requiredMaxSignWaveHeight = chosenSignWaveHeight;
 		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
 			weatherWaypoints.get(i).updateSignWaveHeightStatus(chosenSignWaveHeight);
@@ -359,6 +448,7 @@ public class Voyage
 	}
 	public void setRequiredCurrentDir (double chosenCurrentDir)
 	{
+		requiredCurrentDir = chosenCurrentDir;
 		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
 			weatherWaypoints.get(i).updateCurrentDirStatus(chosenCurrentDir);
@@ -368,6 +458,7 @@ public class Voyage
 
 	public void setRequiredCurrentSpeed(double chosenCurrentSpeed)
 	{
+		requiredMaxCurrentSpeed = chosenCurrentSpeed;
 		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
 			weatherWaypoints.get(i).updateCurrentSpeedStatus(chosenCurrentSpeed);

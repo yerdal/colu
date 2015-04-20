@@ -33,6 +33,8 @@ public class WeatherWaypoint
 	private String currentSpeedStatus;
 	private String currentDirStatus;
 
+	
+
 	public WeatherWaypoint (double theWindSpeed,
 							double theWindDir,
 							double theSwellHeight,
@@ -74,6 +76,11 @@ public class WeatherWaypoint
 		legType = theLegType;
 		lat = theLat;
 		dateETP = theDate;
+		windSpeedStatus = "undefined";
+		windDirStatus = "undefined";
+		signWaveHeightStatus = "undefined";
+		currentSpeedStatus = "undefined";
+		currentDirStatus = "undefined";
 	}
 
 	public double getWindSpeed()
