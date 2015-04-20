@@ -113,6 +113,7 @@ public class Voyage
 		hasPva = "undefined";
 		comment = "undefined";
 		requiredETA = new Date();
+		status = "undefined";
 	}
 	// private bool onGoing; //kanske?
 	public Voyage (int theVoyageID, int theWorklistID, String theSystemOnBoardStatus, 
@@ -204,6 +205,7 @@ public class Voyage
 		shipReports = theShipReports;
 
   	requiredETA = new Date();
+  	status = "undefined";
 	}
 	public int getVoyageId(){
 		return voyageID;
@@ -399,6 +401,25 @@ public class Voyage
     setRequiredCurrentDir(body.getRequiredCurrentDir());
     setRequiredAvgSpeed(body.getRequiredAvgSpeedMin() , body.getRequiredAvgSpeedMin());
 	}
+	public void setRequiredParameters(SavedParameters body){
+		System.out.println("Saved PArams " +  body.getRequiredETA() + "\n " +
+								body.getRequiredCurrentSpeed() + "\n " + 
+								body.getRequiredWindSpeed() + " \n " + 
+								body.getRequiredWindDir() + "  \n " + 
+								body.getRequiredSignWaveHeight() + " \n " + 
+								body.getRequiredCurrentDir() + " \n " +
+								body.getRequiredAvgSpeedMin()  + " \n " +
+								body.getRequiredAvgSpeedMax());
+
+		//Set each required limits for a voyage
+		setRequiredETA(body.getRequiredETA());
+    setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
+    setRequiredWindSpeed(body.getRequiredWindSpeed());
+    setRequiredWindDir(body.getRequiredWindDir());
+    setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
+    setRequiredCurrentDir(body.getRequiredCurrentDir());
+    setRequiredAvgSpeed(body.getRequiredAvgSpeedMin() , body.getRequiredAvgSpeedMax());
+	}
 
 
 	public void setRequiredETA(String reqEta){
@@ -472,7 +493,8 @@ public class Voyage
 
 	public String checkStatus()
 	{
-		WeatherWaypoint waypoint = getClosestWeatherWaypoint();
+		WeatherWaypoint waypoint = closestWeatherWaypoint();
+
 		//FIXA DENNA FUNKTION EFTER DATEGREJ
 
 		if (waypoint.getWindSpeedStatus() == "BAD" || waypoint.getWindDirStatus() == "BAD"
@@ -495,7 +517,7 @@ public class Voyage
 		
 		return status;
 	}
-	public WeatherWaypoint getClosestWeatherWaypoint()
+	public WeatherWaypoint closestWeatherWaypoint()
 	{
 		int theCounter = checkClosestWeather();
 		System.out.println(theCounter);
@@ -503,9 +525,12 @@ public class Voyage
 		{
 			if (i == theCounter)
 			{
+				System.out.println("WeatherWaypoints size " + weatherWaypoints.size());
+				System.out.println("THE COUNTER" + theCounter);
 				return weatherWaypoints.get(i);
 			}
 		}
+		System.out.println("returning Null");
 		return null;
 
 	}
