@@ -27,7 +27,8 @@ public class ShipController {
   private ArrayList<Ship> myShip;
   private ArrayList<Ship> myShipsPos;
   private ArrayList<OnVoyages> ongoingVoyages;
-  private ArrayList<Voyage> myVoyage;
+  private Voyage myVoyage;
+  private ArrayList<Voyage> voyageList;
 
 
    /**
@@ -56,6 +57,7 @@ public class ShipController {
    */ 
     @RequestMapping(value="/ongoingVoyages")
     public ArrayList getOngoingVoyages(){
+      // System.out.println("getONgoingVoyages");
       ongoingVoyages = getXMLOngoingVoyages();
       return ongoingVoyages;
     }
@@ -65,22 +67,31 @@ public class ShipController {
      * @see         ArrayList
      */ 
     @RequestMapping(value="/voyages/{id}")
-    public ArrayList getVoyage(@PathVariable String id) {
+    public Voyage getVoyage(@PathVariable String id) {
         //This is so we dont update the voyage with new values and erase required parameters from user
-        if(id.equals("89710")) {
-          myVoyage = getXMLShipVoyage();
-          System.out.println("voyage equals 89710");
-        }
+        myVoyage = getXMLShipVoyage(id);
         return myVoyage;
+    }
+    @RequestMapping(value="/voyages")
+    public ArrayList getAllVoyages() {
+      //so we know we have the ongoing voyages
+      ongoingVoyages = getOngoingVoyages();
+      voyageList = new ArrayList<Voyage>();
+        //This is so we dont update the voyage with new values and erase required parameters from user
+      for(int i = 0; i <ongoingVoyages.size(); i++){
+        String voyageId = Integer.toString(ongoingVoyages.get(i).getVoyageId());
+        Voyage tempVoyage = getXMLShipVoyage(voyageId); 
+        voyageList.add(tempVoyage);
+      } 
+      return voyageList;
     }
 
     @RequestMapping(value="/voyages/{id}/updatelimits", method = RequestMethod.PUT)  
     public @ResponseBody RequestedParameters putData(@RequestBody RequestedParameters body, @PathVariable String id) {
       // System.out.println("IN post MEthod JAVA SPRING " + body + id );
       //Loop through the voyages (only one now) and set Required Parameters from frontend
-      for(int i = 0; i < myVoyage.size(); i++){
-        myVoyage.get(i).setRequiredParameters(body);
-      }
+      myVoyage.setRequiredParameters(body);
+
       return body;
     }
     //FOR FUTURE POST METHODS
@@ -355,14 +366,14 @@ public class ShipController {
           return null;
 
     }
-    private ArrayList getXMLShipVoyage(){
-        ArrayList<Voyage> voyageArray = new ArrayList<Voyage>();
-
+    private Voyage getXMLShipVoyage(String id){
+        // ArrayList<Voyage> voyageArray = new ArrayList<Voyage>();
+        Voyage voyage = new Voyage();
         try {
           // Mattias: /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/polls.xml
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // EINAR /Users/einarsandberg/Documents/Voyage_ship_data/voyage_89710.xml
-          File fXmlFile = new File("../data/voyage_and_ship/voyage_89710.xml");
+          File fXmlFile = new File("../data/voyage_and_ship/voyage_" + id + ".xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -681,7 +692,7 @@ public class ShipController {
 
                     }
                   }
-                  Voyage voyage = new Voyage(voyageID, worklistid,systemonboardstatus,state,
+                  voyage = new Voyage(voyageID, worklistid,systemonboardstatus,state,
                                               pvapdf, lastupdate,
                                               voyageName,
                                               voyageVoyref,
@@ -721,20 +732,21 @@ public class ShipController {
                                               voyageComment,
                                               shipReportsArray);
                  
-                  voyageArray.add(voyage);
+                  // voyageArray.add(voyage);
                  
                 }
 
                         
 
           }
-          return voyageArray;
+          return voyage;
 
         
         } catch (Exception e) {
-             e.printStackTrace();
+            // System.out.println("Exception Catched" );
+             // e.printStackTrace();
         }
-         return null; 
+         return voyage; 
     }
 
     //Method for returning 0 if string empty
