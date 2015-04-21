@@ -16,6 +16,8 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 /**
  * Handling the rest API and parsing XML files
@@ -23,6 +25,8 @@ import java.util.ArrayList;
 @RestController
 public class ShipController {
 
+  @Autowired
+  ParametersRepository repository;
 
   private ArrayList<Ship> myShip;
   private ArrayList<Ship> myShipsPos;
@@ -61,6 +65,7 @@ public class ShipController {
     @RequestMapping(value="/ongoingVoyages")
     public ArrayList getOngoingVoyages(){
       // System.out.println("getONgoingVoyages");
+
       ongoingVoyages = getXMLOngoingVoyages();
       return ongoingVoyages;
     }
@@ -423,6 +428,11 @@ public class ShipController {
 
     }
     private Voyage getXMLShipVoyage(String id){
+      SavedParameters savedParam = repository.findOne(1L);
+        // System.out.println("SavedParameters found with findOne(1L):");
+        // System.out.println("--------------------------------");
+        // System.out.println(savedParam.getRequiredETA());
+        // System.out.println();
         // ArrayList<Voyage> voyageArray = new ArrayList<Voyage>();
         Voyage voyage = new Voyage();
         try {
@@ -788,9 +798,15 @@ public class ShipController {
                                               voyageComment,
                                               shipReportsArray);
                  
+<<<<<<< HEAD
 
                  /* voyage.setRequiredCurrentSpeed(0.3);
                  System.out.println(voyage.checkStatus());*/
+=======
+                  voyage.setRequiredParameters(savedParam);
+                  voyage.setRequiredCurrentSpeed(0.3);
+                  System.out.println("CHECKSTATUS " + voyage.checkStatus());
+>>>>>>> 9a9e9b664b8499e266a447c8726eb297306f3ab5
 
 
                 }
