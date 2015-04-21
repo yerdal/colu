@@ -15,36 +15,36 @@ coluApp.service('sharedProperties', function() {
 
 coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
-  //Hämtar in skepp-data
+  //Gets the ship-data
   $http.get('http://localhost:8090/ships/test').success(function(data,status,headers,config)
     {
       
-      console.log("skepp", data[0]);
+      //For now, just looking at a few ships
       $scope.ships = data.slice(1, 20);
 
+      //Sets some hardcoded parameters
       for(var i = 0; i < $scope.ships.length; i++)
       {
+        $scope.ships[i].rangeParameters = {
+          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', status: true, unit: "minuter", number: 0},
+          velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', status:false, unit: "knop", number: 1}
+        }
 
-        $scope.ships[i].time = {lowerLimit: '-30',
-                      upperLimit: '30'};
+        $scope.ships[i].singleParameters = {
 
-        $scope.ships[i].fuel = {upperLimit: '250'};
-
-        $scope.ships[i].combinedWave = {upperLimit: '250'};
-
-        $scope.ships[i].current = {upperLimit: '250'};
-
-        $scope.ships[i].wind = {upperLimit: '250'};
-
-        $scope.ships[i].velocity = {upperLimit: '250'};   
-        
+          fuel: {label: "Bränsle", upperLimit: '250', status: true, unit: "L/mil", number: 2},
+          combinedWave : {label: "Våghöjd",upperLimit: '250', status:false, unit: "m",number: 3},
+          current : {label: "Ström", upperLimit: '250', status:true, unit: "m/s", number: 4},
+          wind : {label: "Vind", upperLimit: '250', status:false, unit: "m/s", number: 5}
+        }        
+      
       } 
       
       $scope.shipsBad = $scope.ships.slice(1, 7);
       $scope.shipsGood = $scope.ships.slice(7, 9);
       $scope.shipsHandled = $scope.ships.slice(9, 15);
       
-      //Where all the functionlaity is
+      //Where all the functionality is
       main();   
       
       }).error(function(data,status,headers,config){
@@ -55,6 +55,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
   function main (){
 
+    
     //How the form works
     formFunctionality();
   
@@ -82,12 +83,14 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       } 
     }
 
+    //Functionality of the form
     function formFunctionality(){
 
       $scope.editorEnabled = [false, false, false, false, false, false];
 
       $scope.enableEditor = function(id) {
         $scope.editorEnabled[id] = true;
+
       };
 
       $scope.disableEditor = function(id) {
