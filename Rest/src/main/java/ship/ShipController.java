@@ -80,6 +80,7 @@ public class ShipController extends ParsingXML{
     }
     @RequestMapping(value="/voyages")
     public ArrayList getAllVoyages() {
+      
       //so we know we have the ongoing voyages
       ongoingVoyages = getOngoingVoyages();
       voyageList = new ArrayList<Voyage>();

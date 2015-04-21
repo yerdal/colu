@@ -3,8 +3,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
 public class Voyage
-{
+{	
+
+	
 	//variabler från XML
 	private int voyageID;
 	private int worklistID;
@@ -373,6 +379,10 @@ public class Voyage
 	}
 
 
+	public String getStatus(){
+		return status;
+	}
+
 	public String getRequiredETA(){
 		String temp; 
 		try {
@@ -384,6 +394,7 @@ public class Voyage
       }
 		return temp;
 	}
+
 	public void setRequiredParameters(RequestedParameters body){
 		System.out.println("Requested PArams " +  body.getRequiredETA() +
 								body.getRequiredCurrentSpeed() +
@@ -392,15 +403,52 @@ public class Voyage
 								body.getRequiredSignWaveHeight() +
 								body.getRequiredCurrentDir());
 
-		//Set each required limits for a voyage
-		setRequiredETA(body.getRequiredETA());
-    setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
-    setRequiredWindSpeed(body.getRequiredWindSpeed());
-    setRequiredWindDir(body.getRequiredWindDir());
-    setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
-    setRequiredCurrentDir(body.getRequiredCurrentDir());
-    setRequiredAvgSpeed(body.getRequiredAvgSpeedMin() , body.getRequiredAvgSpeedMin());
+		// SavedParameters savedParam = repository.findOne(voyageID);
+		// savedParam.setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
+		// savedParam.setRequiredWindSpeed(body.getRequiredWindSpeed());
+		// savedParam.setRequiredWindDir(body.getRequiredWindDir());
+		// savedParam.setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
+		// savedParam.setRequiredCurrentDir(body.getRequiredCurrentDir());
+		// savedParam.setRequiredETA(body.getRequiredETA());
+		// savedParam.setRequiredAvgSpeedMin(body.getRequiredAvgSpeedMin());
+		// savedParam.setRequiredAvgSpeedMax(body.getRequiredAvgSpeedMax());
+
+		// //Set each required limits for a voyage
+		// setRequiredETA(body.getRequiredETA());
+  //   setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
+  //   setRequiredWindSpeed(body.getRequiredWindSpeed());
+  //   setRequiredWindDir(body.getRequiredWindDir());
+  //   setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
+  //   setRequiredCurrentDir(body.getRequiredCurrentDir());
+  //   setRequiredAvgSpeed(body.getRequiredAvgSpeedMin() , body.getRequiredAvgSpeedMin());
 	}
+
+	//Set parameters from DB
+	public void setRequiredParametersFromDB(SavedParameters savedParam){
+		
+
+		//Set each required limits for a voyage
+		setRequiredETA(savedParam.getRequiredETA());
+    setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
+    setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
+    setRequiredWindDir(savedParam.getRequiredWindDir());
+    setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
+    setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
+    setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
+  //   System.out.println("VOyage ID on Object " + voyageID );
+		// System.out.println("Voyage ID from DB " +  savedParam.getId());
+		// System.out.println("savedParam PArams " +  savedParam.getRequiredETA() + "\n " +
+		// 						"RequiredCurrentSpeed " + savedParam.getRequiredCurrentSpeed() + "\n " + 
+		// 						"RequiredWindSpeed " + savedParam.getRequiredWindSpeed() + " \n " + 
+		// 						"RequiredWindDir " + savedParam.getRequiredWindDir() + "  \n " + 
+		// 						"RequiredSignWaveHeight " + savedParam.getRequiredSignWaveHeight() + " \n " + 
+		// 						"RequiredCurrentDir " + savedParam.getRequiredCurrentDir() + " \n " +
+		// 						"RequiredAvgSpeedMin " + savedParam.getRequiredAvgSpeedMin()  + " \n " +
+		// 						"RequiredAvgSpeedMax " + savedParam.getRequiredAvgSpeedMax());
+
+
+	}
+
 	public void setRequiredParameters(SavedParameters body){
 		System.out.println("Saved PArams " +  body.getRequiredETA() + "\n " +
 								body.getRequiredCurrentSpeed() + "\n " + 
@@ -471,7 +519,7 @@ public class Voyage
 			weatherWaypoints.get(i).updateSignWaveHeightStatus(chosenSignWaveHeight);
 		}
 	}
-	public void setRequiredCurrentDir (double chosenCurrentDir)
+	public void setRequiredCurrentDir(double chosenCurrentDir)
 	{
 		requiredCurrentDir = chosenCurrentDir;
 		for (int i = 0; i < weatherWaypoints.size(); i++)
@@ -495,18 +543,30 @@ public class Voyage
 	{
 
 		WeatherWaypoint waypoint = closestWeatherWaypoint();
+		int lastInd;
+		if(shipReports.size() > 0)
+			lastInd = shipReports.size() - 1;
+		else 
+			lastInd = shipReports.size();
+		//Get the last report to compare Speed
+		ShipReport shipreport = shipReports.get(lastInd);
 
 		//FIXA DENNA FUNKTION EFTER DATEGREJ
+		// System.out.println("STATUS WIND Speed" + waypoint.getWindSpeedStatus());
+		// System.out.println("STATUS Wind Dir " + waypoint.getWindDirStatus());
+		// System.out.println("STATUS Current SPeed " + waypoint.getCurrentSpeedStatus());
+		// System.out.println("STATUS Sign Wave Height " + waypoint.getSignWaveHeightStatus());
+		// System.out.println("STATUS Current Dir " + waypoint.getCurrentDirStatus());
+		// System.out.println("STATUS AvgSpeedStatus " + shipreport.getAvgSpeedStatus());
 
-		if (waypoint.getWindSpeedStatus() == "BAD" || waypoint.getWindDirStatus() == "BAD"
+		if (waypoint.getWindSpeedStatus() == "BAD"
 			|| waypoint.getSignWaveHeightStatus() == "BAD" || waypoint.getCurrentSpeedStatus() == "BAD"
-			|| waypoint.getCurrentDirStatus() == "BAD")
+			|| shipreport.getAvgSpeedStatus() == "BAD")
 		{
 			status = "BAD";
 		}
-		else if(waypoint.getWindSpeedStatus() == "GOOD" && waypoint.getWindDirStatus() == "GOOD"
-			&& waypoint.getSignWaveHeightStatus() == "GOOD" && waypoint.getCurrentSpeedStatus() == "GOOD"
-			&& waypoint.getCurrentDirStatus() == "GOOD")
+		else if(waypoint.getWindSpeedStatus() == "GOOD"	&& waypoint.getSignWaveHeightStatus() == "GOOD" 
+			&& waypoint.getCurrentSpeedStatus() == "GOOD" && shipreport.getAvgSpeedStatus() == "GOOD")
 		{
 			status = "GOOD";
 		}
@@ -527,8 +587,8 @@ public class Voyage
 		{
 			if (i == theCounter)
 			{
-				System.out.println("WeatherWaypoints size " + weatherWaypoints.size());
-				System.out.println("THE COUNTER" + theCounter);
+				// System.out.println("WeatherWaypoints size " + weatherWaypoints.size());
+				// System.out.println("THE COUNTER" + theCounter);
 				return weatherWaypoints.get(i);
 			}
 		}

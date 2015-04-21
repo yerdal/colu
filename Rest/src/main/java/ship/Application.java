@@ -7,8 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 
+import java.util.ArrayList;
+
 @SpringBootApplication
-public class Application implements CommandLineRunner {
+public class Application extends ParsingXML implements CommandLineRunner{
 
     @Autowired
     ParametersRepository repository;
@@ -19,28 +21,30 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        // save a couple of customers
-        // repository.save(new SavedParameters(0,0,0,0,0,0,0, "stan "));
-        // repository.save(new SavedParameters(0,0,0,0,0,0,0, "s1"));
-        // repository.save(new SavedParameters(0,0,0,0,0,0,0, "Blo"));
-        // repository.save(new SavedParameters(0,0,0,0,0,0,0," Bahs"));
-        //SHIPOperator inputs 
-      
-        repository.save(new SavedParameters(0.1,15.0 , 120 ,0.4 , 26.2 ,16.2,18.0 , "00-00-00 00:00"));
+        ArrayList<OnVoyages> ongoingVoyages = new ArrayList<OnVoyages>();
+        ongoingVoyages = getXMLOngoingVoyages();
 
-        // fetch all customers
-        System.out.println("Customers found with findAll():");
+        for(int i = 0; i < ongoingVoyages.size();i++){
+            //System.out.println("Ongoning voyage ID " + ongoingVoyages.get(i).getVoyageId());
+            //id , requiredCurrentSpeed, requiredWindSpee, requiredWindDir,requiredSignWaveHeight,requiredCurrentDir,requiredAvgSpeedMin,requiredAvgSpeedMax
+            repository.save(new SavedParameters((ongoingVoyages.get(i).getVoyageId()), 0.5 ,15.0, 120, 1.5, 26.2, 16.2, 18.0, "00-00-00 00:00"));
+        }
+        //SHIPOperator inputs 
+        
+        
+
+        System.out.println("Operator saved variables found with findAll():");
         System.out.println("-------------------------------");
-        for (SavedParameters customer : repository.findAll()) {
-            System.out.println(customer.getRequiredETA());
+        for (SavedParameters savedParameters : repository.findAll()) {
+            System.out.println(savedParameters.getId());
         }
         System.out.println();
 
-        // fetch an individual customer by ID
-        SavedParameters customer = repository.findOne(1L);
-        System.out.println("SavedParameters found with findOne(1L):");
+        // fetch an individual savedParameters by VoyageID
+        SavedParameters savedParameters = repository.findOne(89710);
+        System.out.println("SavedParameters found with findOne(89710):");
         System.out.println("--------------------------------");
-        System.out.println(customer.getRequiredETA());
+        System.out.println(savedParameters.getRequiredCurrentDir());
         System.out.println();
 
         // fetch customers by last name

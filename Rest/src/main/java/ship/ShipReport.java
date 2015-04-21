@@ -392,7 +392,7 @@ public class ShipReport
 	public String getRequiredETAStatus(){
 		return requiredETAStatus;
 	}
-	public String getRequiredAvgSpeedStatus(){
+	public String getAvgSpeedStatus(){
 		return requiredAvgSpeedStatus;
 	}
 
@@ -411,8 +411,8 @@ public class ShipReport
 		
 	}
 	public void updateAvgSpeedStatus(double min, double max){
-		if(speedAvg > min && speedAvg < max ){
-			requiredAvgSpeedStatus = "OK";
+		if(speedAvg >= min && speedAvg <= max ){
+			requiredAvgSpeedStatus = "GOOD";
 		}else{
 			requiredAvgSpeedStatus = "BAD";
 		}

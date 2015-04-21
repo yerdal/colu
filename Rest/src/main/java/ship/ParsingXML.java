@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class ParsingXML{
 
-
   @Autowired
   ParametersRepository repository;
 
@@ -284,12 +283,9 @@ public class ParsingXML{
 
     }
     public Voyage getXMLShipVoyage(String id){
-      SavedParameters savedParam = repository.findOne(1L);
-        // System.out.println("SavedParameters found with findOne(1L):");
-        // System.out.println("--------------------------------");
-        // System.out.println(savedParam.getRequiredETA());
-        // System.out.println();
-        // ArrayList<Voyage> voyageArray = new ArrayList<Voyage>();
+      //getVoyageId from database
+      SavedParameters savedParam = repository.findOne(parseIntSafely(id));
+  
         Voyage voyage = new Voyage();
         try {
           // Mattias: /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/polls.xml
@@ -614,6 +610,7 @@ public class ParsingXML{
 
                     }
                   }
+
                   voyage = new Voyage(voyageID, worklistid,systemonboardstatus,state,
                                               pvapdf, lastupdate,
                                               voyageName,
@@ -653,9 +650,9 @@ public class ParsingXML{
                                               weatherWayPointArray,
                                               voyageComment,
                                               shipReportsArray);
-                 
-                  voyage.setRequiredParameters(savedParam);
-                  voyage.setRequiredCurrentSpeed(0.3);
+                  
+                  voyage.setRequiredParametersFromDB(savedParam);
+                  // System.out.println("HHSADHDSHSDH");
                   System.out.println("CHECKSTATUS " + voyage.checkStatus());
 
 

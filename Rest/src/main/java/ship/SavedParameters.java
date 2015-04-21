@@ -10,9 +10,11 @@ import javax.persistence.Id;
 @Entity
 public class SavedParameters {
   //FOr auto Generation
+  //The Voyage ID
   @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-  private long id;
+  private int id;
+  // @GeneratedValue(strategy=GenerationType.AUTO)
+  
   private double requiredCurrentSpeed;
   private double requiredWindSpeed;
   private double requiredWindDir;
@@ -24,7 +26,8 @@ public class SavedParameters {
 
   protected SavedParameters(){} //So it works with JPA
   
-  public SavedParameters(double theRequiredCurrentSpeed,
+  public SavedParameters(int theId,
+                        double theRequiredCurrentSpeed,
                         double theRequiredWindSpeed,
                         double theRequiredWindDir,
                         double theRequiredSignWaveHeight,
@@ -32,6 +35,7 @@ public class SavedParameters {
                         double theRequiredAvgSpeedMin,
                         double theRequiredAvgSpeedMax,
                         String theRequiredETA) {
+        id = theId;
         requiredCurrentSpeed = theRequiredCurrentSpeed;
         requiredWindSpeed = theRequiredWindSpeed;
         requiredWindDir = theRequiredWindDir;
@@ -41,7 +45,9 @@ public class SavedParameters {
         requiredAvgSpeedMax = theRequiredAvgSpeedMax;
         requiredETA = theRequiredETA;
     }
-
+  public int getId(){
+    return id;
+  }
   public String getRequiredETA(){
     return requiredETA;
   }
@@ -66,7 +72,31 @@ public class SavedParameters {
   public double getRequiredAvgSpeedMax(){
     return requiredAvgSpeedMax;
   }
-
+  //Setters
+  public void setRequiredCurrentSpeed(double theRequiredCurrentSpeed){
+    requiredCurrentSpeed = theRequiredCurrentSpeed;
+  }
+  public void setRequiredWindSpeed(double theRequiredWindSpeed ){
+    requiredWindSpeed = theRequiredWindSpeed;
+  }
+  public void setRequiredWindDir(double theRequiredWindDir){
+    requiredWindDir = theRequiredWindDir;
+  }
+  public void setRequiredSignWaveHeight(double theRequiredSignWaveHeight){
+    requiredSignWaveHeight = theRequiredSignWaveHeight;
+  }
+  public void setRequiredCurrentDir(double theRequiredCurrentDir){
+    requiredCurrentDir = theRequiredCurrentDir;
+  }
+  public void setRequiredETA(String theRequiredETA){
+    requiredETA = theRequiredETA;
+  }
+  public void setRequiredAvgSpeedMin(double theRequiredAvgSpeedMin){
+    requiredAvgSpeedMin = theRequiredAvgSpeedMin;
+  }
+  public void setRequiredAvgSpeedMax(double theRequiredAvgSpeedMax){
+    requiredAvgSpeedMax = theRequiredAvgSpeedMax;
+  }
 
 }
 
