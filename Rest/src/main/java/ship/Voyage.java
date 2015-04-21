@@ -493,6 +493,7 @@ public class Voyage
 
 	public String checkStatus()
 	{
+
 		WeatherWaypoint waypoint = closestWeatherWaypoint();
 
 		//FIXA DENNA FUNKTION EFTER DATEGREJ
@@ -517,10 +518,11 @@ public class Voyage
 		
 		return status;
 	}
+
 	public WeatherWaypoint closestWeatherWaypoint()
 	{
 		int theCounter = checkClosestWeather();
-		System.out.println(theCounter);
+	
 		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
 			if (i == theCounter)
@@ -542,8 +544,8 @@ public class Voyage
 		//weatherDates format: yyyy-mm-dd hh:mm:ss
 		ArrayList <String> weatherDatesString = new ArrayList <String>();
 		//latestReportDate format: yyyy-mm-dd hh:mm
-		String latestReportDate = shipReports.get(shipReports.size()-1).getDate();
-		System.out.println(latestReportDate);
+		String latestReportDate = shipReports.get(0).getDate();
+		
 		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
 			weatherDatesString.add(weatherWaypoints.get(i).getETPDate());
@@ -561,7 +563,7 @@ public class Voyage
 		int currentHour = Integer.parseInt(timePart[0]);
 		int currentMin = Integer.parseInt(timePart[1]);
 		Date currentDate = new Date(currentYear, currentMonth, currentDay);
-		long currentTotalTime = ((currentHour * 60) + currentMin) * 1000;
+		long currentTotalTime = ((currentHour * 60) + currentMin) * 1000; //* 1000 because convert to milliseconds
 		ArrayList <Integer> weatherYears = new ArrayList<Integer>();
 		ArrayList <Integer> weatherMonths = new ArrayList<Integer>();
 		ArrayList <Integer> weatherDays = new ArrayList<Integer>();
@@ -590,7 +592,7 @@ public class Voyage
 		int counter = 0;
 		for (int i = 1; i < weatherDates.size(); i++)
 		{
-			totalHourMin = ((weatherHours.get(i) * 60) + weatherMins.get(i)) * 1000; // * 1000 because convert to milliseconds
+			totalHourMin = ((weatherHours.get(i) * 60) + weatherMins.get(i)) * 1000; // 
 
 			diffDate = Math.abs((weatherDates.get(i).getTime() + totalHourMin) - (currentDate.getTime() + currentTotalTime)); // getTime returns the number of milliseconds since January 1, 1970, 00:00:00 GMT
 			if(diffDate < closest)
@@ -600,7 +602,7 @@ public class Voyage
 				counter = i;
 			}
 			
-			System.out.println(closest);
+			
 		}
 		return counter;
 

@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/Operator.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/RequestedParameters.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/ShipReport.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/Voyage.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/OnVoyages.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/Contract.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/FuelOilPerformance.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/SimpleCORSFilter.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/Contact.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/Ship.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/ShipList.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/SatCPollPosition.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/WeatherWaypoint.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/ShipController.java
+/Users/einarsandberg/Documents/colu/Rest/src/main/java/ship/Application.java
+=======
 F:\TNM094 - Kandidatprojekt\webapplikation\colu\Rest\src\main\java\ship\Ship.java
 F:\TNM094 - Kandidatprojekt\webapplikation\colu\Rest\src\main\java\ship\Operator.java
 F:\TNM094 - Kandidatprojekt\webapplikation\colu\Rest\src\main\java\ship\SavedParameters.java
@@ -15,3 +32,4 @@ F:\TNM094 - Kandidatprojekt\webapplikation\colu\Rest\src\main\java\ship\SatCPoll
 F:\TNM094 - Kandidatprojekt\webapplikation\colu\Rest\src\main\java\ship\ShipReport.java
 F:\TNM094 - Kandidatprojekt\webapplikation\colu\Rest\src\main\java\ship\SimpleCORSFilter.java
 F:\TNM094 - Kandidatprojekt\webapplikation\colu\Rest\src\main\java\ship\Voyage.java
+>>>>>>> 9a9e9b664b8499e266a447c8726eb297306f3ab5
