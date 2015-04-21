@@ -60,7 +60,7 @@ public class ShipController extends ParsingXML{
    * @return      all ongoing voyages
    * @see         ArrayList
    */ 
-    @RequestMapping(value="/ongoingVoyages")
+    @RequestMapping(value="/voyages/ongoing")
     public ArrayList getOngoingVoyages(){
       // System.out.println("getONgoingVoyages");
 
@@ -72,7 +72,7 @@ public class ShipController extends ParsingXML{
      * @return      a voyage with given id
      * @see         ArrayList
      */ 
-    @RequestMapping(value="/voyages/{id}")
+    @RequestMapping(value="/voyages/id/{id}")
     public Voyage getVoyage(@PathVariable String id) {
         //This is so we dont update the voyage with new values and erase required parameters from user
         myVoyage = getXMLShipVoyage(id);
@@ -80,11 +80,11 @@ public class ShipController extends ParsingXML{
     }
     @RequestMapping(value="/voyages")
     public ArrayList getAllVoyages() {
-      
+
       //so we know we have the ongoing voyages
       ongoingVoyages = getOngoingVoyages();
       voyageList = new ArrayList<Voyage>();
-        //This is so we dont update the voyage with new values and erase required parameters from user
+
       for(int i = 0; i < ongoingVoyages.size(); i++){
         String voyageId = Integer.toString(ongoingVoyages.get(i).getVoyageId());
         Voyage tempVoyage = getXMLShipVoyage(voyageId); 
@@ -93,12 +93,12 @@ public class ShipController extends ParsingXML{
       return voyageList;
     }
 
-    @RequestMapping(value="/badVoyages")
+    @RequestMapping(value="/voyages/status/bad")
     public ArrayList getBadVoyages() {
       //so we know we have the ongoing voyages
       ongoingVoyages = getOngoingVoyages();
       badVoyages = new ArrayList<Voyage>();
-        //This is so we dont update the voyage with new values and erase required parameters from user
+
       for(int i = 0; i < ongoingVoyages.size(); i++){
         String voyageId = Integer.toString(ongoingVoyages.get(i).getVoyageId());
         Voyage tempVoyage = getXMLShipVoyage(voyageId);
@@ -109,13 +109,13 @@ public class ShipController extends ParsingXML{
       } 
       return badVoyages;
     }
-    @RequestMapping(value="/goodVoyages")
+    @RequestMapping(value="/voyages/status/good")
     public ArrayList getGoodVoyages()
     {
       //so we know we have the ongoing voyages
       ongoingVoyages = getOngoingVoyages();
       goodVoyages = new ArrayList<Voyage>();
-        //This is so we dont update the voyage with new values and erase required parameters from user
+
       for(int i = 0; i < ongoingVoyages.size(); i++){
         String voyageId = Integer.toString(ongoingVoyages.get(i).getVoyageId());
         Voyage tempVoyage = getXMLShipVoyage(voyageId);
@@ -127,7 +127,7 @@ public class ShipController extends ParsingXML{
       return goodVoyages;
     }
 
-    @RequestMapping(value="/okVoyages")
+    @RequestMapping(value="/voyages/status/ok")
     public ArrayList getOkVoyages()
     {
       //so we know we have the ongoing voyages

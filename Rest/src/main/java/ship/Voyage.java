@@ -118,6 +118,8 @@ public class Voyage
 		doBrobLatest = 0.0;
 		hasPva = "undefined";
 		comment = "undefined";
+		weatherWaypoints = new ArrayList<WeatherWaypoint>();
+	 	shipReports =  new ArrayList<ShipReport>();
 		requiredETA = new Date();
 		status = "undefined";
 	}
@@ -538,18 +540,22 @@ public class Voyage
 		}
 		
 	}
+	//return index 0 if size is 0
+	public int getLatesReportIndex(){
+		if(shipReports.size() > 0)
+			return shipReports.size() - 1;
+		else 
+			return 0;
+	}
 
 	public String checkStatus()
 	{
-
+		if(shipReports.size() == 0)
+			return "ERROR finding shipreports or waypoint";
 		WeatherWaypoint waypoint = closestWeatherWaypoint();
-		int lastInd;
-		if(shipReports.size() > 0)
-			lastInd = shipReports.size() - 1;
-		else 
-			lastInd = shipReports.size();
+
 		//Get the last report to compare Speed
-		ShipReport shipreport = shipReports.get(lastInd);
+		ShipReport shipreport = shipReports.get(getLatesReportIndex());
 
 		//FIXA DENNA FUNKTION EFTER DATEGREJ
 		// System.out.println("STATUS WIND Speed" + waypoint.getWindSpeedStatus());
@@ -593,18 +599,20 @@ public class Voyage
 			}
 		}
 		System.out.println("returning Null");
-		return null;
+		return new WeatherWaypoint();
 
 	}
 
 	public int checkClosestWeather()
 	{
+		if(shipReports.size() == 0 || weatherWaypoints.size() == 0)
+			return 0;
 		String[] parts;
 		String[] dayPart;
 		//weatherDates format: yyyy-mm-dd hh:mm:ss
 		ArrayList <String> weatherDatesString = new ArrayList <String>();
 		//latestReportDate format: yyyy-mm-dd hh:mm
-		String latestReportDate = shipReports.get(0).getDate();
+		String latestReportDate = shipReports.get(getLatesReportIndex()).getDate();
 		
 		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
