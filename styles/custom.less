@@ -1,13 +1,18 @@
-
+@base: #000;
 @red-base: #B93436;
 @blue-base: #069DBF;
 @green-base: #009C73;
 @yellow-base: #F2EA72;
 @gray-base: #BEBCC0;
+@lightgray-base: lighten(@gray-base, 33.5%);
 
 
 tbody {
 	border-bottom: 10px solid @gray-base;
+}
+
+input {
+	 width: 5%;
 }
 
 .list {
@@ -19,15 +24,16 @@ tbody {
 	background-color: @blue-base;
 }
 
-.bad-table{
+.bad {
 	background-color: @red-base;
 }
 
-.good-table{
+.good {
 	background-color: @green-base;
 }	
 
-.handled-table{
+.handled {
+
 	background-color: @yellow-base;
 }	
 
@@ -39,11 +45,56 @@ tbody {
 	border: solid 1px @green-base;
 }
 
+.detail-box {
+
+	
+	.btn {
+		margin:0 0 0 1% !important; 
+	}
+}
+
+.list-inline {
+
+	margin: 3% 0 1% 0;
+	
+	.btn {
+			background-color: transparent;
+			border: none;
+			padding: 0 0 5px 0;
+			margin: 0;
+			vertical-align: baseline;
+
+			&:hover {
+				color: @gray-base;
+				background-color: transparent;
+		}
+	}
+
+	h3 {
+			margin: 0;
+			padding: 0;
+		}
+
+	li {
+		padding: 0;
+	}
+
+	.glyphicon {
+		top: -2px;
+		left: 5px;
+	}
+}
+
 /*For margin between columns*/
 [class*="col-"] {
     background-clip: padding-box;
     border-right: 10px solid transparent;
     border-top: 10px solid transparent;
+    padding: 2%;
+
+    .btn {
+    	margin: 2% 0 0 0;
+    }
 }
 
 @media (max-width: 768px){
