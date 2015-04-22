@@ -1,0 +1,79 @@
+<h4>{{activeShip.shipName | uppercase}}</h4>
+
+<div class="detail-box" ng-repeat="parameter in activeShip.rangeParameters">
+    
+    <ul class="list-inline">
+      <li>
+        <h3 >{{parameter.label}}</h3>
+      </li>
+      
+      <li>
+        <button type="button" class="btn btn-default " ng-click="enableEditor(parameter.number)" ng-hide="editorEnabled[parameter.number]">
+          <i class="glyphicon glyphicon-pencil"></i>
+        </button>
+      </li>
+    
+    </ul>
+
+   <!--  ng-class="{good: activeShip.time.status == true, bad: activeShip.time.status == false}" ng-hide="editorEnabled[0]"  -->
+
+    <div ng-hide="editorEnabled[parameter.number]">
+
+      Undre gräns: {{parameter.lowerLimit}} {{parameter.unit}}. Övre gräns: {{parameter.upperLimit}} {{parameter.unit}}.
+
+    </div>
+
+    <div ng-show="editorEnabled[parameter.number]">
+
+      Undre gräns: <input ng-model="parameter.lowerLimit" ng-show="editorEnabled[parameter.number]"> {{para.unit}}
+      Övre gräns: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[parameter.number]">  {{para.unit}}
+
+      <button ng-click="save(parameter.number)" type="button" class="btn btn-default btn">
+        <i class="glyphicon glyphicon-floppy-disk"></i>
+      </button>     
+
+    </div>
+
+</div>
+  
+<!-- *************************************************************** -->
+
+<div ng-repeat="parameter in activeShip.singleParameters">
+  
+  <div class="detail-box">
+    <ul class="list-inline">
+      <li>
+        <h3 >{{parameter.label}}</h3>
+      </li>
+      
+      <li>
+        <button type="button" class="btn btn-default btn" ng-click="enableEditor(parameter.number)" ng-hide="editorEnabled[parameter.number]">
+          <i class="glyphicon glyphicon-pencil"></i>
+        </button>
+      </li>
+    
+    </ul>
+
+    <div ng-hide="editorEnabled[parameter.number]">
+
+      <!-- ng-class="{good: activeShip.combinedWave.status == true, bad: activeShip.combinedWave.status == false}"-->
+      Maximalt värde: {{parameter.upperLimit}} meter. 
+
+    </div>
+
+    <div ng-show="editorEnabled[parameter.number]">
+      Maximal värde: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[parameter.number]"> {{parameter.unit}}.
+      <button ng-click="save(parameter.number)" type="button" class="btn btn-default btn">
+        <i class="glyphicon glyphicon-floppy-disk"></i>
+      </button>  
+    </div>
+
+  </div>
+
+</div>
+
+<button type="button" class="btn btn-default btn handled" ng-if="isBad(activeShip)" ng-click="handel(activeShip)">HANTERA
+<i class="glyphicon glyphicon-ok"></i>
+</button>
+
+
