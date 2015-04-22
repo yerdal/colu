@@ -3,6 +3,9 @@ package ship;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -13,30 +16,84 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.util.ArrayList;
 
+
+
+
+/**
+ * Handling the rest API and parsing XML files
+ */
 @RestController
-public class ShipController {
+public class ShipController extends ParsingXML{
 
+
+  private ArrayList<Ship> myShip;
+  private ArrayList<Ship> myShipsPos;
+  private ArrayList<OnVoyages> ongoingVoyages;
+  private Voyage myVoyage;
+  private ArrayList<Voyage> voyageList;
+
+  private ArrayList<Voyage> badVoyages;
+  private ArrayList<Voyage> goodVoyages;
+  private ArrayList<Voyage> okVoyages;
+
+   /**
+   * @param  id the id of the ship
+   * @return      a Ship with given id
+   * @see         ArrayList
+   */ 
     //Request a ship with a certain name?
-    @RequestMapping(value="/ships/{name}")
-    public ArrayList getShip(@PathVariable String name) {
+    @RequestMapping(value="/ships/id/{id}")
+    public ArrayList getShip(@PathVariable String id) {
+        myShip = getXMLShip();
+        return myShip;
+    }
+   /**
+   * @return      all ship polls 
+   * @see         ArrayList
+   */ 
+    @RequestMapping(value="/ships/polls")
+    public ArrayList getShipPolls() {
+        myShipsPos = getXMLShipPolls();
+        return myShipsPos;
+    }
+  /**
+   * @return      all ongoing voyages
+   * @see         ArrayList
+   */ 
+    @RequestMapping(value="/voyages/ongoing")
+    public ArrayList getOngoingVoyages(){
+      // System.out.println("getONgoingVoyages");
 
-   /*     ShipList ships = new ShipList();
+      ongoingVoyages = getXMLOngoingVoyages();
+      return ongoingVoyages;
+    }
+    /**
+     * @param  id the id of the voyage
+     * @return      a voyage with given id
+     * @see         ArrayList
+     */ 
+    @RequestMapping(value="/voyages/id/{id}")
+    public Voyage getVoyage(@PathVariable String id) {
+        //This is so we dont update the voyage with new values and erase required parameters from user
+        myVoyage = getXMLShipVoyage(id);
+        return myVoyage;
+    }
+    @RequestMapping(value="/voyages")
+    public ArrayList getAllVoyages() {
 
-        //Static ships for now
+      //so we know we have the ongoing voyages
+      ongoingVoyages = getOngoingVoyages();
+      voyageList = new ArrayList<Voyage>();
 
-        ships.addShip(new Ship(1, "Jonken1"));
-        ships.addShip(new Ship(2, "Jonken2"));
-        ships.addShip(new Ship(3, "Henki"));*/
-        // ArrayList<Ship> myShips = getXMLShip();
-        ArrayList<Ship> myShips_pos = getXMLShipPolls();
-
-        // Is the name in the list?
-       // return ships.findShip(name);
-        return myShips_pos;
+      for(int i = 0; i < ongoingVoyages.size(); i++){
+        String voyageId = Integer.toString(ongoingVoyages.get(i).getVoyageId());
+        Voyage tempVoyage = getXMLShipVoyage(voyageId); 
+        voyageList.add(tempVoyage);
+      } 
+      return voyageList;
     }
 
-
-
+<<<<<<< HEAD
     private ArrayList getXMLShip(){
         ArrayList<Ship> shipsArray = new ArrayList<Ship>();
         try {
@@ -129,10 +186,43 @@ public class ShipController {
         
         } catch (Exception e) {
              e.printStackTrace();
+=======
+    @RequestMapping(value="/voyages/status/bad")
+    public ArrayList getBadVoyages() {
+      //so we know we have the ongoing voyages
+      ongoingVoyages = getOngoingVoyages();
+      badVoyages = new ArrayList<Voyage>();
+
+      for(int i = 0; i < ongoingVoyages.size(); i++){
+        String voyageId = Integer.toString(ongoingVoyages.get(i).getVoyageId());
+        Voyage tempVoyage = getXMLShipVoyage(voyageId);
+        if (tempVoyage.checkStatus() == "BAD")
+        {
+          badVoyages.add(tempVoyage);
         }
-         return null; 
+      } 
+      return badVoyages;
+    }
+    @RequestMapping(value="/voyages/status/good")
+    public ArrayList getGoodVoyages()
+    {
+      //so we know we have the ongoing voyages
+      ongoingVoyages = getOngoingVoyages();
+      goodVoyages = new ArrayList<Voyage>();
+
+      for(int i = 0; i < ongoingVoyages.size(); i++){
+        String voyageId = Integer.toString(ongoingVoyages.get(i).getVoyageId());
+        Voyage tempVoyage = getXMLShipVoyage(voyageId);
+        if (tempVoyage.checkStatus() == "GOOD")
+        {
+          goodVoyages.add(tempVoyage);
+>>>>>>> master
+        }
+      } 
+      return goodVoyages;
     }
 
+<<<<<<< HEAD
     private ArrayList getXMLShipPolls(){
         ArrayList<Ship> shipsArray = new ArrayList<Ship>();
         
@@ -217,18 +307,40 @@ public class ShipController {
         
         } catch (Exception e) {
              e.printStackTrace();
+=======
+    @RequestMapping(value="/voyages/status/ok")
+    public ArrayList getOkVoyages()
+    {
+      //so we know we have the ongoing voyages
+      ongoingVoyages = getOngoingVoyages();
+      okVoyages = new ArrayList<Voyage>();
+        //This is so we dont update the voyage with new values and erase required parameters from user
+      for(int i = 0; i < ongoingVoyages.size(); i++){
+        String voyageId = Integer.toString(ongoingVoyages.get(i).getVoyageId());
+        Voyage tempVoyage = getXMLShipVoyage(voyageId);
+        if (tempVoyage.checkStatus() == "OK")
+        {
+          okVoyages.add(tempVoyage);
+>>>>>>> master
         }
-         return null; 
+      } 
+      return okVoyages;
     }
 
-    //Method for returning 0 if string empty
-  public static double parseDoubleSafely(String str) {
-    double result = 0;
-    try {
-        result = Double.parseDouble(str);
-    } catch (NullPointerException npe) {
-    } catch (NumberFormatException nfe) {
+    @RequestMapping(value="/voyages/{id}/updatelimits", method = RequestMethod.PUT)  
+    public @ResponseBody RequestedParameters putData(@RequestBody RequestedParameters body, @PathVariable String id) {
+      // System.out.println("IN post MEthod JAVA SPRING " + body + id );
+      //Loop through the voyages (only one now) and set Required Parameters from frontend
+      myVoyage.setRequiredParameters(body);
+
+      return body;
     }
-    return result;
-}
+    //FOR FUTURE POST METHODS
+    // @RequestMapping(value="/voyages/{id}/requiredETA", method = RequestMethod.POST)  
+    // public @ResponseBody String postData(@RequestBody String eta, @PathVariable String id) {
+    //   System.out.println("IN post MEthod JAVA SPRING " + eta + id );
+    //   return eta;
+    // }
+
+    
 }

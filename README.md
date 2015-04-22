@@ -1,2 +1,7 @@
+
 # colu
-Fartygsvis
+
+
+
+To generate API documentation run `mvn site`
+
