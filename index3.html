@@ -26,7 +26,7 @@
               <tbody>
                 <tr class="bad-table" ng-repeat="ship in shipsBad">
                   <td ng-click="showActive(ship); save(0); save(1); save(2); save(3); save(4); save(5)">
-                    {{ship.shipName}}
+                    {{ship.shipName}}{{ship.warning.warning}}
                   </td>
                 </tr>
               </tbody>
@@ -55,13 +55,16 @@
 
               <h2>Tid</h2>
                         <div ng-hide="editorEnabled[0]">
-                          Undre gräns: {{activeShip.time.lowerLimit}} minuter. Övre gräns: {{activeShip.time.upperLimit}} minuter.
+                          Önskad ankomsttid: {{activeShip.time.lowerLimit}} - {{activeShip.time.upperLimit}}.
                           <button ng-click="enableEditor(0)">Modify</button>
                         </div>
                         <div ng-show="editorEnabled[0]">
-                          Undre gräns: <input ng-model="activeShip.time.lowerLimit" ng-show="editorEnabled[0]"> minuter.
-                          Övre gräns: <input ng-model="activeShip.time.upperLimit" ng-show="editorEnabled[0]">  minuter. 
+                          Önskad ankomsttid: <input ng-model="activeShip.time.lowerLimit" ng-show="editorEnabled[0]"> 
+                          - <input ng-model="activeShip.time.upperLimit" ng-show="editorEnabled[0]">. 
                           <button ng-click="save(0)">Save</button>     
+                        </div>
+                        <div>
+                          Beräknad ankomsttid: {{activeShip.time.eta}}.
                         </div>
 
                     <h2>Bränsle</h2>
@@ -72,6 +75,9 @@
                         <div ng-show="editorEnabled[1]">
                           Övre gräns: <input ng-model="activeShip.fuel.upperLimit" ng-show="editorEnabled[1]"> L/timme.
                           <button ng-click="save(1)">Save</button>
+                        </div>
+                        <div>
+                          Current fuel consumption: {{activeShip.fuel.current}} L/h.
                         </div>
 
                     <h2>Väder</h2>
@@ -99,21 +105,31 @@
                           Vind: <input ng-model="activeShip.wind.upperLimit" ng-show="editorEnabled[4]"> m/s  
                           <button ng-click="save(4)">Save</button>
                         </div>
+                        <div>
+                          Current wave hight: {{activeShip.combinedWave.current}} meters. 
+                          Current current: {{activeShip.current.current}} . 
+                          Current wind: {{activeShip.wind.current}} m/s. 
+                        </div>
 
                     <h2>Fart</h2>
                          <div ng-hide="editorEnabled[5]">
-                          Fart: {{activeShip.velocity.upperLimit}} m/s.
+                          Lägsta fart: {{activeShip.velocity.lowerLimit}} m/s. Högsta fart: {{activeShip.velocity.upperLimit}} m/s.
                           <button ng-click="enableEditor(5)">Modify</button>
                         </div>
                         <div ng-show="editorEnabled[5]">
-                          Fart: <input ng-model="activeShip.velocity.upperLimit" ng-show="editorEnabled[5]"> m/s.  
+                          Lägsta fart: <input ng-model="activeShip.velocity.lowerLimit" ng-show="editorEnabled[5]"> m/s. 
+                          Högsta fart: <input ng-model="activeShip.velocity.upperLimit" ng-show="editorEnabled[5]"> m/s. 
                           <button ng-click="save(5)">Save</button>
                         </div>
+                        <div>
+                          Current velocity: {{activeShip.velocity.current}} m/s.
+                        </div>
+
+                    <button ng-if="isBad(activeShip)" ng-click="handel(activeShip)">HANTERA</button>
            </div>
          </div>
 
-          <button ng-if="isBad(activeShip)" ng-click="handel(activeShip)">HANTERA</button>
-           </div>
+      
     </div>
   </body>
 </html>

@@ -25,26 +25,61 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       for(var i = 0; i < $scope.ships.length; i++)
       {
 
-        $scope.ships[i].time = {lowerLimit: '-30',
-                      upperLimit: '30'};
+        $scope.ships[i].time = {lowerLimit: '15.30',
+                                upperLimit: '16.30',
+                                eta: '16.00',
+                                status: 'false'};
 
-        $scope.ships[i].fuel = {upperLimit: '250'};
+        $scope.ships[i].fuel = {upperLimit: '250',
+                                current: '200',
+                                status: 'true'};
 
-        $scope.ships[i].combinedWave = {upperLimit: '250'};
+        $scope.ships[i].combinedWave = {upperLimit: '250', 
+                                        current: '200',
+                                        status: 'true' };
 
-        $scope.ships[i].current = {upperLimit: '250'};
+        $scope.ships[i].current = {upperLimit: '250',
+                                   current: '200',
+                                   status: 'true'};
 
-        $scope.ships[i].wind = {upperLimit: '250'};
+        $scope.ships[i].wind = {upperLimit: '250',
+                                current: '200',
+                                status: 'true'};
 
-        $scope.ships[i].velocity = {upperLimit: '250'};   
+        $scope.ships[i].velocity = {lowerLimit: '150',
+                                    upperLimit: '250',
+                                    current: '200',
+                                    status: 'true'}; 
         
+        $scope.ships[i].warning = {warning: ': '
+                                  };
+                                  
+        if($scope.ships[i].time.status == 'false')
+        {
+          $scope.ships[i].warning.warning += 'T ';
+        } 
+
+        if($scope.ships[i].fuel.status == 'false')
+        {
+          $scope.ships[i].warning.warning += 'B ';
+        } 
+
+        if($scope.ships[i].combinedWave.status == 'false' || $scope.ships[i].current.status == 'false' || $scope.ships[i].wind.status == 'false')
+        {
+          $scope.ships[i].warning.warning += 'V ';
+        } 
+
+        if($scope.ships[i].velocity.status == 'false')
+        {
+          $scope.ships[i].warning.warning += 'F ';
+        }                            
       } 
       
       $scope.shipsBad = $scope.ships.slice(1, 7);
       $scope.shipsGood = $scope.ships.slice(7, 9);
       $scope.shipsHandled = $scope.ships.slice(9, 15);
       
-      //Where all the functionlaity is
+      //Where all the functionality is
       main();   
       
       }).error(function(data,status,headers,config){
@@ -69,7 +104,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       return ($scope.shipsBad.indexOf(s) != -1)
     }
 
-    //To "handle" ships, and then put them i the handled-list
+    //To "handle" ships, and then put them in the handled-list
     $scope.handel = function(s){
       if(!isInArray(s,$scope.shipsHandled))
         $scope.shipsHandled.push(s);
