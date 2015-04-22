@@ -43,7 +43,8 @@ public class ShipController {
      
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // Mattias /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml
-          File fXmlFile = new File("/Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml");
+          // Johan 
+          File fXmlFile = new File("../data/voyage_and_ship/ships.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -138,7 +139,8 @@ public class ShipController {
         try {
           // Mattias: /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/polls.xml
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
-          File fXmlFile = new File("/Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/polls.xml");
+          // 
+          File fXmlFile = new File("../data/voyage_and_ship/polls.xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
