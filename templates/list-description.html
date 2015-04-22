@@ -2,25 +2,25 @@
 
 <table class="table table-hover table-str"> 
   <tbody>
-    <tr class="bad-table" ng-repeat="ship in shipsBad">
-      <td ng-click="showActive(ship); save(0); save(1); save(2); save(3); save(4); save(5)">
-        {{ship.shipName | uppercase}}
+    <tr class="bad-table" ng-repeat="voyage in voyagesBad">
+      <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
+        {{voyage.voyageName | uppercase}}
       </td>
     </tr>
   </tbody>
   
   <tbody>
-    <tr class="handled-table" ng-repeat="ship in shipsHandled">
-      <td ng-click="showActive(ship); save(0); save(1); save(2); save(3); save(4); save(5)">
-        {{ship.shipName | uppercase}}
+    <tr class="handled-table" ng-repeat="voyage in voyagesHandled">
+      <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
+        {{voyage.voyageName | uppercase}}
       </td>
     </tr>
   </tbody>
 
   <tbody>
-    <tr class="good-table"ng-repeat="ship in shipsGood">
-      <td ng-click="showActive(ship); save(0); save(1); save(2); save(3); save(4); save(5)">
-        {{ship.shipName | uppercase}}
+    <tr class="good-table"ng-repeat="voyage in voyagesGood">
+      <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
+        {{voyage.shipName | uppercase}}
       </td>
     </tr>
   </tbody>

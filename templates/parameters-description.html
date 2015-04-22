@@ -1,6 +1,6 @@
-<h2>{{activeShip.shipName | uppercase}}</h2>
+<h2>{{activeVoyage.shipName | uppercase}}</h2>
 
-<div class="detail-box" ng-repeat="parameter in activeShip.rangeParameters">
+<div class="detail-box" ng-repeat="parameter in activeVoyage.rangeParameters">
     
     <ul class="list-inline">
       <li>
@@ -37,7 +37,7 @@
   
 <!-- *************************************************************** -->
 
-<div ng-repeat="parameter in activeShip.singleParameters">
+<div ng-repeat="parameter in activeVoyage.singleParameters">
   
   <div class="detail-box">
     <ul class="list-inline">
@@ -55,8 +55,8 @@
 
     <div ng-hide="editorEnabled[parameter.number]">
 
-      <!-- ng-class="{good: activeShip.combinedWave.status == true, bad: activeShip.combinedWave.status == false}"-->
-      Maximalt värde: {{parameter.upperLimit}} meter. 
+      <!-- ng-class="{good: activeVoyage.combinedWave.status == true, bad: activeVoyage.combinedWave.status == false}"-->
+      Maximalt värde: {{parameter.upperLimit}} {{parameter.unit}}. 
 
     </div>
 
@@ -73,7 +73,7 @@
 
 <!-- *********************************************************** -->
 
-<button type="button" class="btn btn-default btn-lg handled" ng-if="isBad(activeShip)" ng-click="handel(activeShip)">
+<button type="button" class="btn btn-default btn-lg handled" ng-if="isBad(activeVoyage)" ng-click="handel(activeVoyage)">
   <i class="glyphicon glyphicon-ok"></i>
 </button>
 
