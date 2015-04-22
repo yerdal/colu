@@ -4,6 +4,7 @@ angular.module('coluApp')
 .controller('mainController', function($scope, $http){
     
 
+
     // somewhere in your controller
 
     $scope.options = {
@@ -21,6 +22,7 @@ angular.module('coluApp')
     $scope.sliderValue = 0
     var vectorLayer;
     var shipVectorSource = new ol.source.Vector({});
+
     var map = new ol.Map({
       layers: [new ol.layer.Tile({ source: new ol.source.OSM()})],
       target: document.getElementById('map'),

@@ -1,0 +1,124 @@
+@base: #000;
+@red-base: #B93436;
+@blue-base: #069DBF;
+@green-base: #009C73;
+@yellow-base: #F2EA72;
+@gray-base: #BEBCC0;
+@lightgray-base: lighten(@gray-base, 33.5%);
+
+body {
+	font:15px/1.1 'Open Sans', sans-serif;
+	font-weight: lighter;
+}
+
+tbody {
+	border-bottom: 10px solid @gray-base;
+}
+
+
+input {
+	 width: 5%;
+}
+
+.container {
+	min-height: 90%;
+    height: 90%;
+
+}
+
+.list {
+	min-height: 100%;
+    height: 100%;
+	background-color: @gray-base;
+	text-align: center
+}
+
+.content {
+	min-height: 100%;
+    height: 100%;
+	background-color: @blue-base;
+}
+
+.bad-table {
+	background-color: @red-base;
+}
+
+.good-table {
+	background-color: @green-base;
+}	
+
+.handled-table {
+
+	background-color: @yellow-base;
+}	
+
+.bad {
+	border: solid 1px @red-base;
+}
+
+.good {
+	border: solid 1px @green-base;
+}
+
+.handled {
+	background-color: @yellow-base;
+}
+
+.detail-box {
+
+	margin-top: 5%;
+	
+	.btn {
+		margin:0 0 0 1% !important; 
+	}
+}
+
+.list-inline {
+
+	margin: 3% 0 1% 0;
+	
+	.btn {
+			background-color: transparent;
+			border: none;
+			padding: 0 0 5px 0;
+			margin: 0;
+			vertical-align: baseline;
+
+			&:hover {
+				color: @gray-base;
+				background-color: transparent;
+		}
+	}
+
+	h3, h4 {
+			margin: 0;
+			padding: 0;
+		}
+
+	li {
+		padding: 0;
+	}
+
+	.glyphicon {
+		top: -2px;
+		left: 5px;
+	}
+}
+
+/*For margin between columns*/
+[class*="col-"] {
+    background-clip: padding-box;
+    border-right: 10px solid transparent;
+    border-top: 10px solid transparent;
+    padding: 2%;
+
+    .btn {
+    	margin: 3% 0 0 0;
+    }
+}
+
+@media (max-width: 768px){
+	.content{
+		
+	}
+}
