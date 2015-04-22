@@ -30,7 +30,29 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
           velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', status: false, unit: "knop", number: 1}
           warning: {warning: " "}
         }
+        
+        // $scope.ships[i].warning = {warning: ': '
+        //                           };
+                                  
+        // if($scope.ships[i].time.status == 'false')
+        // {
+        //   $scope.ships[i].warning.warning += 'T ';
+        // } 
 
+        // if($scope.ships[i].fuel.status == 'false')
+        // {
+        //   $scope.ships[i].warning.warning += 'B ';
+        // } 
+
+        // if($scope.ships[i].combinedWave.status == 'false' || $scope.ships[i].current.status == 'false' || $scope.ships[i].wind.status == 'false')
+        // {
+        //   $scope.ships[i].warning.warning += 'V ';
+        // } 
+
+        // if($scope.ships[i].velocity.status == 'false')
+        // {
+        //   $scope.ships[i].warning.warning += 'F ';
+        // }                            
         $scope.ships[i].singleParameters = {
 
           fuel: {label: "Bränsle", upperLimit: '250', status: true, unit: "L/mil", number: 2},
@@ -73,7 +95,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       return ($scope.shipsBad.indexOf(s) != -1)
     }
 
-    //To "handle" ships, and then put them i the handled-list
+    //To "handle" ships, and then put them in the handled-list
     $scope.handel = function(s){
       if(!isInArray(s,$scope.shipsHandled))
         $scope.shipsHandled.push(s);
