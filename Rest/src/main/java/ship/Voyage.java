@@ -1,7 +1,17 @@
 package ship;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
 public class Voyage
-{
+{	
+
+	
+	//variabler från XML
 	private int voyageID;
 	private int worklistID;
 	private String systemOnBoardStatus;
@@ -46,6 +56,73 @@ public class Voyage
 	private ArrayList <WeatherWaypoint> weatherWaypoints;
 	private ArrayList <ShipReport> shipReports;
 	private String comment; //Comment about the voyage
+
+
+	//Our new vaiables!
+	private Date requiredETA;
+
+	private String status;
+
+	//Weather
+	private double requiredMaxWindSpeed;
+	private double requiredWindDir;
+	private double requiredMaxSignWaveHeight;
+	private double requiredCurrentDir;
+	private double requiredMaxCurrentSpeed;
+	//Ship
+	private double requiredAvgSpeedMin;
+	private double requiredAvgSpeedMax;
+
+
+
+	//Default Constructor
+	public Voyage(){
+		voyageID = 0;
+		worklistID = 0;
+		systemOnBoardStatus = "undefined";
+		state = "undefined";
+		pvapdfurl = "undefined";
+		lastUpdate = "undefined";
+		voyageName = "undefined";
+		voyRef = 0;
+		operator = new Operator(0);
+		personName = "undefined";
+		ship = new Ship(0, operator, "undefined");
+		departure = "undefined";
+		destination = "undefined";
+		etd = "undefined";
+		eta = "undefined";
+		requiredEta = "undefined";
+		loadingStatus = 0;
+		cargoWeight = 0.0;
+		cargoSensitivStatus = 0;
+		gmHeight = 0.0;
+		displacementAtDep = 0.0;
+		maxSpeed = 0.0;
+		draftAft = 0.0;
+		draftFwd = 0.0;
+		draftMean = 0.0;
+		draftTrim = 0.0;
+		tradelaneName = "undefined";
+		voyagePhase = "undefined";
+		hasRoute = "undefined";
+		nextMessageDate = "undefined";
+		priority = "undefined";
+		seaName = "undefined";
+		seaSortOrder = 0.0;
+		forecastModifiedDate = "undefined";
+		forecastState = "undefined";
+		foBrobDep = 0.0;
+		doBrobDep = 0.0;
+		foBrobLatest = 0.0;
+		doBrobLatest = 0.0;
+		hasPva = "undefined";
+		comment = "undefined";
+		weatherWaypoints = new ArrayList<WeatherWaypoint>();
+	 	shipReports =  new ArrayList<ShipReport>();
+		requiredETA = new Date();
+		status = "undefined";
+	}
 	// private bool onGoing; //kanske?
 	public Voyage (int theVoyageID, int theWorklistID, String theSystemOnBoardStatus, 
 									String theState,
@@ -90,7 +167,7 @@ public class Voyage
 									ArrayList <ShipReport> theShipReports)
 	{
 		voyageID = theVoyageID;
-	 	worklistID = theWorklistID;
+		worklistID = theWorklistID;
   	systemOnBoardStatus = theSystemOnBoardStatus;
   	state = theState;
   	pvapdfurl = thePvadpfurl;
@@ -98,7 +175,7 @@ public class Voyage
 	//values
   	voyageName = theVoyageName;
   	voyRef = theVoyRef;
-	 	operator = theOperator;
+		operator = theOperator;
   	personName = thePersonName;
   	ship = theShip;
   	departure = theDeparture;
@@ -131,9 +208,12 @@ public class Voyage
   	foBrobLatest = theFoBrobLatest;
   	hasPva = theHasPva;
   	weatherWaypoints = theWeatherWaypoints;
-	 	comment = theComment;
-	 	shipReports = theShipReports;
 
+  	comment = theComment;
+		shipReports = theShipReports;
+
+  	requiredETA = new Date();
+  	status = "undefined";
 	}
 	public int getVoyageId(){
 		return voyageID;
@@ -154,6 +234,7 @@ public class Voyage
 	{
 		return weatherWaypoints;
 	}
+
 	public ArrayList<ShipReport> getShipReports()
 	{
 		return shipReports;
@@ -193,9 +274,6 @@ public class Voyage
 	}
 	public String getEta(){
 		return eta;
-	}
-	public String getRequiredEta(){
-		return requiredEta;
 	}
 	public int getLoadingStatus(){
 		return loadingStatus;
@@ -271,5 +349,330 @@ public class Voyage
 	}
 	public String getComment(){
 		return comment;
+	}
+
+
+	// Bränsleåtgång → Bränsle kvar, OCH förbrukad bränsle sen senaste rapport?
+			
+	// Fart -> Definiera fartygets önskade hastighet. Spann? 
+
+
+	//Get own defined variables
+	public double getRequiredMaxWindSpeed(){
+		return requiredMaxWindSpeed;
+	}
+	public double getRequiredWindDir(){
+		return requiredWindDir;
+	}
+	public double getRequiredMaxSignWaveHeight(){
+		return requiredMaxSignWaveHeight;
+	}
+	public double getRequiredCurrentDir(){
+		return requiredCurrentDir;
+	}
+	public double getRequiredMaxCurrentSpeed(){
+		return requiredMaxCurrentSpeed;
+	}
+	public double getRequiredAvgSpeedMin(){
+		return requiredAvgSpeedMin;
+	}
+	public double getRequiredAvgSpeedMax(){
+		return requiredAvgSpeedMax;
+	}
+
+
+	public String getStatus(){
+		return status;
+	}
+
+	public String getRequiredETA(){
+		String temp; 
+		try {
+        temp = requiredETA.toString();
+      }   
+      catch (Exception e) {
+      	// e.throw
+         temp = "00-00-00 00:00";
+      }
+		return temp;
+	}
+
+	public void setRequiredParameters(RequestedParameters body){
+		System.out.println("Requested PArams " +  body.getRequiredETA() +
+								body.getRequiredCurrentSpeed() +
+								body.getRequiredWindSpeed() +
+								body.getRequiredWindDir() +
+								body.getRequiredSignWaveHeight() +
+								body.getRequiredCurrentDir());
+
+		// SavedParameters savedParam = repository.findOne(voyageID);
+		// savedParam.setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
+		// savedParam.setRequiredWindSpeed(body.getRequiredWindSpeed());
+		// savedParam.setRequiredWindDir(body.getRequiredWindDir());
+		// savedParam.setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
+		// savedParam.setRequiredCurrentDir(body.getRequiredCurrentDir());
+		// savedParam.setRequiredETA(body.getRequiredETA());
+		// savedParam.setRequiredAvgSpeedMin(body.getRequiredAvgSpeedMin());
+		// savedParam.setRequiredAvgSpeedMax(body.getRequiredAvgSpeedMax());
+
+		// //Set each required limits for a voyage
+		// setRequiredETA(body.getRequiredETA());
+  //   setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
+  //   setRequiredWindSpeed(body.getRequiredWindSpeed());
+  //   setRequiredWindDir(body.getRequiredWindDir());
+  //   setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
+  //   setRequiredCurrentDir(body.getRequiredCurrentDir());
+  //   setRequiredAvgSpeed(body.getRequiredAvgSpeedMin() , body.getRequiredAvgSpeedMin());
+	}
+
+	//Set parameters from DB
+	public void setRequiredParametersFromDB(SavedParameters savedParam){
+		
+
+		//Set each required limits for a voyage
+		setRequiredETA(savedParam.getRequiredETA());
+    setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
+    setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
+    setRequiredWindDir(savedParam.getRequiredWindDir());
+    setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
+    setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
+    setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
+  //   System.out.println("VOyage ID on Object " + voyageID );
+		// System.out.println("Voyage ID from DB " +  savedParam.getId());
+		// System.out.println("savedParam PArams " +  savedParam.getRequiredETA() + "\n " +
+		// 						"RequiredCurrentSpeed " + savedParam.getRequiredCurrentSpeed() + "\n " + 
+		// 						"RequiredWindSpeed " + savedParam.getRequiredWindSpeed() + " \n " + 
+		// 						"RequiredWindDir " + savedParam.getRequiredWindDir() + "  \n " + 
+		// 						"RequiredSignWaveHeight " + savedParam.getRequiredSignWaveHeight() + " \n " + 
+		// 						"RequiredCurrentDir " + savedParam.getRequiredCurrentDir() + " \n " +
+		// 						"RequiredAvgSpeedMin " + savedParam.getRequiredAvgSpeedMin()  + " \n " +
+		// 						"RequiredAvgSpeedMax " + savedParam.getRequiredAvgSpeedMax());
+
+
+	}
+
+	public void setRequiredParameters(SavedParameters body){
+		System.out.println("Saved PArams " +  body.getRequiredETA() + "\n " +
+								body.getRequiredCurrentSpeed() + "\n " + 
+								body.getRequiredWindSpeed() + " \n " + 
+								body.getRequiredWindDir() + "  \n " + 
+								body.getRequiredSignWaveHeight() + " \n " + 
+								body.getRequiredCurrentDir() + " \n " +
+								body.getRequiredAvgSpeedMin()  + " \n " +
+								body.getRequiredAvgSpeedMax());
+
+		//Set each required limits for a voyage
+		setRequiredETA(body.getRequiredETA());
+    setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
+    setRequiredWindSpeed(body.getRequiredWindSpeed());
+    setRequiredWindDir(body.getRequiredWindDir());
+    setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
+    setRequiredCurrentDir(body.getRequiredCurrentDir());
+    setRequiredAvgSpeed(body.getRequiredAvgSpeedMin() , body.getRequiredAvgSpeedMax());
+	}
+
+
+	public void setRequiredETA(String reqEta){
+		try {
+ 			if(reqEta.equals(""))
+ 				reqEta = "00-00-00 00:00";
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+			requiredETA = formatter.parse(reqEta);
+			for(int i = 0; i < shipReports.size(); i++){
+				shipReports.get(i).updateRequiredETAStatus(requiredETA);
+			}
+ 
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	// Ankomsttid -> Använda ETA variable från shipreport
+
+	public void setRequiredAvgSpeed(double speedMin, double speedMax){
+		requiredAvgSpeedMin = speedMin;
+		requiredAvgSpeedMax = speedMax;
+		for (int i = 0; i < shipReports.size(); i++)
+		{
+			shipReports.get(i).updateAvgSpeedStatus(speedMin, speedMax);
+		}
+	}
+	public void setRequiredWindSpeed(double chosenWindSpeed)
+	{
+		requiredMaxWindSpeed = chosenWindSpeed;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			weatherWaypoints.get(i).updateWindSpeedStatus(chosenWindSpeed);
+		}
+	}
+	public void setRequiredWindDir(double chosenWindDir)
+	{
+		requiredWindDir = chosenWindDir;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			weatherWaypoints.get(i).updateWindDirStatus(chosenWindDir);
+		}
+
+	}
+	public void setRequiredSignWaveHeight(double chosenSignWaveHeight)
+	{
+		requiredMaxSignWaveHeight = chosenSignWaveHeight;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			weatherWaypoints.get(i).updateSignWaveHeightStatus(chosenSignWaveHeight);
+		}
+	}
+	public void setRequiredCurrentDir(double chosenCurrentDir)
+	{
+		requiredCurrentDir = chosenCurrentDir;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			weatherWaypoints.get(i).updateCurrentDirStatus(chosenCurrentDir);
+		}
+	}
+
+
+	public void setRequiredCurrentSpeed(double chosenCurrentSpeed)
+	{
+		requiredMaxCurrentSpeed = chosenCurrentSpeed;
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			weatherWaypoints.get(i).updateCurrentSpeedStatus(chosenCurrentSpeed);
+		}
+		
+	}
+	//return index 0 if size is 0
+	public int getLatesReportIndex(){
+		if(shipReports.size() > 0)
+			return shipReports.size() - 1;
+		else 
+			return 0;
+	}
+
+	public String checkStatus()
+	{
+		if(shipReports.size() == 0)
+			return "ERROR finding shipreports or waypoint";
+		WeatherWaypoint waypoint = closestWeatherWaypoint();
+
+		//Get the last report to compare Speed
+		ShipReport shipreport = shipReports.get(getLatesReportIndex());
+
+		//FIXA DENNA FUNKTION EFTER DATEGREJ
+		// System.out.println("STATUS WIND Speed" + waypoint.getWindSpeedStatus());
+		// System.out.println("STATUS Wind Dir " + waypoint.getWindDirStatus());
+		// System.out.println("STATUS Current SPeed " + waypoint.getCurrentSpeedStatus());
+		// System.out.println("STATUS Sign Wave Height " + waypoint.getSignWaveHeightStatus());
+		// System.out.println("STATUS Current Dir " + waypoint.getCurrentDirStatus());
+		// System.out.println("STATUS AvgSpeedStatus " + shipreport.getAvgSpeedStatus());
+
+		if (waypoint.getWindSpeedStatus() == "BAD"
+			|| waypoint.getSignWaveHeightStatus() == "BAD" || waypoint.getCurrentSpeedStatus() == "BAD"
+			|| shipreport.getAvgSpeedStatus() == "BAD")
+		{
+			status = "BAD";
+		}
+		else if(waypoint.getWindSpeedStatus() == "GOOD"	&& waypoint.getSignWaveHeightStatus() == "GOOD" 
+			&& waypoint.getCurrentSpeedStatus() == "GOOD" && shipreport.getAvgSpeedStatus() == "GOOD")
+		{
+			status = "GOOD";
+		}
+		else
+		{
+			status = "OK";
+		}
+			
+		
+		return status;
+	}
+
+	public WeatherWaypoint closestWeatherWaypoint()
+	{
+		int theCounter = checkClosestWeather();
+	
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			if (i == theCounter)
+			{
+				// System.out.println("WeatherWaypoints size " + weatherWaypoints.size());
+				// System.out.println("THE COUNTER" + theCounter);
+				return weatherWaypoints.get(i);
+			}
+		}
+		System.out.println("returning Null");
+		return new WeatherWaypoint();
+
+	}
+
+	public int checkClosestWeather()
+	{
+		if(shipReports.size() == 0 || weatherWaypoints.size() == 0)
+			return 0;
+		String[] parts;
+		String[] dayPart;
+		//weatherDates format: yyyy-mm-dd hh:mm:ss
+		ArrayList <String> weatherDatesString = new ArrayList <String>();
+		//latestReportDate format: yyyy-mm-dd hh:mm
+		String latestReportDate = shipReports.get(getLatesReportIndex()).getDate();
+		
+		for (int i = 0; i < weatherWaypoints.size(); i++)
+		{
+			weatherDatesString.add(weatherWaypoints.get(i).getETPDate());
+		}
+		//System.out.println(latestReportDateString + " " + weatherDates.get(2));
+
+		parts = latestReportDate.split("-");
+		// DEN FULASTE LÖSNINGEN IN THE HISTORY OF MANKIND
+		dayPart = parts[2].split(" ");
+		String[] timePart = dayPart[1].split(":");
+		int currentYear = Integer.parseInt(parts[0]);
+		int currentMonth = Integer.parseInt(parts[1]);
+		int currentDay = Integer.parseInt(dayPart[0]);
+		
+		int currentHour = Integer.parseInt(timePart[0]);
+		int currentMin = Integer.parseInt(timePart[1]);
+		Date currentDate = new Date(currentYear, currentMonth, currentDay);
+		long currentTotalTime = ((currentHour * 60) + currentMin) * 1000; //* 1000 because convert to milliseconds
+		ArrayList <Integer> weatherYears = new ArrayList<Integer>();
+		ArrayList <Integer> weatherMonths = new ArrayList<Integer>();
+		ArrayList <Integer> weatherDays = new ArrayList<Integer>();
+		ArrayList <Date> weatherDates = new ArrayList<Date>();
+		ArrayList <Integer> weatherHours = new ArrayList<Integer>();
+		ArrayList <Integer> weatherMins = new ArrayList<Integer>();
+		for (int i = 0; i < weatherDatesString.size(); i++)
+		{
+			parts = weatherDatesString.get(i).split("-");
+			dayPart = parts[2].split(" ");
+			timePart = dayPart[1].split(":");
+
+			weatherYears.add(Integer.parseInt(parts[0]));
+			weatherMonths.add(Integer.parseInt(parts[1]));
+			weatherDays.add(Integer.parseInt(dayPart[0]));
+			weatherDates.add(new Date(weatherYears.get(i), weatherMonths.get(i), weatherDays.get(i)));
+			weatherHours.add(Integer.parseInt(timePart[0]));
+			weatherMins.add(Integer.parseInt(timePart[1]));
+		}
+		 
+		long diffDate;
+		long closest = weatherDates.get(0).getTime(); // set to first
+		Date closestDate = new Date();
+		long totalHourMin;
+		//comparison between the dates
+		int counter = 0;
+		for (int i = 1; i < weatherDates.size(); i++)
+		{
+			totalHourMin = ((weatherHours.get(i) * 60) + weatherMins.get(i)) * 1000; // 
+
+			diffDate = Math.abs((weatherDates.get(i).getTime() + totalHourMin) - (currentDate.getTime() + currentTotalTime)); // getTime returns the number of milliseconds since January 1, 1970, 00:00:00 GMT
+			if(diffDate < closest)
+			{
+				closest = diffDate;
+				closestDate = new Date(weatherDates.get(i).getTime() + totalHourMin); //using milliseconds constructor
+				counter = i;
+			}
+			
+			
+		}
+		return counter;
+
 	}
 }

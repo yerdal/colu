@@ -24,7 +24,43 @@ public class WeatherWaypoint
 	private double lon;
 	private String legType;
 	private double lat;
-	private String dateETP; // Estimated Time of Passage in UTC format="yyyy-M-dd HH:mm:ss" 
+	private String dateETP; // Estimated Time of Passage in UTC format="yyyy-M-dd HH:mm:ss"
+
+	//våra variabler
+	private String windSpeedStatus; 
+	private String windDirStatus;
+	private String signWaveHeightStatus;
+	private String currentSpeedStatus;
+	private String currentDirStatus;
+
+	public WeatherWaypoint(){
+		double windSpeed = 0.0;
+		double windDir = 0.0;
+		double swellHeight = 0.0;
+		double swellDir = 0.0;
+		double swellPeriod = 0.0;
+		double currentSpeed = 0.0;
+		double currentDir = 0.0;
+		double airPressure = 0.0;
+		double signWaveHeight = 0.0;
+		double windWaveHeight = 0.0;
+		double windWavePeriod = 0.0;
+		double calcShipSpeed = 0.0;
+		double weatherFactor = 0.0;
+		double currentFactor = 0.0;
+		double calcDistance = 0.0;
+		String goodWeather = "undefined";
+		double lon = 0.0;
+		String legType = "undefined";
+		double lat = 0.0;
+		String dateETP = "undefined";
+		String windSpeedStatus = "undefined";
+		String windDirStatus = "undefined";
+		String signWaveHeightStatus = "undefined";
+		String currentSpeedStatus = "undefined";
+		String currentDirStatus = "undefined";
+	}
+	
 
 	public WeatherWaypoint (double theWindSpeed,
 							double theWindDir,
@@ -67,13 +103,18 @@ public class WeatherWaypoint
 		legType = theLegType;
 		lat = theLat;
 		dateETP = theDate;
+		windSpeedStatus = "undefined";
+		windDirStatus = "undefined";
+		signWaveHeightStatus = "undefined";
+		currentSpeedStatus = "undefined";
+		currentDirStatus = "undefined";
 	}
 
 	public double getWindSpeed()
 	{
 		return windSpeed;
 	}
-	public double GetWindDir()
+	public double getWindDir()
 	{
 		return windDir;
 	}
@@ -134,5 +175,121 @@ public class WeatherWaypoint
 	public String getETPDate(){
 		return dateETP;
 	}
-	
+	public String getWindSpeedStatus()
+	{
+		return windSpeedStatus;	
+	}
+	public String getWindDirStatus()
+	{
+		return windDirStatus;
+	}
+	public String getSignWaveHeightStatus()
+	{
+		return signWaveHeightStatus;
+	}
+	public String getCurrentDirStatus()
+	{
+		return currentDirStatus;
+	}
+	public String getCurrentSpeedStatus()
+	{
+		return currentSpeedStatus;
+	}
+	public void setWindSpeedStatus(String status)
+	{
+		windSpeedStatus = status;
+	}
+	public void setWindDirStatus(String status)
+	{
+		windDirStatus = status;
+	}
+	public void setSignWaveHeightStatus(String status)
+	{
+		signWaveHeightStatus = status;
+	}
+	public void setCurrentSpeedStatus(String status)
+	{
+		currentSpeedStatus = status;
+	}
+	public void setCurrentDirStatus(String status)
+	{
+		currentDirStatus = status;
+	}
+
+	public void updateWindSpeedStatus(double chosenWindSpeed)
+	{
+		if (windSpeed < chosenWindSpeed)
+		{
+			setWindSpeedStatus("GOOD");
+		}
+		else if (windSpeed == chosenWindSpeed)
+		{
+			setWindSpeedStatus("OK");
+		}
+		else //windSpeed > chosenWindSpeed
+		{
+			setWindSpeedStatus("BAD");
+		}
+		
+	}
+
+	public void updateWindDirStatus(double chosenWindDir){
+
+		if (windDir < chosenWindDir)
+		{
+			setWindDirStatus("GOOD");
+		}
+		else if (windDir == chosenWindDir)
+		{
+			setWindDirStatus("OK");
+		}
+		else //windDir > chosenWindDir
+		{
+			setWindDirStatus("BAD");
+		}
+	}
+
+	public void updateSignWaveHeightStatus(double chosenSignWaveHeight){
+		if (signWaveHeight < chosenSignWaveHeight)
+		{
+			setSignWaveHeightStatus("GOOD");
+		}
+		else if (signWaveHeight == chosenSignWaveHeight)
+		{
+			setSignWaveHeightStatus("OK");
+		}
+		else
+		{
+			setSignWaveHeightStatus("BAD");
+		}
+	}
+
+	public void updateCurrentDirStatus(double chosenCurrentDir){
+		if (currentDir < chosenCurrentDir)
+			{
+				setCurrentDirStatus("GOOD");
+			}
+			else if (currentDir == chosenCurrentDir)
+			{
+				setCurrentDirStatus("OK");
+			}
+			else
+			{
+				setCurrentDirStatus("BAD");
+			}
+	}
+	public void updateCurrentSpeedStatus(double chosenCurrentSpeed){
+		if (currentSpeed < chosenCurrentSpeed)
+		{
+				setCurrentSpeedStatus("GOOD");
+		}
+		else if (currentSpeed == chosenCurrentSpeed)
+		{
+				setCurrentSpeedStatus("OK");
+		}
+		else
+		{
+				setCurrentSpeedStatus("BAD");
+		}
+	}
 }
