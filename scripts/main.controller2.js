@@ -26,8 +26,9 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       for(var i = 0; i < $scope.ships.length; i++)
       {
         $scope.ships[i].rangeParameters = {
-          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', status: true, unit: "minuter", number: 0},
-          velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', status:false, unit: "knop", number: 1}
+          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', status: true, unit: "minuter", number: 0,},
+          velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', status: false, unit: "knop", number: 1}
+          warning: {warning: " "}
         }
 
         $scope.ships[i].singleParameters = {
@@ -39,6 +40,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         }        
       
       } 
+
+      
       
       $scope.shipsBad = $scope.ships.slice(1, 7);
       $scope.shipsGood = $scope.ships.slice(7, 9);
