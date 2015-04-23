@@ -4,17 +4,31 @@ angular.module('coluApp')
 .controller('mainController', function($scope, $http){
     
 
-    
 
+    // somewhere in your controller
 
-
+    $scope.options = {
+      min: new Date(2015,2,07),  //Date for when the shipdataa got init
+      format: 'yyyy-mm-dd', // ISO formatted date
+      onClose: function(e) {
+        // do something when the picker closes  
+        // console.log('jasdjas')
+      }
+    }
+    var nrOfDaysForward = 4;
+    $scope.maxDate = new Date(2015,2,18); //Date.now()-1000*60*60*24*nrOfDaysForward); //Set a default date to slide to
+    $scope.minDate = new Date(2015,02,07); 
+    $scope.sliderDate = $scope.minDate;
+    $scope.sliderValue = 0
+    var vectorLayer;
+    var shipVectorSource = new ol.source.Vector({});
 
     var map = new ol.Map({
-      layers: [new ol.layer.Tile({ source: new ol.source.OSM() })],
+      layers: [new ol.layer.Tile({ source: new ol.source.OSM()})],
       target: document.getElementById('map'),
       view: new ol.View({
         center: [0, 0],
-        zoom: 2.5
+        zoom: 2.500
       })
     });
 
@@ -36,7 +50,6 @@ angular.module('coluApp')
       });
        
       map.addLayer(gribLayer);
-
       map.on('pointermove', function(evt) {
         document.getElementById('info').innerHTML = '';
         var viewResolution = /** @type {number} */ (view.getResolution());
@@ -50,21 +63,23 @@ angular.module('coluApp')
       });
     }
     initGribData();
-         //Get data from backend
-    $http.get('http://localhost:8090/ships/test').success(function(data,status,headers,config)
+    //Get data from backend
+    $http.get('http://localhost:8090/ships/id/notdefined').success(function(data,status,headers,config)
     {
-      initShipPos(data);
-
+      //Succes getting from backend
+      //Init scope data
+      $scope.ships = data;
+      console.log ('data ', data);
+      initShipPos();
       //drawLines(data);
-
     }).error(function(data,status,headers,config){
         console.log('ERROR getting from backend' , status);
     });
   
-      
-    var initShipPos = function(data){
-      var shipVectorSource = new ol.source.Vector({});
-      $scope.ships = data;
+    
+    var initShipPos = function(){
+       var shipVectorIconSrc = new ol.source.Vector({});
+       var styleArray = [];
       // console.log('daata ', data)
       for(var i = 0; i < $scope.ships.length; i++){
         var iconFeature = new ol.Feature({
@@ -79,7 +94,7 @@ angular.module('coluApp')
         for(var a = 0; a < $scope.ships[i].satCPollPositions.length;a++){
           points[a] = ol.proj.transform([$scope.ships[i].satCPollPositions[a].lon, $scope.ships[i].satCPollPositions[a].lat], 'EPSG:4326', 'EPSG:3857');
         }
-
+        iconFeature.setId(i);   //Set id to get the right feature later in when updating position
         var featureLine = new ol.Feature({
             geometry: new ol.geom.LineString(points)
         });
@@ -100,35 +115,94 @@ angular.module('coluApp')
               })
               })
               });
-        map.addLayer(shipRouteLineLayer);
-
-
-        shipVectorSource.addFeature(iconFeature);
-
-
-      }
-          
-      //create the style
+         // });
+      var stroke = new ol.style.Stroke({
+        color: 'black'
+      });
+      var textStroke = new ol.style.Stroke({
+        color: '#fff',
+        width: 3
+      });
+      var textFill = new ol.style.Fill({
+        color: '#000'
+      });
       var iconStyle = new ol.style.Style({
-        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+        image: new ol.style.Icon({
           // anchor: [0.5, 46],
           // anchorXUnits: 'fraction',
           // anchorYUnits: 'pixels',
           opacity: 0.75,
           // rotation: -3.14/2,
-
           src: 'http://icons.iconarchive.com/icons/icons-land/transporter/32/Container-Ship-Top-Red-icon.png'
-        }))
+        }),
+        text: new ol.style.Text({
+          offsetY : -14,
+          font: '14px Calibri,sans-serif',
+          text: $scope.ships[i].shipName,
+          fill: textFill,
+          stroke: textStroke,
+          
+        })
+        
       });
 
-   
+      map.addLayer(shipRouteLineLayer);
+
+      // THIS IS NEW - add each style individually to the feature
+      iconFeature.setStyle(iconStyle);
+
+        // shipVectorIconSrc.addFeature(iconStyle);
+      shipVectorSource.addFeature(iconFeature);
+         
+      }
+         
       //add the feature vector to the layer vector, and apply a style to whole layer
-      var vectorLayer = new ol.layer.Vector({
+      vectorLayer = new ol.layer.Vector({
         source: shipVectorSource,
         style: iconStyle
       });
-
+ 
       map.addLayer(vectorLayer);
+      
+      
+    }
+
+    $scope.updateShipPos = function(){
+        var nowDate = new Date(2015,02,07); //Should use Date.Now in real application
+        $scope.maxDate = new Date($scope.maxDate);
+        console.log('MaxDate ', new Date($scope.maxDate));
+        var milliBetweenEndAndNow = Math.abs(nowDate - $scope.maxDate)
+        //multiply slider value with milliseconds between end and now date
+        var milliOnSlider = $scope.sliderValue * (1 / 100) * milliBetweenEndAndNow;
+        // get the current date & time
+        var tempM = nowDate.getTime() + milliOnSlider;
+        $scope.sliderDate = new Date(tempM);
+        // console.log('Slider DATE ', $scope.sliderDate, nowDate.getTime(),milliOnSlider, tempM);
+    
+        for(var i = 0; i < shipVectorSource.getFeatures().length; i++){
+          var tempDiff;
+          var nearestPosInd = 0;
+          for(var k = 0; k < $scope.ships[i].satCPollPositions.length; k++){
+            var tempDate =  new Date($scope.ships[i].satCPollPositions[k].date.replace(/-/g,'/'));
+            // console.log('tempDate Ship ' , tempDate);
+            if(k == 0){
+              nearestPosInd = k;
+              tempDiff =  Math.abs($scope.sliderDate - tempDate);
+            }
+            //Check if Date is close and set the nearestPos index to move ship to that positions 
+            if(tempDiff > Math.abs($scope.sliderDate - tempDate))
+            {
+              nearestPosInd = k;
+              tempDiff = Math.abs($scope.sliderDate - tempDate);
+            }
+          }
+
+          shipVectorSource.getFeatureById(i).setGeometry(
+              new ol.geom.Point(ol.proj.transform([$scope.ships[i].satCPollPositions[nearestPosInd].lon, $scope.ships[i].satCPollPositions[nearestPosInd].lat], 'EPSG:4326',   'EPSG:3857'))
+          )
+        }
+        // console.log('asdsad' ,$scope.ships);
+
     }
 
     
