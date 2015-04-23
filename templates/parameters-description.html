@@ -1,4 +1,4 @@
-<h2>{{activeVoyage.shipName | uppercase}}</h2>
+<h2>{{activeVoyage.voyageName | uppercase}}</h2>
 
 <div class="detail-box" ng-repeat="parameter in activeVoyage.rangeParameters">
     
@@ -58,7 +58,7 @@
       <!-- ng-class="{good: activeVoyage.combinedWave.status == true, bad: activeVoyage.combinedWave.status == false}"-->
       Maximalt värde: {{parameter.upperLimit}} {{parameter.unit}}. 
 
-    </div>
+      </div>
 
     <div ng-show="editorEnabled[parameter.number]">
       Maximal värde: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[parameter.number]"> {{parameter.unit}}.

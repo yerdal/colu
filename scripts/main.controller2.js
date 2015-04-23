@@ -20,8 +20,12 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
     {
       
       //For now, just looking at a few voyages
-      $scope.voyages = data.slice(1, 5);
+      $scope.voyages = data;
       console.log("fesfsdfsdfs", data[0]);
+
+      $scope.voyagesBad = [];
+      $scope.voyagesGood = [];    
+      $scope.voyagesHandled = [];
 
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
@@ -54,24 +58,26 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         // if($scope.voyages[i].velocity.status == 'false')
         // {
         //   $scope.voyages[i].warning.warning += 'F ';
-        // }                            
+        // } 
+
         $scope.voyages[i].singleParameters = {
 
           fuel: {label: "Bränsle", upperLimit: '250', status: true, unit: "L/mil", number: 2},
-          combinedWave : {label: "Våghöjd", upperLimit: '250', status:false, unit: "m",number: 3},
-          current : {label: "Ström", upperLimit: '250', status:true, unit: "m/s", number: 4},
-          wind : {label: "Vind", upperLimit: $scope.voyages[i].weatherWaypoints[1].windSpeed, status:false, unit: "m/s", number: 5}
+          combinedWave : {label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, status:false, unit: "m",number: 3},
+          current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, status:true, unit: "m/s", number: 4},
+          wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, status:false, unit: "m/s", number: 5}
         
-        }        
-      
+        }  
+       
+        //Add voyages to right array
+        if($scope.voyages[i].status == "BAD")
+          $scope.voyagesBad.push($scope.voyages[i]);
+        else if($scope.voyages[i].status == "OK")
+          $scope.voyagesHandled.push($scope.voyages[i]);
+        else
+          $scope.voyagesGood.push($scope.voyages[i])
       } 
 
-      
-      
-      $scope.voyagesBad = $scope.voyages.slice(1, 7);
-      $scope.voyagesGood = $scope.voyages.slice(7, 9);
-      $scope.voyagesHandled = $scope.voyages.slice(9, 15);
-      
       //Where all the functionality is
       main();   
       
@@ -104,7 +110,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         $scope.voyagesHandled.push(s);
 
       var index = $scope.voyagesBad.indexOf(s);
-      console.log("index", index);
+      //console.log("index", index);
 
       if (index > -1) {
         $scope.voyagesBad.splice(index, 1);
