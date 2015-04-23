@@ -18,57 +18,38 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
   //Gets the Voyage-data
   $http.get('http://localhost:8090/voyages').success(function(data,status,headers,config)
     {
-      
-
-      //Delete some broken data, Einis will solve it, sometime,
-        data.splice(9, 1);  
-      
+    
+      //Delete some broken data, Einar Sanberg will solve it, sometime.
+      data.splice(9, 1);  
+    
+      //Position 27 is broken, and I can´t manage to delete it, hehe.   
       $scope.voyages = data.slice(1, 26);
-      //console.log("fesfsdfsdfs", data[0]);
 
+      //console.log("fesfsdfsdfs", data[0]);
+      $scope.activeVoyage = $scope.voyages[0];
       $scope.voyagesBad = [];
       $scope.voyagesGood = [];    
       $scope.voyagesHandled = [];
 
-      //console.log("oefsn", $scope.voyages[8]);
-        
-        // $scope.voyages[i].warning = {warning: ': '
-        //                           };
-                                  
-        // if($scope.voyages[i].time.status == 'false')
-        // {
-        //   $scope.voyages[i].warning.warning += 'T ';
-        // } 
-
-        // if($scope.voyages[i].fuel.status == 'false')
-        // {
-        //   $scope.voyages[i].warning.warning += 'B ';
-        // } 
-
-        // if($scope.voyages[i].combinedWave.status == 'false' || $scope.voyages[i].current.status == 'false' || $scope.voyages[i].wind.status == 'false')
-        // {
-        //   $scope.voyages[i].warning.warning += 'V ';
-        // } 
-
-        // if($scope.voyages[i].velocity.status == 'false')
-        // {
-        //   $scope.voyages[i].warning.warning += 'F ';
-        // } 
-
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
       {
+
+        var statusArray = ["GOOD", "BAD"];
+        
+        // console.log("ska vara rand", rand);   
+
         $scope.voyages[i].rangeParameters = {
-          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].eta, status: "BAD", unit: "minuter" },
-          velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', current: $scope.voyages[i].shipReports[1].speedAvg, status:"GOOD", unit: "knop"}
+          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].eta, status: statusArray[Math.round(Math.random())], unit: "minuter" },
+          velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', current: $scope.voyages[i].shipReports[1].speedAvg, status: statusArray[Math.round(Math.random())], unit: "knop"}
         }
 
         $scope.voyages[i].singleParameters = {
 
-          fuel: {label: "Bränsle", upperLimit: '250', status: "BAD", unit: "L/mil",},
-          combinedWave : {label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].weatherWaypoints[1].signWaveHeight, status:"GOOD", unit: "m"},
-          current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed,current: $scope.voyages[i].weatherWaypoints[1].currentSpeed, status:"GOOD", unit: "m/s"},
-          wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].weatherWaypoints[1].windSpeed, status:"BAD", unit: "m/s"}
+          fuel: {label: "Bränsle", upperLimit: '250', status:  statusArray[Math.round(Math.random())], unit: "L/mil",},
+          combinedWave : {label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].weatherWaypoints[1].signWaveHeight, status: statusArray[Math.round(Math.random())], unit: "m"},
+          current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed,current: $scope.voyages[i].weatherWaypoints[1].currentSpeed, status: statusArray[Math.round(Math.random())], unit: "m/s"},
+          wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].weatherWaypoints[1].windSpeed, status: statusArray[Math.round(Math.random())], unit: "m/s"}
 
         }  
        
@@ -89,9 +70,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
       });
 
-
   function main (){
-
     
     //How the form works
     formFunctionality();

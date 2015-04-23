@@ -3,17 +3,34 @@
 <table class="table table-hover table-str"> 
 
   <tbody class="bad">
+
     <tr ng-repeat="voyage in voyagesBad">
+
       <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
-        {{voyage.voyageName | uppercase}}
+
+        {{voyage.voyageName.slice(7,15) | uppercase}}
+          
+          <i ng-class="{'glyphicon glyphicon-time': voyage.rangeParameters.time.status == 'BAD'}"></i>
+  
+          <i ng-class="{'glyphicon glyphicon-dashboard': voyage.rangeParameters.velocity.status == 'BAD'}"></i>
+
+          <i ng-class="{'glyphicon glyphicon-cloud': voyage.singleParameters.wind.status == 'BAD'}"></i>
+
+          <i ng-class="{'glyphicon glyphicon-scale': voyage.singleParameters.fuel.status == 'BAD'}"></i>
+
+          <i ng-class="{'glyphicon glyphicon-refresh': voyage.singleParameters.current.status == 'BAD'}"></i>
+
+          <i ng-class="{'glyphicon glyphicon-tint': voyage.singleParameters.combinedWave.status == 'BAD'}"></i>
+
       </td>
     </tr>
+
   </tbody>
   
   <tbody class="handled">
     <tr ng-repeat="voyage in voyagesHandled">
       <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
-        {{voyage.voyageName | uppercase}}
+        {{voyage.voyageName | uppercase}} 
       </td>
     </tr>
   </tbody>
