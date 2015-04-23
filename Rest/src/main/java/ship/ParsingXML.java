@@ -549,7 +549,9 @@ public class ParsingXML{
 
                     }
                   }
-
+                  if(shipReportsArray.size() == 0){
+                    shipReportsArray.add(new ShipReport());
+                  }
 
                   //Weather Way points
                   ArrayList<WeatherWaypoint> weatherWayPointArray = new ArrayList<WeatherWaypoint>();
@@ -609,6 +611,9 @@ public class ParsingXML{
                       weatherWayPointArray.add(tempPoint);
 
                     }
+                  }
+                  if(weatherWayPointArray.size()==0){
+                    weatherWayPointArray.add(new WeatherWaypoint());
                   }
 
                   voyage = new Voyage(voyageID, worklistid,systemonboardstatus,state,

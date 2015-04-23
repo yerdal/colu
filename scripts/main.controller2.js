@@ -74,12 +74,33 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
     
     //How the form works
     formFunctionality();
-  
+    
     //Shows the active Voyage in the detailed view 
     $scope.showActive = function(s){
       sharedProperties.setActive(s);
       $scope.activeVoyage = sharedProperties.getActive();
+      $scope.showActive.shipTrue = true;
+      //console.log('active shipname ', $scope.showActive.shipName);
     }
+
+    $scope.goBack = function(){
+    $scope.showActive.shipTrue = false;
+    }
+
+
+    $scope.smallScreenSize = function(){
+      var screenSize = screen.width;
+
+      if(screenSize >= 1000){
+        //console.log('Big screen');
+        return false;
+      }
+      if(screenSize < 1000){
+        //console.log('Small screen');
+        return true;  
+      }
+
+    } 
 
     //Used to only show handle-button on Bad-voyages
     $scope.isBad = function(s){

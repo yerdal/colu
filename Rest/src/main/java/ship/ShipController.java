@@ -34,8 +34,6 @@ public class ShipController extends ParsingXML{
 
   private ArrayList<Voyage> badVoyages;
   private ArrayList<Voyage> goodVoyages;
-  private ArrayList<Voyage> okVoyages;
-
    /**
    * @param  id the id of the ship
    * @return      a Ship with given id
@@ -126,25 +124,6 @@ public class ShipController extends ParsingXML{
         }
       } 
       return goodVoyages;
-    }
-
-
-    @RequestMapping(value="/voyages/status/ok")
-    public ArrayList getOkVoyages()
-    {
-      //so we know we have the ongoing voyages
-      ongoingVoyages = getOngoingVoyages();
-      okVoyages = new ArrayList<Voyage>();
-        //This is so we dont update the voyage with new values and erase required parameters from user
-      for(int i = 0; i < ongoingVoyages.size(); i++){
-        String voyageId = Integer.toString(ongoingVoyages.get(i).getVoyageId());
-        Voyage tempVoyage = getXMLShipVoyage(voyageId);
-        if (tempVoyage.checkStatus() == "OK")
-        {
-          okVoyages.add(tempVoyage);
-        }
-      } 
-      return okVoyages;
     }
 
     @RequestMapping(value="/voyages/{id}/updatelimits", method = RequestMethod.PUT)  
