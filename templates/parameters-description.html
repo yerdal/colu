@@ -19,6 +19,7 @@
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
 
       Undre gräns: {{parameter.lowerLimit}} {{parameter.unit}}. Övre gräns: {{parameter.upperLimit}} {{parameter.unit}}.
+                   {{parameter.required}} 
 
     </div>
 
@@ -26,8 +27,9 @@
 
       Undre gräns: <input ng-model="parameter.lowerLimit" ng-show="editorEnabled[parameter.number]"> {{para.unit}}
       Övre gräns: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[parameter.number]">  {{para.unit}}
+      <input ng-model="parameter.required" ng-show="editorEnabled[parameter.number]">
 
-      <button ng-click="save(parameter.number)" type="button" class="btn btn-default btn-sm">
+      <button ng-click="saveIndex(parameter.number, parameter.index)" type="button" class="btn btn-default btn-sm">
         <i class="glyphicon glyphicon-floppy-disk"></i>
       </button>     
 

@@ -15,6 +15,31 @@ coluApp.service('sharedProperties', function() {
 
 coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
+  function checkTimeStatus(i){
+
+      console.log("hej",i);
+      var MINUTES_TO_MILLISEC = 60000;
+
+      var required = Date.parse($scope.voyages[i].rangeParameters.time.required);
+      var estimated = Date.parse($scope.voyages[i].rangeParameters.time.current);
+      console.log("estimated ", estimated);
+
+
+      var lower = required + $scope.voyages[i].rangeParameters.time.lowerLimit*MINUTES_TO_MILLISEC;
+      console.log("lower ", lower);
+      var higher = required + $scope.voyages[i].rangeParameters.time.upperLimit*MINUTES_TO_MILLISEC;
+            console.log("higher ", higher);
+
+
+      if( estimated < higher && estimated > lower){
+        $scope.voyages[i].rangeParameters.status = true;
+      }
+      else {
+        $scope.voyages[i].rangeParameters.status = false;
+      }
+      console.log($scope.voyages[i].rangeParameters.status);
+    }
+
   //Gets the Voyage-data
   $http.get('http://localhost:8090/voyages').success(function(data,status,headers,config)
     {
@@ -34,9 +59,13 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       for(var i = 0; i < $scope.voyages.length; i++)
       {
         $scope.voyages[i].rangeParameters = {
-          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', status: true, unit: "minuter", current: $scope.voyages[i].eta, number: 0 },
+          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', required: $scope.voyages[i].eta, status: true, unit: "minuter", current: $scope.voyages[i].eta, number: 0, index: i },
           velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', status: false, unit: "knop", current: $scope.voyages[i].shipReports[1].speedAvg, number: 1}
         }
+        
+         checkTimeStatus(i);
+
+        console.log($scope.voyages[i].rangeParameters.status);
 
         //console.log("oefsn", $scope.voyages[8]);
         
@@ -70,6 +99,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
           current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed,current: $scope.voyages[i].weatherWaypoints[1].currentSpeed, status:true, unit: "m/s", number: 4},
           wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].weatherWaypoints[1].windSpeed, status:false, unit: "m/s", number: 5}
 
+
         }  
        
         //Add voyages to right array
@@ -81,18 +111,21 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
           $scope.voyagesGood.push($scope.voyages[i])
       } 
 
+      
+
       //Where all the functionality is
       main();   
       
       }).error(function(data,status,headers,config){
         console.log('ERROR getting from backend' , status);
 
+
+
       });
 
 
   function main (){
 
-    
     //How the form works
     formFunctionality();
   
@@ -134,15 +167,23 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         $scope.editorEnabled[id] = false;
       };
 
+      $scope.saveIndex = function(id, index) {
+        $scope.disableEditor(id);
+        console.log("save", id);
+        console.log("sadsad", index);
+        checkTimeStatus(index);
+
+      };
+
       $scope.save = function(id) {
         $scope.disableEditor(id);
       };
 
-      }
+    }
 
-      function isInArray(value, array) {
-        return array.indexOf(value) > -1;
-      }
+    function isInArray(value, array) {
+      return array.indexOf(value) > -1;
+    }
   }
 
 });
