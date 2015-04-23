@@ -19,9 +19,12 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
   $http.get('http://localhost:8090/voyages').success(function(data,status,headers,config)
     {
       
-      //For now, just looking at a few voyages
-      $scope.voyages = data;
-      console.log("fesfsdfsdfs", data[0]);
+
+      //Delete some broken data, Einis will solve it, sometime,
+        data.splice(9, 1);  
+      
+      $scope.voyages = data.slice(1, 26);
+      //console.log("fesfsdfsdfs", data[0]);
 
       $scope.voyagesBad = [];
       $scope.voyagesGood = [];    
@@ -31,8 +34,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       for(var i = 0; i < $scope.voyages.length; i++)
       {
         $scope.voyages[i].rangeParameters = {
-          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', status: true, unit: "minuter", number: 0},
-          velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', status: false, unit: "knop", number: 1}
+          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', status: true, unit: "minuter", current: $scope.voyages[i].eta, number: 0 },
+          velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', status: false, unit: "knop", current: $scope.voyages[i].shipReports[1].speedAvg, number: 1}
         }
 
         //console.log("oefsn", $scope.voyages[8]);
@@ -63,10 +66,10 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         $scope.voyages[i].singleParameters = {
 
           fuel: {label: "Bränsle", upperLimit: '250', status: true, unit: "L/mil", number: 2},
-          combinedWave : {label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, status:false, unit: "m",number: 3},
-          current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, status:true, unit: "m/s", number: 4},
-          wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, status:false, unit: "m/s", number: 5}
-        
+          combinedWave : {label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].weatherWaypoints[1].signWaveHeight, status:false, unit: "m",number: 3},
+          current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed,current: $scope.voyages[i].weatherWaypoints[1].currentSpeed, status:true, unit: "m/s", number: 4},
+          wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].weatherWaypoints[1].windSpeed, status:false, unit: "m/s", number: 5}
+
         }  
        
         //Add voyages to right array
