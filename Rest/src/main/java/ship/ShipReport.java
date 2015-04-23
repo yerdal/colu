@@ -72,6 +72,71 @@ public class ShipReport
 	private String requiredAvgSpeedStatus;
 
 
+
+	public ShipReport(){
+		reportID = 0;
+		cosp_eosp = 0;
+		// SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+		etaEarliest = new Date();
+		obsWindspeed = 0.0;
+		obsWindspeedbf = 0.0;
+		obsWindDir = 0.0;
+		obsWaveh = 0.0;
+		obsSwellh = 0.0;
+		obsSwellDir = 0.0;
+		course = 0.0;
+		speedAvg = 0.0;
+		rpmAvg = 0.0;
+		loadAvg = 0.0;
+		distSinceLatestRep = 0.0;
+		distRemToGo = 0.0;
+		hfoBrob = 0.0;
+		lsfoBrob = 0.0;
+		mgoBrob = 0.0;
+		mdoBrob = 0.0;
+		meHfoSLR = 0.0;
+		meLsfoSLR = 0.0;
+		memDoSLR = 0.0;
+		memGoSLR = 0.0;
+		auxHfoSLR = 0.0;
+		auxLsfoSLR = 0.0;
+		auxMdoSLR = 0.0;
+		auxMgoSLR = 0.0;
+		boilerHfoSLR = 0.0;
+		boilerLsfoSLR = 0.0;
+		boilerMdoSLR = 0.0;
+		boilerMgoSLR = 0.0;
+		cleanHfoSLR = 0.0;
+		cleanLsfoSLR = 0.0;
+		cleanMdoSLR = 0.0;
+		cleanMgoSLR = 0.0;
+		heatHfoSLR = 0.0;
+		heatLfsoSLR = 0.0;
+		heatMdoSLR = 0.0;
+		heatMgoSLR = 0.0;
+		genAtSeaHfoSLR = 0.0;
+		genAtSeaLsfoSLR = 0.0;
+		genAtSeaMdoSlr = 0.0;
+		genAtSeaMgoSLR = 0.0;
+		othersAtSeaHfoSLR = 0.0;
+		othersAtSeaLsfoSLR = 0.0;
+		othersAtSeaMdoSLR = 0.0;
+		othersAtSeaMgoSLR = 0.0;
+		instructedLegCode = "undefined";
+		instructedSpeed = "undefined";
+		propulsionEngines = 0;
+		shaftGenerators = 0;
+		finStabilizers = 0;
+		steamTimeSLR = 0.0;
+		baselineInstructionID = 0;
+		proformaSpeed = 0.0;
+		intendedSpeed = 0.0;
+		lon = 0.0;
+		legType = 0;
+		lat = 0.0;
+		date = "2000-01-01 00:00";
+	}
+
 	public ShipReport(int theReportID,
 						 int theCosp_eosp,
 						 String theEtaEarliest,
@@ -211,8 +276,9 @@ public class ShipReport
 	public int getCosp_eosp(){
 		return cosp_eosp;
 	}
-	public Date getEtaEarliest(){
-		return etaEarliest;
+	public String getEtaEarliest(){
+		SimpleDateFormat form = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		return form.format(etaEarliest);
 	}
 	public double getObsWindspeed(){
 		return obsWindspeed;

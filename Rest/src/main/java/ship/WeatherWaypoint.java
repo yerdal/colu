@@ -34,31 +34,31 @@ public class WeatherWaypoint
 	private String currentDirStatus;
 
 	public WeatherWaypoint(){
-		double windSpeed = 0.0;
-		double windDir = 0.0;
-		double swellHeight = 0.0;
-		double swellDir = 0.0;
-		double swellPeriod = 0.0;
-		double currentSpeed = 0.0;
-		double currentDir = 0.0;
-		double airPressure = 0.0;
-		double signWaveHeight = 0.0;
-		double windWaveHeight = 0.0;
-		double windWavePeriod = 0.0;
-		double calcShipSpeed = 0.0;
-		double weatherFactor = 0.0;
-		double currentFactor = 0.0;
-		double calcDistance = 0.0;
-		String goodWeather = "undefined";
-		double lon = 0.0;
-		String legType = "undefined";
-		double lat = 0.0;
-		String dateETP = "undefined";
-		String windSpeedStatus = "undefined";
-		String windDirStatus = "undefined";
-		String signWaveHeightStatus = "undefined";
-		String currentSpeedStatus = "undefined";
-		String currentDirStatus = "undefined";
+		windSpeed = 0.0;
+		windDir = 0.0;
+		swellHeight = 0.0;
+		swellDir = 0.0;
+		swellPeriod = 0.0;
+		currentSpeed = 0.0;
+		currentDir = 0.0;
+		airPressure = 0.0;
+		signWaveHeight = 0.0;
+		windWaveHeight = 0.0;
+		windWavePeriod = 0.0;
+		calcShipSpeed = 0.0;
+		weatherFactor = 0.0;
+		currentFactor = 0.0;
+		calcDistance = 0.0;
+		goodWeather = "undefined";
+		lon = 0.0;
+		legType = "undefined";
+		lat = 0.0;
+		dateETP = "2000-01-01 00:00";
+		windSpeedStatus = "undefined";
+		windDirStatus = "undefined";
+		signWaveHeightStatus = "undefined";
+		currentSpeedStatus = "undefined";
+		currentDirStatus = "undefined";
 	}
 	
 
