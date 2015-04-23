@@ -21,14 +21,13 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       
       //For now, just looking at a few voyages
       $scope.voyages = data.slice(1, 5);
-      console.log("fesfsdfsdfs", data[0]);
 
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
       {
         $scope.voyages[i].rangeParameters = {
-          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', status: true, unit: "minuter", number: 0},
-          velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', status: false, unit: "knop", number: 1}
+          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', status: true, unit: "minuter", current: $scope.voyages[i].eta, number: 0 },
+          velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', status: false, unit: "knop", current: $scope.voyages[i].shipReports[1].speedAvg, number: 1}
         }
 
         //console.log("oefsn", $scope.voyages[8]);
@@ -58,9 +57,9 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         $scope.voyages[i].singleParameters = {
 
           fuel: {label: "Bränsle", upperLimit: '250', status: true, unit: "L/mil", number: 2},
-          combinedWave : {label: "Våghöjd", upperLimit: '250', status:false, unit: "m",number: 3},
-          current : {label: "Ström", upperLimit: '250', status:true, unit: "m/s", number: 4},
-          wind : {label: "Vind", upperLimit: $scope.voyages[i].weatherWaypoints[1].windSpeed, status:false, unit: "m/s", number: 5}
+          combinedWave : {label: "Våghöjd", upperLimit: '250', status:false, unit: "m", current: $scope.voyages[i].weatherWaypoints[1].signWaveHeight, number: 3},
+          current : {label: "Ström", upperLimit: '250', status:true, unit: "m/s", current: $scope.voyages[i].weatherWaypoints[1].currentSpeed, number: 4},
+          wind : {label: "Vind", upperLimit: $scope.voyages[i].weatherWaypoints[1].windSpeed, status:false, unit: "m/s", current: $scope.voyages[i].weatherWaypoints[1].windSpeed, number: 5}
         
         }        
       
