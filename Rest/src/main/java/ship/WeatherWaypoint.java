@@ -218,16 +218,12 @@ public class WeatherWaypoint
 
 	public void updateWindSpeedStatus(double chosenWindSpeed)
 	{
-		if (windSpeed < chosenWindSpeed)
+		if (windSpeed <= chosenWindSpeed)
 		{
 			setWindSpeedStatus("GOOD");
 		}
-		else if (windSpeed == chosenWindSpeed)
-		{
-			setWindSpeedStatus("OK");
-		}
-		else //windSpeed > chosenWindSpeed
-		{
+		else  
+		{	
 			setWindSpeedStatus("BAD");
 		}
 		
@@ -239,25 +235,17 @@ public class WeatherWaypoint
 		{
 			setWindDirStatus("GOOD");
 		}
-		else if (windDir == chosenWindDir)
-		{
-			setWindDirStatus("OK");
-		}
-		else //windDir > chosenWindDir
-		{
+		else 
+		{		
 			setWindDirStatus("BAD");
-		}
-	}
+	}	}
 
 	public void updateSignWaveHeightStatus(double chosenSignWaveHeight){
 		if (signWaveHeight < chosenSignWaveHeight)
 		{
 			setSignWaveHeightStatus("GOOD");
 		}
-		else if (signWaveHeight == chosenSignWaveHeight)
-		{
-			setSignWaveHeightStatus("OK");
-		}
+	
 		else
 		{
 			setSignWaveHeightStatus("BAD");
@@ -269,10 +257,6 @@ public class WeatherWaypoint
 			{
 				setCurrentDirStatus("GOOD");
 			}
-			else if (currentDir == chosenCurrentDir)
-			{
-				setCurrentDirStatus("OK");
-			}
 			else
 			{
 				setCurrentDirStatus("BAD");
@@ -283,10 +267,7 @@ public class WeatherWaypoint
 		{
 				setCurrentSpeedStatus("GOOD");
 		}
-		else if (currentSpeed == chosenCurrentSpeed)
-		{
-				setCurrentSpeedStatus("OK");
-		}
+
 		else
 		{
 				setCurrentSpeedStatus("BAD");

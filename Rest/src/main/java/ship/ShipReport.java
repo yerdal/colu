@@ -398,16 +398,16 @@ public class ShipReport
 
 	//Update
 	public void updateRequiredETAStatus(Date reqEta){
-		if(reqEta.compareTo(etaEarliest)>0){
+		if(reqEta.compareTo(etaEarliest)>0)
+		{
         // System.out.println("reqEta is after etaEarliest");
         requiredETAStatus = "BAD";
-    }else if(reqEta.compareTo(etaEarliest)<0){
-        // System.out.println("reqEta is before etaEarliest");
-        requiredETAStatus = "BAD";
-    }else{
+    	}
+    	else
+    	{
         // System.out.println("reqEta is equal to etaEarliest");
         requiredETAStatus = "OK";
-    }
+    	}
 		
 	}
 	public void updateAvgSpeedStatus(double min, double max){

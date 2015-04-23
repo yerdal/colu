@@ -571,17 +571,11 @@ public class Voyage
 		{
 			status = "BAD";
 		}
-		else if(waypoint.getWindSpeedStatus() == "GOOD"	&& waypoint.getSignWaveHeightStatus() == "GOOD" 
-			&& waypoint.getCurrentSpeedStatus() == "GOOD" && shipreport.getAvgSpeedStatus() == "GOOD")
+		else //all good
 		{
 			status = "GOOD";
 		}
-		else
-		{
-			status = "OK";
-		}
-			
-		
+
 		return status;
 	}
 
@@ -598,7 +592,7 @@ public class Voyage
 				return weatherWaypoints.get(i);
 			}
 		}
-		System.out.println("returning Null");
+		System.out.println("returning Null"); //faaaast ändå inte.
 		return new WeatherWaypoint();
 
 	}
