@@ -244,7 +244,7 @@ public class Voyage
 	public ArrayList<WeatherWaypoint> getWeatherWaypoints()
 	{
 		return weatherWaypoints;
-
+	}
 
 	public WeatherWaypoint getCurrentWeatherWaypoint(){
 		return closestWeatherWaypoint();
