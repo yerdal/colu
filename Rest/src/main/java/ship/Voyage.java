@@ -59,7 +59,8 @@ public class Voyage
 
 
 	//Our new vaiables!
-	private Date requiredETA;
+	private Date requiredMinETA;
+	private Date requiredMaxETA;
 
 	private String status;
 
@@ -122,7 +123,8 @@ public class Voyage
 		weatherWaypoints.add(new WeatherWaypoint());
 	 	shipReports =  new ArrayList<ShipReport>();
 	 	shipReports.add(new ShipReport());
-		requiredETA = new Date();
+		requiredMinETA = new Date();
+		requiredMaxETA = new Date();
 		status = "undefined";
 	}
 	// private bool onGoing; //kanske?
@@ -214,7 +216,8 @@ public class Voyage
   	comment = theComment;
 		shipReports = theShipReports;
 
-  	requiredETA = new Date();
+  	requiredMinETA = new Date();
+  	requiredMaxETA = new Date();
   	status = "undefined";
 	}
 	public int getVoyageId(){
@@ -392,10 +395,23 @@ public class Voyage
 		return status;
 	}
 
-	public String getRequiredETA(){
+	public String getRequiredMinETA(){
 		String temp; 
 		try {
-        temp = requiredETA.toString();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+        temp = formatter.format(requiredMinETA);
+      }   
+      catch (Exception e) {
+      	// e.throw
+         temp = "0000-00-00 00:00";
+      }
+		return temp;
+	}
+	public String getRequiredMaxETA(){
+		String temp; 
+		try {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+        temp = formatter.format(requiredMaxETA);
       }   
       catch (Exception e) {
       	// e.throw
@@ -405,7 +421,7 @@ public class Voyage
 	}
 
 	public void setRequiredParameters(RequestedParameters body){
-		System.out.println("Requested PArams " +  body.getRequiredETA() +
+		System.out.println("Requested PArams " +  body.getRequiredMinETA() +
 								body.getRequiredCurrentSpeed() +
 								body.getRequiredWindSpeed() +
 								body.getRequiredWindDir() +
@@ -418,12 +434,12 @@ public class Voyage
 		// savedParam.setRequiredWindDir(body.getRequiredWindDir());
 		// savedParam.setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
 		// savedParam.setRequiredCurrentDir(body.getRequiredCurrentDir());
-		// savedParam.setRequiredETA(body.getRequiredETA());
+		// savedParam.setRequiredMinMaxETA(body.getRequiredMinETA());
 		// savedParam.setRequiredAvgSpeedMin(body.getRequiredAvgSpeedMin());
 		// savedParam.setRequiredAvgSpeedMax(body.getRequiredAvgSpeedMax());
 
 		// //Set each required limits for a voyage
-		// setRequiredETA(body.getRequiredETA());
+		// setRequiredMinMaxETA(body.getRequiredMinETA());
   //   setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
   //   setRequiredWindSpeed(body.getRequiredWindSpeed());
   //   setRequiredWindDir(body.getRequiredWindDir());
@@ -431,13 +447,31 @@ public class Voyage
   //   setRequiredCurrentDir(body.getRequiredCurrentDir());
   //   setRequiredAvgSpeed(body.getRequiredAvgSpeedMin() , body.getRequiredAvgSpeedMin());
 	}
-
+	public void setRequiredParametersToDB(SavedParameters savedParam, RequestedParameters body){
+		savedParam.setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
+		savedParam.setRequiredWindSpeed(body.getRequiredWindSpeed());
+		savedParam.setRequiredWindDir(body.getRequiredWindDir());
+		savedParam.setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
+		savedParam.setRequiredCurrentDir(body.getRequiredCurrentDir());
+		savedParam.setRequiredMinETA(body.getRequiredMinETA());
+		savedParam.setRequiredMaxETA(body.getRequiredMaxETA());
+		savedParam.setRequiredAvgSpeedMin(body.getRequiredAvgSpeedMin());
+		savedParam.setRequiredAvgSpeedMax(body.getRequiredAvgSpeedMax());
+		//Set on the object
+		setRequiredMinMaxETA(savedParam.getRequiredMinETA(), savedParam.getRequiredMaxETA());
+    setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
+    setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
+    setRequiredWindDir(savedParam.getRequiredWindDir());
+    setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
+    setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
+    setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
+	}
 	//Set parameters from DB
 	public void setRequiredParametersFromDB(SavedParameters savedParam){
 		
-
+		
 		//Set each required limits for a voyage
-		setRequiredETA(savedParam.getRequiredETA());
+		setRequiredMinMaxETA(savedParam.getRequiredMinETA(), savedParam.getRequiredMaxETA());
     setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
     setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
     setRequiredWindDir(savedParam.getRequiredWindDir());
@@ -446,7 +480,7 @@ public class Voyage
     setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
   //   System.out.println("VOyage ID on Object " + voyageID );
 		// System.out.println("Voyage ID from DB " +  savedParam.getId());
-		// System.out.println("savedParam PArams " +  savedParam.getRequiredETA() + "\n " +
+		// System.out.println("savedParam PArams " +  savedParam.getRequiredMinETA() + "\n " +
 		// 						"RequiredCurrentSpeed " + savedParam.getRequiredCurrentSpeed() + "\n " + 
 		// 						"RequiredWindSpeed " + savedParam.getRequiredWindSpeed() + " \n " + 
 		// 						"RequiredWindDir " + savedParam.getRequiredWindDir() + "  \n " + 
@@ -458,41 +492,46 @@ public class Voyage
 
 	}
 
-	public void setRequiredParameters(SavedParameters body){
-		System.out.println("Saved PArams " +  body.getRequiredETA() + "\n " +
-								body.getRequiredCurrentSpeed() + "\n " + 
-								body.getRequiredWindSpeed() + " \n " + 
-								body.getRequiredWindDir() + "  \n " + 
-								body.getRequiredSignWaveHeight() + " \n " + 
-								body.getRequiredCurrentDir() + " \n " +
-								body.getRequiredAvgSpeedMin()  + " \n " +
-								body.getRequiredAvgSpeedMax());
+	public void setRequiredParameters(SavedParameters savedParam){
+		System.out.println("Saved PArams " +  savedParam.getRequiredMinETA() + "\n " +
+								savedParam.getRequiredCurrentSpeed() + "\n " + 
+								savedParam.getRequiredWindSpeed() + " \n " + 
+								savedParam.getRequiredWindDir() + "  \n " + 
+								savedParam.getRequiredSignWaveHeight() + " \n " + 
+								savedParam.getRequiredCurrentDir() + " \n " +
+								savedParam.getRequiredAvgSpeedMin()  + " \n " +
+								savedParam.getRequiredAvgSpeedMax());
 
 		//Set each required limits for a voyage
-		setRequiredETA(body.getRequiredETA());
-    setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
-    setRequiredWindSpeed(body.getRequiredWindSpeed());
-    setRequiredWindDir(body.getRequiredWindDir());
-    setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
-    setRequiredCurrentDir(body.getRequiredCurrentDir());
-    setRequiredAvgSpeed(body.getRequiredAvgSpeedMin() , body.getRequiredAvgSpeedMax());
+		setRequiredMinMaxETA(savedParam.getRequiredMinETA(),savedParam.getRequiredMaxETA());
+    setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
+    setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
+    setRequiredWindDir(savedParam.getRequiredWindDir());
+    setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
+    setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
+    setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
 	}
 
 
-	public void setRequiredETA(String reqEta){
+	public void setRequiredMinMaxETA(String reqMinEta, String reqMaxEta){
 		try {
- 			if(reqEta.equals(""))
- 				reqEta = "00-00-00 00:00";
+ 			if(reqMinEta.equals(""))
+ 				reqMinEta = "00-00-00 00:00";
+ 			if(reqMaxEta.equals(""))
+ 				reqMaxEta = "00-00-00 00:00";
+ 			
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm");
-			requiredETA = formatter.parse(reqEta);
+			requiredMinETA = formatter.parse(reqMinEta);
+			requiredMaxETA = formatter.parse(reqMaxEta);
 			for(int i = 0; i < shipReports.size(); i++){
-				shipReports.get(i).updateRequiredETAStatus(requiredETA);
+				shipReports.get(i).updateRequiredETAStatus(requiredMinETA, requiredMaxETA);
 			}
  
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}
+
 	// Ankomsttid -> Använda ETA variable från shipreport
 
 	public void setRequiredAvgSpeed(double speedMin, double speedMax){
