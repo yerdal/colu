@@ -53,6 +53,7 @@ public class Voyage
 	private double foBrobLatest; // Fuel Oil remaining on board incl. IFO, LS, HS if any) at arrival
 	private double doBrobLatest; // Diesel Oil remaining on board incl. MDO, MGO if any) at arrival
 	private String hasPva; //If voyage pva is created , true false, undefined
+	private ArrayList <Waypoint> waypoints;
 	private ArrayList <WeatherWaypoint> weatherWaypoints;
 	private ArrayList <ShipReport> shipReports;
 	private String comment; //Comment about the voyage
@@ -118,6 +119,7 @@ public class Voyage
 		doBrobLatest = 0.0;
 		hasPva = "undefined";
 		comment = "undefined";
+		waypoints = new ArrayList<Waypoint>();
 		weatherWaypoints = new ArrayList<WeatherWaypoint>();
 	 	shipReports =  new ArrayList<ShipReport>();
 		requiredETA = new Date();
@@ -162,12 +164,13 @@ public class Voyage
 									double theFoBrobLatest,
 									double theDoBrobLatest,
 									String theHasPva,
+									ArrayList <Waypoint> theWaypoints,
 									ArrayList <WeatherWaypoint> theWeatherWaypoints,
 									String theComment,
 									ArrayList <ShipReport> theShipReports)
 	{
-		voyageID = theVoyageID;
-		worklistID = theWorklistID;
+	voyageID = theVoyageID;
+	worklistID = theWorklistID;
   	systemOnBoardStatus = theSystemOnBoardStatus;
   	state = theState;
   	pvapdfurl = thePvadpfurl;
@@ -175,7 +178,7 @@ public class Voyage
 	//values
   	voyageName = theVoyageName;
   	voyRef = theVoyRef;
-		operator = theOperator;
+	operator = theOperator;
   	personName = thePersonName;
   	ship = theShip;
   	departure = theDeparture;
@@ -188,7 +191,7 @@ public class Voyage
   	cargoSensitivStatus = theCargoSensitiv;
   	gmHeight = theGmHeight;
   	displacementAtDep = theDisplacementAtDep;
-	 	maxSpeed = theMaxSpeed;
+	 maxSpeed = theMaxSpeed;
   	draftAft = theDraftAft;
   	draftFwd = theDraftFwd;
   	draftMean = theDraftMean;
@@ -207,10 +210,11 @@ public class Voyage
   	doBrobLatest = theDoBrobLatest;
   	foBrobLatest = theFoBrobLatest;
   	hasPva = theHasPva;
+  	waypoints = theWaypoints;
   	weatherWaypoints = theWeatherWaypoints;
 
   	comment = theComment;
-		shipReports = theShipReports;
+	shipReports = theShipReports;
 
   	requiredETA = new Date();
   	status = "undefined";
@@ -229,6 +233,10 @@ public class Voyage
 	public Operator getOperator()
 	{
 		return operator;
+	}
+	public ArrayList<Waypoint> getWaypoints()
+	{
+		return waypoints;
 	}
 	public ArrayList<WeatherWaypoint> getWeatherWaypoints()
 	{
@@ -551,7 +559,7 @@ public class Voyage
 	public String checkStatus()
 	{
 		if(shipReports.size() == 0)
-			return "ERROR finding shipreports or waypoint";
+			return "ERROR finding shipreports or weather waypoint";
 		WeatherWaypoint waypoint = closestWeatherWaypoint();
 
 		//Get the last report to compare Speed
