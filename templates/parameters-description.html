@@ -1,88 +1,93 @@
 <h2>{{activeVoyage.voyageName | uppercase}}</h2>
 
-<div class="detail-box" ng-repeat="parameter in activeVoyage.rangeParameters">
-    
-    <ul class="list-inline">
-      <li>
-        <h4>{{parameter.label | uppercase}}</h4>
-      </li>
+<div class="col-sm-6">
+  <div class="detail-box" ng-repeat="parameter in activeVoyage.rangeParameters">
       
-      <li>
-        <button type="button" class="btn btn-default btn-sm " ng-click="enableEditor(parameter.number)" ng-hide="editorEnabled[parameter.number]">
-          <i class="glyphicon glyphicon-pencil"></i>
-        </button>
-      </li>
-    
-    </ul>
-
-    <div ng-hide="editorEnabled[parameter.number]">
-    <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
-
-      Undre gräns: {{parameter.lowerLimit}} {{parameter.unit}}. Övre gräns: {{parameter.upperLimit}} {{parameter.unit}}.
-
-    </div>
-
-    <div ng-show="editorEnabled[parameter.number]">
-
-      Undre gräns: <input ng-model="parameter.lowerLimit" ng-show="editorEnabled[parameter.number]"> {{para.unit}}
-      Övre gräns: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[parameter.number]">  {{para.unit}}
-
-      <button ng-click="save(parameter.number)" type="button" class="btn btn-default btn-sm">
-        <i class="glyphicon glyphicon-floppy-disk"></i>
-      </button>     
-
-    </div>
-
-    <div>
-      Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.
-    </div>
-
-</div>
-  
-<!-- *************************************************************** -->
-
-<div ng-repeat="parameter in activeVoyage.singleParameters">
-  
-  <div class="detail-box">
-    <ul class="list-inline">
-      <li>
-        <h4 >{{parameter.label | uppercase}}</h4>
-      </li>
+      <ul class="list-inline">
+        <li>
+          <h4>{{parameter.label | uppercase}}</h4>
+        </li>
+        
+        <li>
+          <button type="button" class="btn btn-default btn-sm " ng-click="enableEditor($index)" ng-hide="editorEnabled[$index]">
+            <i class="glyphicon glyphicon-pencil"></i>
+          </button>
+        </li>
       
-      <li>
-        <button type="button" class="btn btn-default btn-sm" ng-click="enableEditor(parameter.number)" ng-hide="editorEnabled[parameter.number]">
-          <i class="glyphicon glyphicon-pencil"></i>
-        </button>
-      </li>
-    
-    </ul>
+      </ul>
 
-    <div ng-hide="editorEnabled[parameter.number]">
+      <div ng-hide="editorEnabled[$index]">
+      <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
 
-      <!-- ng-class="{good: activeVoyage.combinedWave.status == true, bad: activeVoyage.combinedWave.status == false}"-->
-      Maximalt värde: {{parameter.upperLimit}} {{parameter.unit}}. 
+        Undre gräns: {{parameter.lowerLimit}} {{parameter.unit}}. Övre gräns: {{parameter.upperLimit}} {{parameter.unit}}.
 
       </div>
 
-    <div ng-show="editorEnabled[parameter.number]">
-      Maximal värde: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[parameter.number]"> {{parameter.unit}}.
-      <button ng-click="save(parameter.number)" type="button" class="btn btn-default btn-sm">
-        <i class="glyphicon glyphicon-floppy-disk"></i>
-      </button>  
+      <div ng-show="editorEnabled[$index]">
+
+        Undre gräns: <input ng-model="parameter.lowerLimit" ng-show="editorEnabled[$index]"> {{para.unit}}
+        Övre gräns: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[$index]">  {{para.unit}}
+
+        <button ng-click="save($index)" type="button" class="btn btn-default btn-sm">
+          <i class="glyphicon glyphicon-floppy-disk"></i>
+        </button>     
+
+      </div>
+
+      <div id="current" ng-class="{bad: parameter.status == 'BAD'}">
+        <p>Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.</p>
+      </div>
+
+  </div>
+    
+  <!-- *************************************************************** -->
+
+  <!-- $index+2, because the loop above as already used two iterations--> 
+  <div ng-repeat="parameter in activeVoyage.singleParameters">
+    
+    <div class="detail-box">
+      <ul class="list-inline">
+        <li>
+          <h4 >{{parameter.label | uppercase}}</h4>
+        </li>
+        
+        <li>
+          <button type="button" class="btn btn-default btn-sm" ng-click="enableEditor($index + 2)" ng-hide="editorEnabled[$index + 2]">
+            <i class="glyphicon glyphicon-pencil"></i>
+          </button>
+        </li>
+      
+      </ul>
+
+      <div ng-hide="editorEnabled[$index + 2]">
+
+        <!-- ng-class="{good: activeVoyage.combinedWave.status == true, bad: activeVoyage.combinedWave.status == false}"-->
+        Maximalt värde: {{parameter.upperLimit}} {{parameter.unit}}. 
+
+        </div>
+
+      <div ng-show="editorEnabled[$index + 2]">
+        Maximal värde: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[$index + 2]"> {{parameter.unit}}.
+        <button ng-click="save($index + 2)" type="button" class="btn btn-default btn-sm">
+          <i class="glyphicon glyphicon-floppy-disk"></i>
+        </button>  
+      </div>
+
+      <div id="current" ng-class="{bad: parameter.status == 'BAD'}">
+        <p>Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.</p>
     </div>
 
   </div>
 
-  <div>
-      Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.
+    
+
   </div>
 
+  <!-- *********************************************************** -->
+
+  <button type="button" class="btn btn-default btn-lg handled" ng-if="isBad(activeVoyage)" ng-click="handel(activeVoyage)">
+    <i class="glyphicon glyphicon-ok"></i>
+  </button>
+
 </div>
-
-<!-- *********************************************************** -->
-
-<button type="button" class="btn btn-default btn-lg handled" ng-if="isBad(activeVoyage)" ng-click="handel(activeVoyage)">
-  <i class="glyphicon glyphicon-ok"></i>
-</button>
-
 

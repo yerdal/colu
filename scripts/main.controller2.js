@@ -30,15 +30,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       $scope.voyagesGood = [];    
       $scope.voyagesHandled = [];
 
-      //Sets some hardcoded parameters
-      for(var i = 0; i < $scope.voyages.length; i++)
-      {
-        $scope.voyages[i].rangeParameters = {
-          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', status: true, unit: "minuter", current: $scope.voyages[i].eta, number: 0 },
-          velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', status: false, unit: "knop", current: $scope.voyages[i].shipReports[1].speedAvg, number: 1}
-        }
-
-        //console.log("oefsn", $scope.voyages[8]);
+      //console.log("oefsn", $scope.voyages[8]);
         
         // $scope.voyages[i].warning = {warning: ': '
         //                           };
@@ -63,12 +55,20 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         //   $scope.voyages[i].warning.warning += 'F ';
         // } 
 
+      //Sets some hardcoded parameters
+      for(var i = 0; i < $scope.voyages.length; i++)
+      {
+        $scope.voyages[i].rangeParameters = {
+          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].eta, status: "BAD", unit: "minuter" },
+          velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', current: $scope.voyages[i].shipReports[1].speedAvg, status:"GOOD", unit: "knop"}
+        }
+
         $scope.voyages[i].singleParameters = {
 
-          fuel: {label: "Bränsle", upperLimit: '250', status: true, unit: "L/mil", number: 2},
-          combinedWave : {label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].weatherWaypoints[1].signWaveHeight, status:false, unit: "m",number: 3},
-          current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed,current: $scope.voyages[i].weatherWaypoints[1].currentSpeed, status:true, unit: "m/s", number: 4},
-          wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].weatherWaypoints[1].windSpeed, status:false, unit: "m/s", number: 5}
+          fuel: {label: "Bränsle", upperLimit: '250', status: "BAD", unit: "L/mil",},
+          combinedWave : {label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].weatherWaypoints[1].signWaveHeight, status:"GOOD", unit: "m"},
+          current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed,current: $scope.voyages[i].weatherWaypoints[1].currentSpeed, status:"GOOD", unit: "m/s"},
+          wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].weatherWaypoints[1].windSpeed, status:"BAD", unit: "m/s"}
 
         }  
        
@@ -105,6 +105,13 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
     //Used to only show handle-button on Bad-voyages
     $scope.isBad = function(s){
       return ($scope.voyagesBad.indexOf(s) != -1)
+    }
+
+    $scope.test = function(p){
+      if(p == BAD)
+        return false;
+      else
+        return true;
     }
 
     //To "handle" voyages, and then put them in the handled-list
