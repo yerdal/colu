@@ -119,7 +119,9 @@ public class Voyage
 		hasPva = "undefined";
 		comment = "undefined";
 		weatherWaypoints = new ArrayList<WeatherWaypoint>();
+		weatherWaypoints.add(new WeatherWaypoint());
 	 	shipReports =  new ArrayList<ShipReport>();
+	 	shipReports.add(new ShipReport());
 		requiredETA = new Date();
 		status = "undefined";
 	}
@@ -230,14 +232,19 @@ public class Voyage
 	{
 		return operator;
 	}
-	public ArrayList<WeatherWaypoint> getWeatherWaypoints()
-	{
-		return weatherWaypoints;
+	//To get all the weatherwaypoints
+	// public ArrayList<WeatherWaypoint> getWeatherWaypoints()
+	// {
+	// 	return weatherWaypoints;
+	// }
+
+	public WeatherWaypoint getCurrentWeatherWaypoint(){
+		return closestWeatherWaypoint();
 	}
 
-	public ArrayList<ShipReport> getShipReports()
+	public ShipReport getLatestShipReport()
 	{
-		return shipReports;
+		return shipReports.get(getLatesReportIndex());
 	}
 
 
@@ -582,19 +589,8 @@ public class Voyage
 	public WeatherWaypoint closestWeatherWaypoint()
 	{
 		int theCounter = checkClosestWeather();
-	
-		for (int i = 0; i < weatherWaypoints.size(); i++)
-		{
-			if (i == theCounter)
-			{
-				// System.out.println("WeatherWaypoints size " + weatherWaypoints.size());
-				// System.out.println("THE COUNTER" + theCounter);
-				return weatherWaypoints.get(i);
-			}
-		}
-		System.out.println("returning Null"); //faaaast ändå inte.
-		return new WeatherWaypoint();
-
+		
+		return weatherWaypoints.get(theCounter);
 	}
 
 	public int checkClosestWeather()
@@ -612,6 +608,7 @@ public class Voyage
 		{
 			weatherDatesString.add(weatherWaypoints.get(i).getETPDate());
 		}
+
 		//System.out.println(latestReportDateString + " " + weatherDates.get(2));
 
 		parts = latestReportDate.split("-");
