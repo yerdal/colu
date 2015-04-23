@@ -107,10 +107,10 @@ public class ParsingXML{
                       String contactValues = eElement.getAttribute("values");
                       String[] contactParts = contactValues.split(";", 4);
                       System.out.println(" \n Contact VALUES  ");
-                      for (int i = 0; i < contactParts.length; i++)
+                     /* for (int i = 0; i < contactParts.length; i++)
                       {
                         System.out.println(contactParts[i] + " ");
-                      }
+                      }*/
 
                     }
                 }
@@ -124,18 +124,13 @@ public class ParsingXML{
                       int operatorID = Integer.parseInt(eElement.getAttribute("id"));
                       String operatorValues = eElement.getAttribute("values");
                       String [] operatorParts = operatorValues.split(";", 5);
-                      System.out.println(" \n OPERATOR VALUE  ");
+                     /* System.out.println(" \n OPERATOR VALUE  ");
                       for (int n = 0; n < operatorParts.length; n++)
                       {
                         System.out.println(operatorParts[n] + " ");
-                      }
+                      }*/
                     }
                 }
-
-                
-
-
-
           }
           return shipsArray;
 
@@ -549,11 +544,55 @@ public class ParsingXML{
 
                     }
                   }
-                  if(shipReportsArray.size() == 0){
+                    if(shipReportsArray.size() == 0){
                     shipReportsArray.add(new ShipReport());
                   }
 
-                  //Weather Way points
+                  // Waypoints
+                  ArrayList <Waypoint> waypointArray = new ArrayList<Waypoint>();
+                  NodeList nListWaypoint = tempVoyageEl.getElementsByTagName("waypoint");
+                  System.out.println(nListWaypoint.getLength() + " ");
+                  if (nListWaypoint.getLength() == 0)
+                  {
+                    Waypoint waypoint = new Waypoint();
+                    waypointArray.add(waypoint);
+                  }
+                  else
+                  {
+                      for (int i = 0; i < nListWaypoint.getLength(); i++)
+                      {
+                        Node waypointNode = nListWaypoint.item(i);
+                        if (waypointNode.getNodeType()==Node.ELEMENT_NODE)
+                        {
+                          Element waypointEl = (Element) waypointNode;
+                          int waypointID = parseIntSafely(waypointEl.getAttribute("id"));
+                          String waypointVal = waypointEl.getAttribute("values");
+                          String[] waypointValues = waypointVal.split(";", 3);
+                          double lon = parseDoubleSafely(waypointEl.getAttribute("lon"));
+                          double lat = parseDoubleSafely(waypointEl.getAttribute("lat"));
+                          String waypLegType = waypointEl.getAttribute("legtype");
+                          String eta = waypointEl.getAttribute("date");
+                          String waypointName = waypointValues[0];
+                          double waypointSpeed = parseDoubleSafely(waypointValues[1]);
+                          String nWaypoint = waypointValues[2];
+
+                          Waypoint waypoint = new Waypoint(waypointID, 
+                                                            waypointName, 
+                                                            waypointSpeed, 
+                                                            nWaypoint, 
+                                                            lat, 
+                                                            lon,
+                                                            waypLegType, 
+                                                            eta);
+                          waypointArray.add(waypoint);
+
+                        //  System.out.println(waypointID + " " + lon + " " + lat + " " + waypointName + " " + waypointSpeed);
+                        }
+
+                      }
+                    }
+                      
+                  // Weather Waypoints
                   ArrayList<WeatherWaypoint> weatherWayPointArray = new ArrayList<WeatherWaypoint>();
                   NodeList nList_weatherWayPoint = tempVoyageEl.getElementsByTagName("weatherwaypoint");
                   
@@ -652,13 +691,14 @@ public class ParsingXML{
                                               voyageFo_brob_latest,
                                               voyageDo_brob_latest,
                                               voyageHas_pva,
+                                              waypointArray,
                                               weatherWayPointArray,
                                               voyageComment,
                                               shipReportsArray);
                   
                   voyage.setRequiredParametersFromDB(savedParam);
                   // System.out.println("HHSADHDSHSDH");
-                  System.out.println("CHECKSTATUS " + voyage.checkStatus());
+                 // System.out.println("CHECKSTATUS " + voyage.checkStatus() + " Waypoint size " + waypointArray.size() +  " Voy ID " + voyage.getVoyageId());
 
 
                 }
