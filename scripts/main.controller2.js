@@ -30,13 +30,13 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       $scope.voyagesBad = [];
       $scope.voyagesGood = [];    
       $scope.voyagesHandled = [];
-
+      // console.log('requ$scope.voyages[i].requiredETA', $scope.voyages[0].latestShipReport);
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
       {
       
         $scope.voyages[i].rangeParameters = {
-          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].requiredETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter" },
+          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].latestShipReport.etaEarliest, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter" },
           velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop"}
         }
 
