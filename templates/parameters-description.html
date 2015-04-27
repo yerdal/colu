@@ -1,47 +1,93 @@
 <h2>{{activeVoyage.voyageName | uppercase}}</h2>
 
-<div class="detail-box" ng-repeat="parameter in activeVoyage.rangeParameters">
+<!--***************************************************-->
+<!-- Time -->
+<div class="detail-box" >
     
     <ul class="list-inline">
       <li>
-        <h4>{{parameter.label | uppercase}}</h4>
+        <h4>{{activeVoyage.rangeParameters.time.label | uppercase}}</h4>
       </li>
       
       <li>
-        <button type="button" class="btn btn-default btn-sm " ng-click="enableEditor(parameter.number)" ng-hide="editorEnabled[parameter.number]">
+        <button type="button" class="btn btn-default btn-sm " ng-click="enableEditor(activeVoyage.rangeParameters.time.number)" ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
           <i class="glyphicon glyphicon-pencil"></i>
         </button>
       </li>
     
     </ul>
 
-    <div ng-hide="editorEnabled[parameter.number]">
+    <div ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
 
-      Undre gräns: {{parameter.lowerLimit}} {{parameter.unit}}. Övre gräns: {{parameter.upperLimit}} {{parameter.unit}}.
-                   {{parameter.required}} 
+      Undre gräns: {{activeVoyage.rangeParameters.time.lowerLimit}} {{activeVoyage.rangeParameters.time.unit}}. Övre gräns: {{activeVoyage.rangeParameters.time.upperLimit}} {{activeVoyage.rangeParameters.time.unit}}.
+        Ursprunglig ankomsttid: {{activeVoyage.rangeParameters.time.required}}           
 
     </div>
 
-    <div ng-show="editorEnabled[parameter.number]">
+    <div ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">
 
-      Undre gräns: <input ng-model="parameter.lowerLimit" ng-show="editorEnabled[parameter.number]"> {{para.unit}}
-      Övre gräns: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[parameter.number]">  {{para.unit}}
-      <input ng-model="parameter.required" ng-show="editorEnabled[parameter.number]">
+      Undre gräns: <input ng-model="activeVoyage.rangeParameters.time.lowerLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]"> {{para.unit}}
+      Övre gräns: <input ng-model="activeVoyage.rangeParameters.time.upperLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">  {{para.unit}}
+      Ursprunglig ankomsttid: <input ng-model="activeVoyage.rangeParameters.time.required" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">
 
-      <button ng-click="saveIndex(parameter.number, parameter.index)" type="button" class="btn btn-default btn-sm">
+      <button ng-click="saveIndex(activeVoyage.rangeParameters.time.number, activeVoyage.rangeParameters.time.index)" type="button" class="btn btn-default btn-sm">
         <i class="glyphicon glyphicon-floppy-disk"></i>
       </button>     
 
     </div>
 
     <div>
-      Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.
+      Aktuell ankomsttid: {{activeVoyage.rangeParameters.time.label}} : {{activeVoyage.rangeParameters.time.current}} 
+    </div>
+
+</div>
+
+<!--***************************************************-->
+<!-- Velocity -->
+
+<div class="detail-box" >
+
+  <ul class="list-inline">
+      <li>
+        <h4>{{activeVoyage.rangeParameters.velocity.label | uppercase}}</h4>
+      </li>
+      
+      <li>
+        <button type="button" class="btn btn-default btn-sm " ng-click="enableEditor(activeVoyage.rangeParameters.velocity.number)" ng-hide="editorEnabled[activeVoyage.rangeParameters.velocity.number]">
+          <i class="glyphicon glyphicon-pencil"></i>
+        </button>
+      </li>
+    
+    </ul>
+
+    <div ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
+    <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
+
+      Undre gräns: {{activeVoyage.rangeParameters.velocity.lowerLimit}} {{activeVoyage.rangeParameters.velocity.unit}}. Övre gräns: {{activeVoyage.rangeParameters.velocity.upperLimit}} {{activeVoyage.rangeParameters.velocity.unit}}.
+                   {{activeVoyage.rangeParameters.velocity.required}} 
+
+    </div>
+
+    <div ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]">
+
+      Undre gräns: <input ng-model="activeVoyage.rangeParameters.velocity.lowerLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]"> {{para.unit}}
+      Övre gräns: <input ng-model="activeVoyage.rangeParameters.velocity.upperLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]">  {{para.unit}}
+
+      <button ng-click="save(activeVoyage.rangeParameters.velocity.number)" type="button" class="btn btn-default btn-sm">
+        <i class="glyphicon glyphicon-floppy-disk"></i>
+      </button>     
+
+    </div>
+
+    <div>
+      Aktuell {{activeVoyage.rangeParameters.velocity.label}} : {{activeVoyage.rangeParameters.velocity.current}} {{activeVoyage.rangeParameters.velocity.unit}}.
     </div>
 
 </div>
   
 <!-- *************************************************************** -->
+
 
 <div ng-repeat="parameter in activeVoyage.singleParameters">
   

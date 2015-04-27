@@ -17,18 +17,18 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
   function checkTimeStatus(i){
 
-      console.log("hej",i);
+      //console.log("hej",i);
       var MINUTES_TO_MILLISEC = 60000;
 
       var required = Date.parse($scope.voyages[i].rangeParameters.time.required);
       var estimated = Date.parse($scope.voyages[i].rangeParameters.time.current);
-      console.log("estimated ", estimated);
+      //console.log("estimated ", estimated);
 
 
       var lower = required + $scope.voyages[i].rangeParameters.time.lowerLimit*MINUTES_TO_MILLISEC;
-      console.log("lower ", lower);
+      //console.log("lower ", lower);
       var higher = required + $scope.voyages[i].rangeParameters.time.upperLimit*MINUTES_TO_MILLISEC;
-            console.log("higher ", higher);
+            //console.log("higher ", higher);
 
 
       if( estimated < higher && estimated > lower){
@@ -37,7 +37,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       else {
         $scope.voyages[i].rangeParameters.status = false;
       }
-      console.log($scope.voyages[i].rangeParameters.status);
+      //console.log($scope.voyages[i].rangeParameters.status);
     }
 
   //Gets the Voyage-data
@@ -49,11 +49,12 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         data.splice(9, 1);  
       
       $scope.voyages = data.slice(1, 26);
-      //console.log("fesfsdfsdfs", data[0]);
+      console.log("fesfsdfsdfs", data[0]);
 
       $scope.voyagesBad = [];
       $scope.voyagesGood = [];    
       $scope.voyagesHandled = [];
+      $scope.activeVoyage = $scope.voyages[0];
 
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
@@ -64,34 +65,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         }
         
          checkTimeStatus(i);
-
-        console.log($scope.voyages[i].rangeParameters.status);
-
-        //console.log("oefsn", $scope.voyages[8]);
-        
-        // $scope.voyages[i].warning = {warning: ': '
-        //                           };
-                                  
-        // if($scope.voyages[i].time.status == 'false')
-        // {
-        //   $scope.voyages[i].warning.warning += 'T ';
-        // } 
-
-        // if($scope.voyages[i].fuel.status == 'false')
-        // {
-        //   $scope.voyages[i].warning.warning += 'B ';
-        // } 
-
-        // if($scope.voyages[i].combinedWave.status == 'false' || $scope.voyages[i].current.status == 'false' || $scope.voyages[i].wind.status == 'false')
-        // {
-        //   $scope.voyages[i].warning.warning += 'V ';
-        // } 
-
-        // if($scope.voyages[i].velocity.status == 'false')
-        // {
-        //   $scope.voyages[i].warning.warning += 'F ';
-        // } 
-
+  
         $scope.voyages[i].singleParameters = {
 
           fuel: {label: "Bränsle", upperLimit: '250', status: true, unit: "L/mil", number: 2},
@@ -169,8 +143,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
       $scope.saveIndex = function(id, index) {
         $scope.disableEditor(id);
-        console.log("save", id);
-        console.log("sadsad", index);
+        //("save", id);
+        //console.log("sadsad", index);
         checkTimeStatus(index);
 
       };

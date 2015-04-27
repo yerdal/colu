@@ -29,7 +29,7 @@
 
   <body ng-app="coluApp">
      <div ng-controller="mainController" class="container"> 
-       <div class="row">
+       <div class="row" ng-if="voyages">
 
           <div class="col-sm-3 list" ng-include="'colu/templates/list-description.html'"></div>
         
