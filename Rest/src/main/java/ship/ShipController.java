@@ -83,14 +83,7 @@ public class ShipController extends ParsingXML{
     }
     @RequestMapping(value="/voyages")
     public ArrayList getAllVoyages() {
-      System.out.println("Operator saved variables found with findAll():");
-        System.out.println("-------------------------------");
-        for (SavedParameters savedParameters : repository.findAll()) {
-            System.out.println(savedParameters.getId());
-        }
-        SavedParameters savedParam = repository.findOne(89710);
-        System.out.println("THE ID"  + savedParam.getId() + " THE MinETA"  + savedParam.getRequiredMinETA());
-        System.out.println();
+
       //so we know we have the ongoing voyages
       ongoingVoyages = getOngoingVoyages();
       voyageList = new ArrayList<Voyage>();

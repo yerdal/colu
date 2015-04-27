@@ -551,7 +551,7 @@ public class ParsingXML{
                   // Waypoints
                   ArrayList <Waypoint> waypointArray = new ArrayList<Waypoint>();
                   NodeList nListWaypoint = tempVoyageEl.getElementsByTagName("waypoint");
-                  System.out.println(nListWaypoint.getLength() + " ");
+                  // System.out.println(nListWaypoint.getLength() + " ");
                   if (nListWaypoint.getLength() == 0)
                   {
                     Waypoint waypoint = new Waypoint();

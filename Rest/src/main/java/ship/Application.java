@@ -33,25 +33,18 @@ public class Application extends ParsingXML implements CommandLineRunner{
         
         
 
-        System.out.println("Operator saved variables found with findAll():");
+        System.out.println("Operator saved voyage ID found with findAll():");
         System.out.println("-------------------------------");
         for (SavedParameters savedParameters : repository.findAll()) {
             System.out.println(savedParameters.getId());
         }
         System.out.println();
 
-        // fetch an individual savedParameters by VoyageID
-        SavedParameters savedParameters = repository.findOne(89710);
-        System.out.println("SavedParameters found with findOne(89710):");
-        System.out.println("--------------------------------");
-        System.out.println(savedParameters.getRequiredCurrentDir());
-        System.out.println();
-
-        // fetch customers by last name
-        // System.out.println("SavedParameters found with findByLastName('Bauer'):");
-        // System.out.println("--------------------------------------------");
-        // for (SavedParameters bauer : repository.findByRequiredETA("Bauer")) {
-        //     System.out.println(bauer.getRequiredETA());
-        // }
+        // // fetch an individual savedParameters by VoyageID
+        // SavedParameters savedParameters = repository.findOne(89710);
+        // System.out.println("SavedParameters found with findOne(89710):");
+        // System.out.println("--------------------------------");
+        // System.out.println(savedParameters.getRequiredCurrentDir());
+        // System.out.println();
     }
 }
