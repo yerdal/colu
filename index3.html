@@ -27,9 +27,9 @@
      <div ng-controller="mainController" class="container"> 
        <div class="row">
 
-          <div class="col-sm-3 list" ng-include="'colu/templates/list-description.html'"></div>
+          <div class="col-sm-3 list" ng-hide="(smallScreenSize() && showActive.shipTrue)" ng-include="'templates/list-description.html'"></div>
         
-          <div ng-if="(!smallScreenSize() || showActive.shipTrue)" class="col-sm-9 content" ng-include="'colu/templates/parameters-description.html'"></div>  
+          <div ng-if="(!smallScreenSize() || showActive.shipTrue)" class="col-sm-9 content" ng-include="'templates/parameters-description.html'"></div>  
          </div>
       
        </div>
