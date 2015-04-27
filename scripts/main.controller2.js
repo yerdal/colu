@@ -63,6 +63,35 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         console.log('ERROR getting from backend' , status);
 
       });
+      
+    $scope.putData = function(){
+        //console.log('hejje');
+        parameters = {
+          requiredCurrentSpeed: $scope.activeVoyage.singleParameters.current.upperLimit,
+          requiredWindSpeed: $scope.activeVoyage.singleParameters.wind.upperLimit,
+          requiredWindDir: 125,
+          requiredSignWaveHeight: $scope.activeVoyage.singleParameters.combinedWave.upperLimit,
+          requiredCurrentDir: 12,
+          requiredMinETA: "2015-05-20 00:00",
+          requiredMaxETA: "2015-05-21 02:00",
+          requiredAvgSpeedMin: $scope.activeVoyage.rangeParameters.velocity.lowerLimit,
+          requiredAvgSpeedMax: $scope.activeVoyage.rangeParameters.velocity.upperLimit
+          //requiredFuelConsumption:
+        }
+       
+       //var vID = $scope.activeVoyage.voyageId;
+      $http.put('http://localhost:8090/voyages/'+ $scope.activeVoyage.voyageId + '/updatelimits', parameters).success(function(data,status,headers,config)
+      {
+        //Succes getting from backend
+        //Init scope data
+        console.log ('data ', data);
+
+
+        //drawLines(data);
+      }).error(function(data,status,headers,config){
+          console.log('ERROR getting from backend' , status);
+      });
+    }
 
   function main (){
     
@@ -136,6 +165,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
       $scope.save = function(id) {
         $scope.disableEditor(id);
+        $scope.putData();
       };
 
       }
