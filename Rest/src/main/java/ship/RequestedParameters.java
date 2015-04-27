@@ -11,15 +11,19 @@ public class RequestedParameters{
   private double requiredWindDir;
   private double requiredSignWaveHeight;
   private double requiredCurrentDir;
-  private String requiredETA;
+  private String requiredMinETA;
+  private String requiredMaxETA;
   private double requiredAvgSpeedMin;
   private double requiredAvgSpeedMax;
 
 
 
 
-  public String getRequiredETA(){
-    return requiredETA;
+  public String getRequiredMinETA(){
+    return requiredMinETA;
+  }
+  public String getRequiredMaxETA(){
+    return requiredMaxETA;
   }
   public double getRequiredCurrentSpeed(){
     return requiredCurrentSpeed;
