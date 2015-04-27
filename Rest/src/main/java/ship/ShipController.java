@@ -151,7 +151,7 @@ public class ShipController extends ParsingXML{
 
       System.out.println("THE ID"  + savedParam.getId());
       for(int i = 0; i < voyageList.size(); i++){
-
+        
         if(voyageList.get(i).getVoyageId() == savedParam.getId()){
           voyageList.get(i).setRequiredParametersFromDB(savedParam);
           break;
