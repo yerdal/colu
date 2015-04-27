@@ -24,7 +24,6 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
     
       //Position 27 is broken, and I can´t manage to delete it, hehe.   
       $scope.voyages = data.slice(1, 26);
-      //console.log("gegennge", $scope.voyages[2]);
 
       //console.log("fesfsdfsdfs", data[0]);
       $scope.activeVoyage = $scope.voyages[0];
@@ -75,13 +74,11 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       sharedProperties.setActive(s);
       $scope.activeVoyage = sharedProperties.getActive();
       $scope.showActive.shipTrue = true;
-      //console.log('active shipname ', $scope.showActive.shipName);
     }
 
     $scope.goBack = function(){
-    $scope.showActive.shipTrue = false;
+      $scope.showActive.shipTrue = false;
     }
-
 
     $scope.smallScreenSize = function(){
       var screenSize = screen.width;
@@ -120,6 +117,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       if (index > -1) {
         $scope.voyagesBad.splice(index, 1);
       } 
+
     }
 
     //Functionality of the form
