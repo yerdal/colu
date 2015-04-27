@@ -24,6 +24,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
     
       //Position 27 is broken, and I can´t manage to delete it, hehe.   
       $scope.voyages = data.slice(1, 26);
+      //console.log("gegennge", $scope.voyages[2]);
 
       //console.log("fesfsdfsdfs", data[0]);
       $scope.activeVoyage = $scope.voyages[0];
@@ -34,30 +35,24 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
       {
-
-        var statusArray = ["GOOD", "BAD"];
-        
-        // console.log("ska vara rand", rand);   
-
+      
         $scope.voyages[i].rangeParameters = {
-          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].eta, status: statusArray[Math.round(Math.random())], unit: "minuter" },
-          velocity: {label: "Hastighet", lowerLimit: '50', upperLimit: '250', current: $scope.voyages[i].shipReports[1].speedAvg, status: statusArray[Math.round(Math.random())], unit: "knop"}
+          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].requiredETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter" },
+          velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop"}
         }
 
         $scope.voyages[i].singleParameters = {
 
-          fuel: {label: "Bränsle", upperLimit: '250', status:  statusArray[Math.round(Math.random())], unit: "L/mil",},
-          combinedWave : {label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].weatherWaypoints[1].signWaveHeight, status: statusArray[Math.round(Math.random())], unit: "m"},
-          current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed,current: $scope.voyages[i].weatherWaypoints[1].currentSpeed, status: statusArray[Math.round(Math.random())], unit: "m/s"},
-          wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].weatherWaypoints[1].windSpeed, status: statusArray[Math.round(Math.random())], unit: "m/s"}
+          fuel: {label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "L/mil",},
+          combinedWave : {label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
+          current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
+          wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, status: $scope.voyages[i].currentWeatherWaypoint.windSpeedStatus, unit: "m/s"}
 
         }  
        
         //Add voyages to right array
-        if($scope.voyages[i].status == "BAD")
+        if($scope.voyages[i].rangeParameters.time.status == "BAD" || $scope.voyages[i].rangeParameters.velocity.status == "BAD" || $scope.voyages[i].singleParameters.fuel.status == "BAD" || $scope.voyages[i].singleParameters.combinedWave.status == "BAD" || $scope.voyages[i].singleParameters.current.status == "BAD"  || $scope.voyages[i].singleParameters.wind.status == "BAD")
           $scope.voyagesBad.push($scope.voyages[i]);
-        else if($scope.voyages[i].status == "OK")
-          $scope.voyagesHandled.push($scope.voyages[i]);
         else
           $scope.voyagesGood.push($scope.voyages[i])
       } 
