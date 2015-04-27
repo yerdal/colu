@@ -1,4 +1,16 @@
-<h2>{{activeVoyage.voyageName | uppercase}}</h2>
+<ul class="list-inline">
+  <li>
+
+    <button type="button" class="btn btn-default btn-lg" ng-click="goBack()" ng-if="smallScreenSize()">
+      <i class="glyphicon glyphicon-chevron-left " id="back">    </i>
+    </button>
+  
+  </li>
+
+  <li>
+    <h2>{{activeVoyage.voyageName | uppercase}}</h2> 
+  </li>
+</ul>
 
 <div class="col-sm-6">
   <div class="detail-box" ng-repeat="parameter in activeVoyage.rangeParameters">
@@ -85,11 +97,10 @@
 
   <!-- *********************************************************** -->
 
-<button type="button" class="btn btn-default btn-lg handled" ng-if="isBad(activeVoyage)" ng-click="handel(activeVoyage)">
+<button type="button" class="btn btn-default btn-lg handled" ng-if="isBad(activeVoyage)" ng-click="handel(activeVoyage); goBack();">
   <i class="glyphicon glyphicon-ok"></i>
 </button>
 
-<button ng-click="goBack()" ng-if="smallScreenSize()" >Go back</button>
 
 </div>
 
