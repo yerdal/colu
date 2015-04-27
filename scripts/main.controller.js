@@ -62,7 +62,33 @@ angular.module('coluApp')
         }
       });
     }
-    initGribData();
+    // initGribData();
+    $scope.putData = function(){
+      console.log('hejje ');
+      parameters = {
+        requiredCurrentSpeed: 1.2,
+        requiredWindSpeed: 15,
+        requiredWindDir: 125,
+        requiredSignWaveHeight: 1.1,
+        requiredCurrentDir: 12,
+        requiredMinETA: "2015-05-20 00:00",
+        requiredMaxETA: "2015-05-21 02:00",
+        requiredAvgSpeedMin: 13,
+        requiredAvgSpeedMax: 20
+      }
+      $http.put('http://localhost:8090/voyages/89710/updatelimits', parameters).success(function(data,status,headers,config)
+      {
+        //Succes getting from backend
+        //Init scope data
+        console.log ('data ', data);
+
+
+        //drawLines(data);
+      }).error(function(data,status,headers,config){
+          console.log('ERROR getting from backend' , status);
+      });
+    }
+
     //Get data from backend
     $http.get('http://localhost:8090/ships/id/notdefined').success(function(data,status,headers,config)
     {

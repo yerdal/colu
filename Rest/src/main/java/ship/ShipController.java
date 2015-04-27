@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 /**
  * Handling the rest API and parsing XML files
@@ -25,6 +27,8 @@ import java.util.ArrayList;
 @RestController
 public class ShipController extends ParsingXML{
 
+  @Autowired
+  ParametersRepository repository;
 
   private ArrayList<Ship> myShip;
   private ArrayList<Ship> myShipsPos;
@@ -73,6 +77,7 @@ public class ShipController extends ParsingXML{
     @RequestMapping(value="/voyages/id/{id}")
     public Voyage getVoyage(@PathVariable String id) {
         //This is so we dont update the voyage with new values and erase required parameters from user
+
         myVoyage = getXMLShipVoyage(id);
         return myVoyage;
     }
@@ -128,10 +133,32 @@ public class ShipController extends ParsingXML{
 
     @RequestMapping(value="/voyages/{id}/updatelimits", method = RequestMethod.PUT)  
     public @ResponseBody RequestedParameters putData(@RequestBody RequestedParameters body, @PathVariable String id) {
-      // System.out.println("IN post MEthod JAVA SPRING " + body + id );
-      //Loop through the voyages (only one now) and set Required Parameters from frontend
-      myVoyage.setRequiredParameters(body);
+      // System.out.println("Requested Min ETA " +  body.getRequiredMinETA());
+      // System.out.println("Requested Max ETA " +  body.getRequiredMaxETA());
+      // System.out.println(body.getRequiredCurrentSpeed());
+      // System.out.println(body.getRequiredWindSpeed());
+      // System.out.println(body.getRequiredWindDir());
+      // System.out.println(body.getRequiredSignWaveHeight());
+      // System.out.println(body.getRequiredCurrentDir());
 
+      //Loop through the voyages (only one now) and set Required Parameters from frontend
+      SavedParameters savedParam = repository.findOne(parseIntSafely(id));
+             
+      repository.save(new SavedParameters(savedParam.getId(), body.getRequiredCurrentSpeed(),body.getRequiredWindSpeed(), 
+        body.getRequiredWindDir(), body.getRequiredSignWaveHeight(), body.getRequiredCurrentDir(),
+         body.getRequiredAvgSpeedMin(), body.getRequiredAvgSpeedMax(), body.getRequiredMinETA(),body.getRequiredMaxETA()));
+
+
+      System.out.println("THE ID"  + savedParam.getId());
+      for(int i = 0; i < voyageList.size(); i++){
+
+        if(voyageList.get(i).getVoyageId() == savedParam.getId()){
+          voyageList.get(i).setRequiredParametersFromDB(savedParam);
+          break;
+        }
+       
+      } 
+      
       return body;
     }
     //FOR FUTURE POST METHODS

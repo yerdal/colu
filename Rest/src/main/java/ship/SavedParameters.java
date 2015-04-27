@@ -20,7 +20,8 @@ public class SavedParameters {
   private double requiredWindDir;
   private double requiredSignWaveHeight;
   private double requiredCurrentDir;
-  private String requiredETA;
+  private String requiredMinETA;
+  private String requiredMaxETA;
   private double requiredAvgSpeedMin;
   private double requiredAvgSpeedMax;
 
@@ -34,7 +35,8 @@ public class SavedParameters {
                         double theRequiredCurrentDir,
                         double theRequiredAvgSpeedMin,
                         double theRequiredAvgSpeedMax,
-                        String theRequiredETA) {
+                        String theRequiredMinETA,
+                        String theRequiredMaxETA) {
         id = theId;
         requiredCurrentSpeed = theRequiredCurrentSpeed;
         requiredWindSpeed = theRequiredWindSpeed;
@@ -43,13 +45,17 @@ public class SavedParameters {
         requiredCurrentDir = theRequiredCurrentDir;
         requiredAvgSpeedMin = theRequiredAvgSpeedMin;
         requiredAvgSpeedMax = theRequiredAvgSpeedMax;
-        requiredETA = theRequiredETA;
+        requiredMinETA = theRequiredMinETA;
+        requiredMaxETA = theRequiredMaxETA;
     }
   public int getId(){
     return id;
   }
-  public String getRequiredETA(){
-    return requiredETA;
+  public String getRequiredMinETA(){
+    return requiredMinETA;
+  }
+  public String getRequiredMaxETA(){
+    return requiredMaxETA;
   }
   public double getRequiredCurrentSpeed(){
     return requiredCurrentSpeed;
@@ -88,8 +94,12 @@ public class SavedParameters {
   public void setRequiredCurrentDir(double theRequiredCurrentDir){
     requiredCurrentDir = theRequiredCurrentDir;
   }
-  public void setRequiredETA(String theRequiredETA){
-    requiredETA = theRequiredETA;
+  public void setRequiredMinETA(String theRequiredETA){
+    System.out.println("SETTING MIN ETA "+ theRequiredETA);
+    requiredMinETA = theRequiredETA;
+  }
+  public void setRequiredMaxETA(String theRequiredETA){
+    requiredMaxETA = theRequiredETA;
   }
   public void setRequiredAvgSpeedMin(double theRequiredAvgSpeedMin){
     requiredAvgSpeedMin = theRequiredAvgSpeedMin;
