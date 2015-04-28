@@ -15,34 +15,34 @@ coluApp.service('sharedProperties', function() {
 
 coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
-  function checkTimeStatus(i){
+  function checkTimeStatus(){
     var MINUTES_TO_MILLISEC = 60000;
 
-    var required = Date.parse($scope.voyages[i].rangeParameters.time.required);
-    var estimated = Date.parse($scope.voyages[i].rangeParameters.time.current);
+    var required = Date.parse($scope.activeVoyage.rangeParameters.time.required);
+    var estimated = Date.parse($scope.activeVoyage.rangeParameters.time.current);
 
-    var lower = required + $scope.voyages[i].rangeParameters.time.lowerLimit*MINUTES_TO_MILLISEC;
-    var higher = required + $scope.voyages[i].rangeParameters.time.upperLimit*MINUTES_TO_MILLISEC;
+    var lower = required + $scope.activeVoyage.rangeParameters.time.lowerLimit*MINUTES_TO_MILLISEC;
+    var higher = required + $scope.activeVoyage.rangeParameters.time.upperLimit*MINUTES_TO_MILLISEC;
 
     if( estimated < higher && estimated > lower){
-      $scope.voyages[i].rangeParameters.time.status = 'GOOD';
+      $scope.activeVoyage.rangeParameters.time.status = 'GOOD';
     }
     else {
-      $scope.voyages[i].rangeParameters.time.status = 'BAD';
+      $scope.activeVoyage.rangeParameters.time.status = 'BAD';
     }
   }
 
-  function checkVelocityStatus(i){
-    var withinLowerLimit = $scope.voyages[i].rangeParameters.velocity.current > $scope.voyages[i].rangeParameters.velocity.lowerLimit; 
-    var withinUpperLimit = $scope.voyages[i].rangeParameters.velocity.current < $scope.voyages[i].rangeParameters.velocity.upperLimit; 
+  function checkVelocityStatus(){
+    var withinLowerLimit = $scope.activeVoyage.rangeParameters.velocity.current > $scope.activeVoyage.rangeParameters.velocity.lowerLimit; 
+    var withinUpperLimit = $scope.activeVoyage.rangeParameters.velocity.current < $scope.activeVoyage.rangeParameters.velocity.upperLimit; 
 
     if(withinLowerLimit && withinUpperLimit){
-      $scope.voyages[i].rangeParameters.velocity.status = 'GOOD';
+      $scope.activeVoyage.rangeParameters.velocity.status = 'GOOD';
     }
     else {
-      $scope.voyages[i].rangeParameters.velocity.status = 'BAD';
+      $scope.activeVoyage.rangeParameters.velocity.status = 'BAD';
     }
-    //console.log("status i statusfunktion ",$scope.voyages[i].rangeParameters.velocity.status);
+    console.log("status i statusfunktion ",$scope.activeVoyage.rangeParameters.velocity.status);
   }
 
   //Gets the Voyage-data
@@ -66,8 +66,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       {
       
         $scope.voyages[i].rangeParameters = {
-          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].eta, required: $scope.voyages[i].requiredMaxETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter", number: 0, index: i },
-          velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1, index: i}
+          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].eta, required: $scope.voyages[i].requiredMaxETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter", number: 0 },
+          velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
         }
 
         $scope.voyages[i].rangeParameters.time.status = 'BAD';
@@ -200,26 +200,21 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         $scope.editorEnabled[id] = false;
       };
 
-      $scope.saveTimeIndex = function(id, index) {
-        //console.log("hej", id);
-        $scope.disableEditor(id);
-        checkTimeStatus(index);
-      };
+      $scope.save = function(parameterId) {
+        console.log("parameterId ", parameterId);
 
-      $scope.saveVelocityIndex = function(id, index) {
-        //console.log("id ", id);
-        //console.log("index ", index);
-
-        $scope.disableEditor(id);
-        checkVelocityStatus(index);
-      };
-
-      $scope.save = function(id) {
-        //console.log("id 1", id);
-        $scope.disableEditor(id);
+        $scope.disableEditor(parameterId);
         $scope.putData();
-      };
 
+        switch(parameterId){
+          case 0:
+            checkTimeStatus();
+            break;
+          case 1:
+            checkVelocityStatus();
+            break;
+        }
+      }
     }
 
     function isInArray(value, array) {
