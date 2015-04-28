@@ -126,7 +126,7 @@
 
       <div ng-show="editorEnabled[$index + 2]">
         Maximal värde: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[$index + 2]"> {{parameter.unit}}.
-        <button ng-click="save($index + 2)" type="button" class="btn btn-default btn-sm">
+        <button ng-click="save($index + 2, parameter.name)" type="button" class="btn btn-default btn-sm">
           <i class="glyphicon glyphicon-floppy-disk"></i>
         </button>  
       </div>

@@ -53,8 +53,6 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
     
       //Position 27 is broken, and I can´t manage to delete it, hehe.   
       $scope.voyages = data.slice(1, 26);
-
-      
       $scope.activeVoyage = $scope.voyages[0];
       $scope.voyagesBad = [];
       $scope.voyagesGood = [];    
@@ -65,26 +63,23 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       {
       
         $scope.voyages[i].rangeParameters = {
-          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].eta, required: $scope.voyages[i].requiredMaxETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter", number: 0 },
+          time: { label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].eta, required: $scope.voyages[i].requiredMaxETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter", number: 0 },
           velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
         }
 
         $scope.voyages[i].singleParameters = {
 
-          fuel: {label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "L/mil",},
-          combinedWave : {label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
-          current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
-          wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, status: $scope.voyages[i].currentWeatherWaypoint.windSpeedStatus, unit: "m/s"}
+          fuel: {name: "fuel", label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "L/mil",},
+          combinedWave : {name: "combinedWave", label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
+          current : {name: "current", label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
+          wind : {name: "wind", label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, status: $scope.voyages[i].currentWeatherWaypoint.windSpeedStatus, unit: "m/s"}
 
+        }
 
-        }  
-       
-        //Add voyages to right array
-        if($scope.voyages[i].rangeParameters.time.status == "BAD" || $scope.voyages[i].rangeParameters.velocity.status == "BAD" || $scope.voyages[i].singleParameters.fuel.status == "BAD" || $scope.voyages[i].singleParameters.combinedWave.status == "BAD" || $scope.voyages[i].singleParameters.current.status == "BAD"  || $scope.voyages[i].singleParameters.wind.status == "BAD")
-          $scope.voyagesBad.push($scope.voyages[i]);
-        else
-          $scope.voyagesGood.push($scope.voyages[i])
+        flagVoyage($scope.voyages[i]);
       } 
+
+
 
       //Where all the functionality is
       main();   
@@ -158,20 +153,13 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       return ($scope.voyagesBad.indexOf(s) != -1)
     }
 
-    $scope.test = function(p){
-      if(p == BAD)
-        return false;
-      else
-        return true;
-    }
-
     //To "handle" voyages, and then put them in the handled-list
     $scope.handel = function(s){
       if(!isInArray(s,$scope.voyagesHandled))
         $scope.voyagesHandled.push(s);
 
       var index = $scope.voyagesBad.indexOf(s);
-      //console.log("index", index);
+      
 
       if (index > -1) {
         $scope.voyagesBad.splice(index, 1);
@@ -193,21 +181,26 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         $scope.editorEnabled[id] = false;
       };
 
-      $scope.save = function(parameterId) {
-        console.log("parameterId ", parameterId);
-
-        $scope.disableEditor(parameterId);
-        $scope.putData();
-
-        switch(parameterId){
+      $scope.save = function(paramId, paramName) {
+        $scope.disableEditor(paramId);
+          
+        switch(paramId){
           case 0:
             checkTimeStatus();
             break;
           case 1:
             checkVelocityStatus();
             break;
+          default:
+            if($scope.activeVoyage.singleParameters[paramName].current < $scope.activeVoyage.singleParameters[paramName].upperLimit)
+              $scope.activeVoyage.singleParameters[paramName].status = "GOOD";
+            else
+              $scope.activeVoyage.singleParameters[paramName].status = "BAD";
         }
-      }
+        
+        flagVoyage($scope.activeVoyage);
+        $scope.putData();
+      };
     }
 
     function isInArray(value, array) {
@@ -215,4 +208,22 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
     }
   }
 
+  //Add voyages to right array, if any status is BAD, place in voyagesBad.
+  function flagVoyage(voyage){
+    if(voyage.rangeParameters.time.status == "BAD" || voyage.rangeParameters.velocity.status == "BAD" || voyage.singleParameters.fuel.status == "BAD" || voyage.singleParameters.combinedWave.status == "BAD" || voyage.singleParameters.current.status == "BAD"  || voyage.singleParameters.wind.status == "BAD")
+    {
+
+      var index = $scope.voyagesBad.indexOf(voyage);
+        if (index == -1)
+          $scope.voyagesBad.push(voyage);
+
+    } 
+    else
+    {
+      $scope.voyagesGood.push(voyage)
+      var index = $scope.voyagesBad.indexOf(voyage);
+        if (index > -1) 
+          $scope.voyagesBad.splice(index, 1);
+    }
+  }
 });

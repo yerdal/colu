@@ -8,7 +8,7 @@
 
     <tr ng-repeat="voyage in voyagesBad | filter:searchShip">
 
-      <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
+      <td ng-click="showActive(voyage);">
 
         {{voyage.voyageName.slice(7,15) | uppercase}}
           
@@ -28,7 +28,7 @@
     </tr>
 
   </tbody>
-  
+
   <tbody class="handled">
     <tr ng-repeat="voyage in voyagesHandled | filter:searchShip">
       <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
@@ -46,3 +46,4 @@
   </tbody>
 
 </table>
+
