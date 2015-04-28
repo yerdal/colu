@@ -15,6 +15,31 @@ coluApp.service('sharedProperties', function() {
 
 coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
+  function checkTimeStatus(i){
+
+      //console.log("hej",i);
+      var MINUTES_TO_MILLISEC = 60000;
+
+      var required = Date.parse($scope.voyages[i].rangeParameters.time.required);
+      var estimated = Date.parse($scope.voyages[i].rangeParameters.time.current);
+      //console.log("estimated ", estimated);
+
+
+      var lower = required + $scope.voyages[i].rangeParameters.time.lowerLimit*MINUTES_TO_MILLISEC;
+      //console.log("lower ", lower);
+      var higher = required + $scope.voyages[i].rangeParameters.time.upperLimit*MINUTES_TO_MILLISEC;
+            //console.log("higher ", higher);
+
+
+      if( estimated < higher && estimated > lower){
+        $scope.voyages[i].rangeParameters.time.status = 'GOOD';
+      }
+      else {
+        $scope.voyages[i].rangeParameters.time.status = 'BAD';
+      }
+      console.log("status i statusfunktion ",$scope.voyages[i].rangeParameters.time.status);
+    }
+
   //Gets the Voyage-data
   $http.get('http://localhost:8090/voyages').success(function(data,status,headers,config)
     {
@@ -25,20 +50,26 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       //Position 27 is broken, and I can´t manage to delete it, hehe.   
       $scope.voyages = data.slice(1, 26);
 
-      //console.log("fesfsdfsdfs", data[0]);
+      console.log("fesfsdfsdfs", data[0]);
       $scope.activeVoyage = $scope.voyages[0];
       $scope.voyagesBad = [];
       $scope.voyagesGood = [];    
       $scope.voyagesHandled = [];
-      // console.log('requ$scope.voyages[i].requiredETA', $scope.voyages[0].latestShipReport);
+
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
       {
       
         $scope.voyages[i].rangeParameters = {
-          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].latestShipReport.etaEarliest, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter" },
-          velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop"}
+          time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].eta, required: $scope.voyages[i].requiredMaxETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter", number: 0, index: i },
+          velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
         }
+
+        $scope.voyages[i].rangeParameters.time.status = 'BAD';
+
+        console.log("status", $scope.voyages[0].rangeParameters.time.status);
+
+        checkTimeStatus(i);
 
         $scope.voyages[i].singleParameters = {
 
@@ -46,6 +77,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
           combinedWave : {label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
           current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
           wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, status: $scope.voyages[i].currentWeatherWaypoint.windSpeedStatus, unit: "m/s"}
+
 
         }  
        
@@ -94,7 +126,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
     }
 
   function main (){
-    
+
     //How the form works
     formFunctionality();
     
@@ -163,16 +195,24 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         $scope.editorEnabled[id] = false;
       };
 
+      $scope.saveIndex = function(id, index) {
+        $scope.disableEditor(id);
+        //("save", id);
+        //console.log("sadsad", index);
+        checkTimeStatus(index);
+
+      };
+
       $scope.save = function(id) {
         $scope.disableEditor(id);
         $scope.putData();
       };
 
-      }
+    }
 
-      function isInArray(value, array) {
-        return array.indexOf(value) > -1;
-      }
+    function isInArray(value, array) {
+      return array.indexOf(value) > -1;
+    }
   }
 
 });
