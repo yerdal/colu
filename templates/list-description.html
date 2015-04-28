@@ -4,9 +4,9 @@
 
   <tbody class="bad">
 
-    <tr ng-repeat="voyage in voyagesBad">
+    <tr ng-repeat="voyage in voyagesBad track by $index">
 
-      <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
+      <td ng-click="showActive(voyage);">
 
         {{voyage.voyageName.slice(7,15) | uppercase}}
           
@@ -26,18 +26,20 @@
     </tr>
 
   </tbody>
+
+  <!-- save(0); save(1); save(2); save(3); save(4); save(5)" -->
   
   <tbody class="handled">
     <tr ng-repeat="voyage in voyagesHandled">
-      <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
+      <td ng-click="showActive(voyage); ">
         {{voyage.voyageName.slice(7,15) | uppercase}} 
       </td>
     </tr>
   </tbody>
 
   <tbody class="good">
-    <tr ng-repeat="voyage in voyagesGood">
-      <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
+    <tr ng-repeat="voyage in voyagesGood track by $index">
+      <td ng-click="showActive(voyage);">
         {{voyage.voyageName.slice(7,15) | uppercase}}
       </td>
     </tr>
