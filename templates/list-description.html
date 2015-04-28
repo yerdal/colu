@@ -4,7 +4,9 @@
 
   <tbody class="bad">
 
-    <tr ng-repeat="voyage in voyagesBad">
+  <div>Sök: <input ng-model="searchShip.voyageName"></div>
+
+    <tr ng-repeat="voyage in voyagesBad | filter:searchShip">
 
       <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
 
@@ -28,7 +30,7 @@
   </tbody>
   
   <tbody class="handled">
-    <tr ng-repeat="voyage in voyagesHandled">
+    <tr ng-repeat="voyage in voyagesHandled | filter:searchShip">
       <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
         {{voyage.voyageName.slice(7,15) | uppercase}} 
       </td>
@@ -36,7 +38,7 @@
   </tbody>
 
   <tbody class="good">
-    <tr ng-repeat="voyage in voyagesGood">
+    <tr ng-repeat="voyage in voyagesGood | filter:searchShip">
       <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
         {{voyage.voyageName.slice(7,15) | uppercase}}
       </td>
