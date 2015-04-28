@@ -43,7 +43,7 @@
       Övre gräns: <input ng-model="activeVoyage.rangeParameters.time.upperLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">  {{para.unit}}
       Ursprunglig ankomsttid: <input ng-model="activeVoyage.rangeParameters.time.required" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">
 
-      <button ng-click="saveIndex(activeVoyage.rangeParameters.time.number, activeVoyage.rangeParameters.time.index)" type="button" class="btn btn-default btn-sm">
+      <button ng-click="saveTimeIndex(activeVoyage.rangeParameters.time.number, activeVoyage.rangeParameters.time.index)" type="button" class="btn btn-default btn-sm">
         <i class="glyphicon glyphicon-floppy-disk"></i>
       </button>     
 
@@ -86,7 +86,7 @@
       Undre gräns: <input ng-model="activeVoyage.rangeParameters.velocity.lowerLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]"> {{para.unit}}
       Övre gräns: <input ng-model="activeVoyage.rangeParameters.velocity.upperLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]">  {{para.unit}}
 
-      <button ng-click="save(activeVoyage.rangeParameters.velocity.number)" type="button" class="btn btn-default btn-sm">
+      <button ng-click="saveVelocityIndex(activeVoyage.rangeParameters.velocity.number, activeVoyage.rangeParameters.velocity.index)" type="button" class="btn btn-default btn-sm">
         <i class="glyphicon glyphicon-floppy-disk"></i>
       </button>
 

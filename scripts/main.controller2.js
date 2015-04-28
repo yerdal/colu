@@ -16,29 +16,34 @@ coluApp.service('sharedProperties', function() {
 coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
   function checkTimeStatus(i){
+    var MINUTES_TO_MILLISEC = 60000;
 
-      //console.log("hej",i);
-      var MINUTES_TO_MILLISEC = 60000;
+    var required = Date.parse($scope.voyages[i].rangeParameters.time.required);
+    var estimated = Date.parse($scope.voyages[i].rangeParameters.time.current);
 
-      var required = Date.parse($scope.voyages[i].rangeParameters.time.required);
-      var estimated = Date.parse($scope.voyages[i].rangeParameters.time.current);
-      //console.log("estimated ", estimated);
+    var lower = required + $scope.voyages[i].rangeParameters.time.lowerLimit*MINUTES_TO_MILLISEC;
+    var higher = required + $scope.voyages[i].rangeParameters.time.upperLimit*MINUTES_TO_MILLISEC;
 
-
-      var lower = required + $scope.voyages[i].rangeParameters.time.lowerLimit*MINUTES_TO_MILLISEC;
-      //console.log("lower ", lower);
-      var higher = required + $scope.voyages[i].rangeParameters.time.upperLimit*MINUTES_TO_MILLISEC;
-            //console.log("higher ", higher);
-
-
-      if( estimated < higher && estimated > lower){
-        $scope.voyages[i].rangeParameters.time.status = 'GOOD';
-      }
-      else {
-        $scope.voyages[i].rangeParameters.time.status = 'BAD';
-      }
-      console.log("status i statusfunktion ",$scope.voyages[i].rangeParameters.time.status);
+    if( estimated < higher && estimated > lower){
+      $scope.voyages[i].rangeParameters.time.status = 'GOOD';
     }
+    else {
+      $scope.voyages[i].rangeParameters.time.status = 'BAD';
+    }
+  }
+
+  function checkVelocityStatus(i){
+    var withinLowerLimit = $scope.voyages[i].rangeParameters.velocity.current > $scope.voyages[i].rangeParameters.velocity.lowerLimit; 
+    var withinUpperLimit = $scope.voyages[i].rangeParameters.velocity.current < $scope.voyages[i].rangeParameters.velocity.upperLimit; 
+
+    if(withinLowerLimit && withinUpperLimit){
+      $scope.voyages[i].rangeParameters.velocity.status = 'GOOD';
+    }
+    else {
+      $scope.voyages[i].rangeParameters.velocity.status = 'BAD';
+    }
+    //console.log("status i statusfunktion ",$scope.voyages[i].rangeParameters.velocity.status);
+  }
 
   //Gets the Voyage-data
   $http.get('http://localhost:8090/voyages').success(function(data,status,headers,config)
@@ -62,12 +67,12 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       
         $scope.voyages[i].rangeParameters = {
           time: {label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].eta, required: $scope.voyages[i].requiredMaxETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter", number: 0, index: i },
-          velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
+          velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1, index: i}
         }
 
         $scope.voyages[i].rangeParameters.time.status = 'BAD';
 
-        console.log("status", $scope.voyages[0].rangeParameters.time.status);
+        //console.log("status", $scope.voyages[0].rangeParameters.velocity.status);
 
         checkTimeStatus(i);
 
@@ -116,7 +121,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       {
         //Succes getting from backend
         //Init scope data
-        console.log ('data ', data);
+        //console.log ('data ', data);
 
 
         //drawLines(data);
@@ -195,15 +200,22 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         $scope.editorEnabled[id] = false;
       };
 
-      $scope.saveIndex = function(id, index) {
+      $scope.saveTimeIndex = function(id, index) {
+        //console.log("hej", id);
         $scope.disableEditor(id);
-        //("save", id);
-        //console.log("sadsad", index);
         checkTimeStatus(index);
+      };
 
+      $scope.saveVelocityIndex = function(id, index) {
+        //console.log("id ", id);
+        //console.log("index ", index);
+
+        $scope.disableEditor(id);
+        checkVelocityStatus(index);
       };
 
       $scope.save = function(id) {
+        //console.log("id 1", id);
         $scope.disableEditor(id);
         $scope.putData();
       };
