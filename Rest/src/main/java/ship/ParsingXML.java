@@ -20,15 +20,15 @@ public class ParsingXML{
   @Autowired
   ParametersRepository repository;
 
-  public ArrayList getXMLShip(){
-        ArrayList<Ship> shipsArray = new ArrayList<Ship>();
+  public Ship getXMLShip(String id){
+        Ship theShip = new Ship();
         try {
      
           // OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata
           // Mattias /Users/mattiaspalmgren/Dropbox/MT/temp/Voyage_and_ship_data/ships.xml
           // Yusuf /Users/Yusuf/Documents/LIU/TNM094-KEX/Voyage_and_ship_data
           // EINAR /Users/einarsandberg/Documents/Voyage_ship_data/ship_101.xml
-          File fXmlFile = new File("../data/voyage_and_ship/ship_101.xml");
+          File fXmlFile = new File("../data/voyage_and_ship/ship_" + id +".xml");
 
           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -90,13 +90,13 @@ public class ParsingXML{
                     String ship_supported_onboardsystem = shipParts[32];
                     String ship_state = shipParts[33];
                     
-                    Ship theShip = new Ship(shipID, operator, contract_contract_id, hull_hull_id, engine_engine_id, ship_ship_name, shiptype_shiptypename, 
+                    theShip = new Ship(shipID, operator, contract_contract_id, hull_hull_id, engine_engine_id, ship_ship_name, shiptype_shiptypename, 
                                             ship_ship_signs, ship_employment, hull_model_no, hull_hull_len_oa , hull_hull_len_pp,
                         hull_hull_beam, hull_hull_front, hull_hull_side, hull_hull_factor, ship_ship_nt, ship_draft_design, ship_draft_scantling, 
                         engine_eng_max_contin_rating, engine_eng_norm_contin_rating, engine_eng_nom_rpm_mcr , engine_eng_nom_rpm_ncr, ship_ship_speed, 
                         ship_ship_dwt, ship_criteria_wind, ship_min_load_speed, ship_max_load_speed, ship_min_ballast_speed, ship_max_ballast_speed, ship_min_medium_speed, 
                         ship_max_medium_speed, ship_routingtype, ship_supported_onboardsystem, ship_state, shipComment, shipDesc);
-                    shipsArray.add(theShip);
+
                     
                 }
                 NodeList contactList = doc.getElementsByTagName("contact");
@@ -110,7 +110,7 @@ public class ParsingXML{
                       int contactID  = Integer.parseInt(eElement.getAttribute("id"));
                       String contactValues = eElement.getAttribute("values");
                       String[] contactParts = contactValues.split(";", 4);
-                      System.out.println(" \n Contact VALUES  ");
+
                      /* for (int i = 0; i < contactParts.length; i++)
                       {
                         System.out.println(contactParts[i] + " ");
@@ -136,7 +136,7 @@ public class ParsingXML{
                     }
                 }
           }
-          return shipsArray;
+          return theShip;
 
         
         } catch (Exception e) {
@@ -335,7 +335,7 @@ public class ParsingXML{
                   Element shipVoyageEl = (Element) shipVoyage;
                   int shipId = Integer.parseInt(shipVoyageEl.getAttribute("id"));
                   
-                  Ship ship = new Ship(shipId, ope, "defaultName");
+                  Ship ship = getXMLShip(Integer.toString(shipId));
                   String voyageDeparture = voyageValues[6];
                   String voyageDestination = voyageValues[7];
                   String voyageEtd = voyageValues[8];

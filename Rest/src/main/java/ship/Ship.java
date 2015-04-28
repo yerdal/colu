@@ -50,6 +50,47 @@ public class Ship {
 	private String ship_description; // Shiptype description.
 	private ArrayList<SatCPollPosition> satCPollPositions;
 
+
+	public Ship(){
+		id = 1;
+		operator = new Operator(1);
+		ship_ship_name = "undefined";
+		contract_contract_id = "undefined";
+		hull_hull_id = 0;
+		engine_engine_id = 0;
+		shiptype_shiptypename = "undefined";
+		ship_ship_signs = "undefined";
+		ship_employment = "undefined";
+		hull_model_no = 0;
+		hull_hull_len_oa = 0;
+		hull_hull_len_pp = 0;
+		hull_hull_beam = 0;
+		hull_hull_front = 0;
+		hull_hull_side = 0;
+		hull_hull_factor = 0;
+		ship_ship_nt = 0;
+		ship_draft_design = 0;
+		ship_draft_scantling = 0;
+		engine_eng_max_contin_rating = 0;
+		engine_eng_norm_contin_rating = 0;
+		engine_eng_nom_rpm_at_mcr = 0;
+		engine_eng_nom_rpm_at_ncr = 0;
+		ship_ship_speed = 0;
+		ship_ship_dwt = 0;
+		ship_criteria_wind = 0;
+		ship_min_load_speed = 0;
+		ship_max_load_speed = 0;
+		ship_min_ballast_speed = 0;
+		ship_max_ballast_speed = 0;
+		ship_min_medium_speed = 0;
+		ship_max_medium_speed = 0;
+		ship_routingtype = "undefined";
+		ship_supported_onboardsystem = "undefined";
+		ship_state = "undefined";
+		ship_comment = "undefined";
+		ship_description = "undefined";
+		satCPollPositions = new ArrayList<SatCPollPosition>();
+	}
 	//This is temporary, only the interering values set.
 	public Ship(int theId, Operator theOperator, String theShipname){
 		id = theId;

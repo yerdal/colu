@@ -30,7 +30,7 @@ public class ShipController extends ParsingXML{
   @Autowired
   ParametersRepository repository;
 
-  private ArrayList<Ship> myShip;
+  private Ship myShip;
   private ArrayList<Ship> myShipsPos;
   private ArrayList<OngoingVoyages> ongoingVoyages;
   private Voyage myVoyage;
@@ -45,8 +45,8 @@ public class ShipController extends ParsingXML{
    */ 
     //Request a ship with a certain name?
     @RequestMapping(value="/ships/id/{id}")
-    public ArrayList getShip(@PathVariable String id) {
-        myShip = getXMLShip();
+    public Ship getShip(@PathVariable String id) {
+        myShip = getXMLShip(id);
         return myShip;
     }
    /**
