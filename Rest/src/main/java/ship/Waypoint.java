@@ -1,6 +1,9 @@
 package ship;
 import java.util.ArrayList;
 
+/**
+ * Class to represent each Waypoint for the ship, i.e the expected positions of the ship
+ */
 public class Waypoint
 {
 	private int id;

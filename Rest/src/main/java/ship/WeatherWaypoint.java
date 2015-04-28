@@ -1,6 +1,9 @@
 package ship;
 import java.util.ArrayList;
 
+/**
+ * Class to represent the weather for each expected position of the ship
+ */
 public class WeatherWaypoint
 {
 	private double windSpeed; //A forecasted wind speed maxValue="60.0"minValue="0.0" 

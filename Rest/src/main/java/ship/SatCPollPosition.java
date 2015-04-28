@@ -1,6 +1,10 @@
 
 package ship;
 
+/**
+ * Class to represent the Satelite positions from each ship
+ */
+
 public class SatCPollPosition {
 
   //According to XML File

@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
- * Handling the rest API and parsing XML files
+ * Handling the rest API 
  */
 @RestController
 public class ShipController extends ParsingXML{
@@ -32,7 +32,7 @@ public class ShipController extends ParsingXML{
 
   private ArrayList<Ship> myShip;
   private ArrayList<Ship> myShipsPos;
-  private ArrayList<OnVoyages> ongoingVoyages;
+  private ArrayList<OngoingVoyages> ongoingVoyages;
   private Voyage myVoyage;
   private ArrayList<Voyage> voyageList;
 

@@ -6,7 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+/**
+ * Class for handling the saved parameters in the database
+ */
 @Entity
 public class SavedParameters {
   //FOr auto Generation

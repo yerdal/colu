@@ -1,5 +1,8 @@
 package ship;
 
+/**
+ * Class to represent the operator
+ */
 public class Operator {
 
   private int operatorId; //Operator ID.

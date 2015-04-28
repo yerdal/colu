@@ -2,6 +2,9 @@ package ship;
 import java.util.Date;
 
 
+/**
+ * Class for handling the requested parameters from frontend
+ */
 public class RequestedParameters{
   //FOr auto Generation
    // @Id

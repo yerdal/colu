@@ -9,6 +9,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class to enable http request to the backend
+ */
 @Component
 public class SimpleCORSFilter implements Filter {
 

@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
+
+
+/**
+ * Class to represent the Ship Report
+ */
 public class ShipReport
 {
 	private int reportID; //Database ID for report, number.

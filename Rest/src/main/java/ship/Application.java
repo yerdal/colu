@@ -9,6 +9,10 @@ import org.springframework.boot.CommandLineRunner;
 
 import java.util.ArrayList;
 
+
+/**
+ * Starting the application with right configurations, init database etc.
+ */
 @SpringBootApplication
 public class Application extends ParsingXML implements CommandLineRunner{
 
@@ -21,7 +25,7 @@ public class Application extends ParsingXML implements CommandLineRunner{
 
     @Override
     public void run(String... strings) throws Exception {
-        ArrayList<OnVoyages> ongoingVoyages = new ArrayList<OnVoyages>();
+        ArrayList<OngoingVoyages> ongoingVoyages = new ArrayList<OngoingVoyages>();
         ongoingVoyages = getXMLOngoingVoyages();
 
         for(int i = 0; i < ongoingVoyages.size();i++){

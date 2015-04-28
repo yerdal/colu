@@ -11,6 +11,10 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * Class for reading in the XML files and creating objects
+ */
+
 public class ParsingXML{
 
   @Autowired
@@ -231,7 +235,7 @@ public class ParsingXML{
          return null; 
     }
     public ArrayList getXMLOngoingVoyages(){
-        ArrayList<OnVoyages> voyageArray = new ArrayList<OnVoyages>();
+        ArrayList<OngoingVoyages> voyageArray = new ArrayList<OngoingVoyages>();
 
         try{
           //OSKAR C:/Users/Oskar Ankarberg/Desktop/Voyage_and_shipdata/
@@ -265,7 +269,7 @@ public class ParsingXML{
                   String shipValues = cElement.getAttribute("values");
                   String[] shipValuesArray = shipValues.split(";", 34);
 
-                  OnVoyages theVoyage = new OnVoyages(voyageID, shipValuesArray[5]); 
+                  OngoingVoyages theVoyage = new OngoingVoyages(voyageID, shipValuesArray[5]); 
                   voyageArray.add(theVoyage);
                 }
                   

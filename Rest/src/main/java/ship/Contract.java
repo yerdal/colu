@@ -1,5 +1,9 @@
 package ship;
 
+
+/**
+ * Class to represent contract
+ */
 public class Contract {
  
   private int contract_id; // Database ID for Contract

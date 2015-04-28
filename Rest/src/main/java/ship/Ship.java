@@ -1,6 +1,8 @@
 package ship;
 import java.util.ArrayList;
-
+/**
+ * Class to represent the Ship
+ */
 public class Ship {
 
 	private int id;

@@ -1,5 +1,9 @@
 package ship;
 
+/**
+ * Class to represent the fuil and oil performance of a ship
+ */
+
 public class FuelOilPerformance
 {
 	//baseline = måttstock(?)

@@ -1,17 +1,21 @@
-//ongoingVoyage
-package ship;
-//import.java.util.ArrayList;
 
-public class OnVoyages{
+package ship;
+
+
+/**
+ * Class to represent the ongoing voyages
+ */
+
+public class OngoingVoyages{
 
 	private int voyageID;
 	private String shipTypeName;
 	
-  public OnVoyages(int theId, String theShipType){
+  public OngoingVoyages(int theId, String theShipType){
     voyageID = theId;
     shipTypeName = theShipType;
   }
-  /*public OnVoyages(int theId, String theName) {
+  /*public OngoingVoyages(int theId, String theName) {
     voyageID = theId;
     theValues = theName;
   }*/

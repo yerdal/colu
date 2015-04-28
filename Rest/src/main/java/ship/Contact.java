@@ -1,5 +1,8 @@
 package ship;
 
+/**
+ * Class to represent contact information
+ */
 public class Contact {
 
   //According to XML File

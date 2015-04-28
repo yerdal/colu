@@ -6,7 +6,9 @@ import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
+/**
+ * Class to represent each Voyage
+ */
 public class Voyage
 {	
 
