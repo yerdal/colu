@@ -13,7 +13,7 @@ coluApp.service('sharedProperties', function() {
     }
 });
 
-coluApp.controller('mainController', function($scope, $http, sharedProperties ){
+coluApp.controller('mainController', function($scope, $http, sharedProperties){
 
   function checkTimeStatus(i){
 
