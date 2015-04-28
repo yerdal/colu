@@ -37,7 +37,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       else {
         $scope.voyages[i].rangeParameters.time.status = 'BAD';
       }
-      console.log("status i statusfunktion ",$scope.voyages[i].rangeParameters.time.status);
+      //console.log("status i statusfunktion ",$scope.voyages[i].rangeParameters.time.status);
     }
 
   //Gets the Voyage-data
@@ -67,7 +67,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
         $scope.voyages[i].rangeParameters.time.status = 'BAD';
 
-        console.log("status", $scope.voyages[0].rangeParameters.time.status);
+        //console.log("status", $scope.voyages[0].rangeParameters.time.status);
 
         checkTimeStatus(i);
 
