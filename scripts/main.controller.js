@@ -32,7 +32,148 @@ angular.module('coluApp')
       })
     });
 
-    var initGribData = function(){
+      $http.get('http://localhost:8090/voyages').success(function(data,status,headers,config)
+    {
+    
+      //Delete some broken data, Einar Sanberg will solve it, sometime.
+      data.splice(9, 1);  
+    
+      //Position 27 is broken, and I can´t manage to delete it, hehe.   
+      $scope.voyages = data.slice(1, 26);
+
+      console.log("fesfsdfsdfs", data[0]);
+      $scope.activeVoyage = $scope.voyages[0];
+
+      initShipPos();
+      }).error(function(data,status,headers,config){
+        console.log('ERROR getting from backend' , status);
+
+      });
+
+      var initShipPos = function(){
+       var shipVectorIconSrc = new ol.source.Vector({});
+       var styleArray = [];
+      // console.log('daata ', data)
+      for(var i = 0; i < $scope.voyages.length; i++){
+        var iconFeature = new ol.Feature({
+        geometry: new                         //LON , LAT 
+          ol.geom.Point(ol.proj.transform([$scope.voyages[i].shipReports[0].lon, $scope.voyages[i].shipReports[0].lat], 'EPSG:4326',   'EPSG:3857')),
+          name: 'Null Island ' + i,
+          population: 4000,
+          rainfall: 500
+        });
+        var points = [];
+        //Loop through ship positions
+        for(var k = 0; k < $scope.voyages[i].shipReports.length;k++){
+          points[k] = ol.proj.transform([$scope.voyages[i].shipReports[k].lon, $scope.voyages[i].shipReports[k].lat], 'EPSG:4326', 'EPSG:3857');
+        }
+        iconFeature.setId(i);   //Set id to get the right feature later in when updating position
+        var featureLine = new ol.Feature({
+            geometry: new ol.geom.LineString(points)
+        });
+
+        var shipRouteLine = new ol.source.Vector({});
+        shipRouteLine.addFeature(featureLine);
+
+          var shipRouteLineLayer = new ol.layer.Vector({
+              source: shipRouteLine,
+              style: new ol.style.Style({
+              fill: new ol.style.Fill({
+                  color: '#000000',
+                  weight: 4
+              }),
+              stroke: new ol.style.Stroke({
+                  color: '#FF00FF',
+                  width: 2
+              })
+              })
+              });
+         // });
+      var stroke = new ol.style.Stroke({
+        color: 'black'
+      });
+      var textStroke = new ol.style.Stroke({
+        color: '#fff',
+        width: 3
+      });
+      var textFill = new ol.style.Fill({
+        color: '#000'
+      });
+      var iconStyle = new ol.style.Style({
+        image: new ol.style.Icon({
+          // anchor: [0.5, 46],
+          // anchorXUnits: 'fraction',
+          // anchorYUnits: 'pixels',
+          opacity: 0.75,
+          // rotation: -3.14/2,
+          src: 'http://icons.iconarchive.com/icons/icons-land/transporter/32/Container-Ship-Top-Red-icon.png'
+        }),
+        text: new ol.style.Text({
+          offsetY : -14,
+          font: '14px Calibri,sans-serif',
+          text: 'TJU',
+          fill: textFill,
+          stroke: textStroke,
+          
+        })
+        
+      });
+
+      map.addLayer(shipRouteLineLayer);
+
+      // THIS IS NEW - add each style individually to the feature
+      iconFeature.setStyle(iconStyle);
+
+        // shipVectorIconSrc.addFeature(iconStyle);
+      shipVectorSource.addFeature(iconFeature);
+         
+      }
+         
+      //add the feature vector to the layer vector, and apply a style to whole layer
+      vectorLayer = new ol.layer.Vector({
+        source: shipVectorSource,
+        style: iconStyle
+      });
+ 
+      map.addLayer(vectorLayer);
+      
+      
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*var initGribData = function(){
       var gribSource = new ol.source.TileWMS({
           url: 'http://localhost:8080/geoserver/wms',
                     params: {'LAYERS': 'cite:Temperature_surface'},
@@ -48,11 +189,11 @@ angular.module('coluApp')
         center: [0, 0],
         zoom: 1
       });
-       
-      map.addLayer(gribLayer);
+       */
+     /* map.addLayer(gribLayer);
       map.on('pointermove', function(evt) {
         document.getElementById('info').innerHTML = '';
-        var viewResolution = /** @type {number} */ (view.getResolution());
+        var viewResolution = /** @type {number}  (view.getResolution());
         var url = gribSource.getGetFeatureInfoUrl(
           evt.coordinate, viewResolution, 'EPSG:3857',
           {'INFO_FORMAT': 'text/html'});
@@ -61,9 +202,9 @@ angular.module('coluApp')
             '<iframe seamless src="' + url + '"></iframe>';
         }
       });
-    }
+    }*/
     // initGribData();
-    $scope.putData = function(){
+ /*   $scope.putData = function(){
       console.log('hejje ');
       parameters = {
         requiredCurrentSpeed: 1.2,
@@ -100,10 +241,10 @@ angular.module('coluApp')
       //drawLines(data);
     }).error(function(data,status,headers,config){
         console.log('ERROR getting from backend' , status);
-    });
+    });*/
   
     
-    var initShipPos = function(){
+  /*  var initShipPos = function(){
        var shipVectorIconSrc = new ol.source.Vector({});
        var styleArray = [];
       // console.log('daata ', data)
@@ -191,9 +332,9 @@ angular.module('coluApp')
       map.addLayer(vectorLayer);
       
       
-    }
+    }*/
 
-    $scope.updateShipPos = function(){
+  /*  $scope.updateShipPos = function(){’
         var nowDate = new Date(2015,02,07); //Should use Date.Now in real application
         $scope.maxDate = new Date($scope.maxDate);
         console.log('MaxDate ', new Date($scope.maxDate));
@@ -229,7 +370,7 @@ angular.module('coluApp')
         }
         // console.log('asdsad' ,$scope.ships);
 
-    }
+    }*/
 
     
 

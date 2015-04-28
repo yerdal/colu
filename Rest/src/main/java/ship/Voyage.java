@@ -241,6 +241,10 @@ public class Voyage
 	{
 		return operator;
 	}
+	public ArrayList <ShipReport> getShipReports()
+	{
+		return shipReports;
+	}
 
 	public ArrayList<Waypoint> getWaypoints()
 	{

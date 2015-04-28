@@ -27,9 +27,9 @@
      <div ng-controller="mainController" class="container"> 
        <div class="row" ng-if="voyages">
 
-          <div class="col-sm-3 list" ng-hide="(smallScreenSize() && showActive.shipTrue)" ng-include src="'git/colu/templates/list-description.html'"></div>
+          <div class="col-sm-3 list" ng-hide="(smallScreenSize() && showActive.shipTrue)" ng-include src="'templates/list-description.html'"></div>
         
-          <div ng-if="(!smallScreenSize() || showActive.shipTrue)" class="col-sm-9 content" ng-include src="'git/colu/templates/parameters-description.html'"></div>  
+          <div ng-if="(!smallScreenSize() || showActive.shipTrue)" class="col-sm-9 content" ng-include src="'templates/parameters-description.html'"></div>  
          </div>
       
        </div>
