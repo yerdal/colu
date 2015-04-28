@@ -44,7 +44,7 @@ public class Voyage
 	private String tradelaneName; //Tradelane Name..
 	private String voyagePhase; //Started/Ongoing/Ended
 	private String hasRoute; // Voyage has a defined route, true / false
-	private String nextMessageDate; //format="yyyy-MM-dd" Next message date
+	private String nextMessageDate; //format="yyyy-MM-dd"HHext message date
 	private String priority; //Manual priority.
 	private String seaName;  //name of the Sea
 	private double seaSortOrder; //Sea sort order 
@@ -408,8 +408,8 @@ public class Voyage
 	public String getRequiredMinETA(){
 		String temp; 
 		try {
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm");
-        temp = formatter.format(requiredMinETA);
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+      temp = formatter.format(requiredMinETA);
       }   
       catch (Exception e) {
       	// e.throw
@@ -420,7 +420,7 @@ public class Voyage
 	public String getRequiredMaxETA(){
 		String temp; 
 		try {
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         temp = formatter.format(requiredMaxETA);
       }   
       catch (Exception e) {
@@ -526,11 +526,11 @@ public class Voyage
 	public void setRequiredMinMaxETA(String reqMinEta, String reqMaxEta){
 		try {
  			if(reqMinEta.equals(""))
- 				reqMinEta = "00-00-00 00:00";
+ 				reqMinEta = "2000-01-01 00:00";
  			if(reqMaxEta.equals(""))
- 				reqMaxEta = "00-00-00 00:00";
+ 				reqMaxEta = "2020-01-01 00:00";
  			
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			requiredMinETA = formatter.parse(reqMinEta);
 			requiredMaxETA = formatter.parse(reqMaxEta);
 			for(int i = 0; i < shipReports.size(); i++){
