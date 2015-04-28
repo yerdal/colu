@@ -42,10 +42,10 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
         $scope.voyages[i].singleParameters = {
 
-          fuel: {label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "L/mil",},
-          combinedWave : {label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
-          current : {label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
-          wind : {label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, status: $scope.voyages[i].currentWeatherWaypoint.windSpeedStatus, unit: "m/s"}
+          fuel: {name: "fuel", label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "L/mil",},
+          combinedWave : {name: "combinedWave", label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
+          current : {name: "current", label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
+          wind : {name: "wind", label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, status: $scope.voyages[i].currentWeatherWaypoint.windSpeedStatus, unit: "m/s"}
 
         }
 
@@ -126,37 +126,14 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         $scope.editorEnabled[id] = false;
       };
 
-      $scope.save = function(id) {
+      $scope.save = function(id, param) {
         $scope.disableEditor(id);
-
-  
-          //Test current and investigate the status
-          if ($scope.activeVoyage.singleParameters.current.current < $scope.activeVoyage.singleParameters.current.upperLimit)
-          {
-            $scope.activeVoyage.singleParameters.current.status = "GOOD";
-          } 
-
-          //Test fuel and investigate the status
-          if ($scope.activeVoyage.singleParameters.fuel.current < $scope.activeVoyage.singleParameters.fuel.upperLimit)
-          {
-            $scope.activeVoyage.singleParameters.fuel.status = "GOOD";
-          } 
-
-          //Test combineWaveHeight and investigate the status
-          if ($scope.activeVoyage.singleParameters.combinedWave.current < $scope.activeVoyage.singleParameters.combinedWave.upperLimit)
-          {
-            $scope.activeVoyage.singleParameters.combinedWave.status = "GOOD";
-          } 
-
-          //Test wind and investigate the status
-          if ($scope.activeVoyage.singleParameters.wind.current < $scope.activeVoyage.singleParameters.wind.upperLimit)
-          {
-            $scope.activeVoyage.singleParameters.wind.status = "GOOD";
-          } 
-
+       
+        if($scope.activeVoyage.singleParameters[param].current < $scope.activeVoyage.singleParameters[param].upperLimit)
+          $scope.activeVoyage.singleParameters[param].status = "GOOD";
+      
           flagVoyage($scope.activeVoyage);
-
-
+          
         };
 
       }
