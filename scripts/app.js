@@ -1,4 +1,5 @@
-'use strict';
+(function () {
+	'use strict';
 
 //Application Configurations 
 //The order of the applications startup 
@@ -9,12 +10,10 @@
 //5 app controller
 //6 directive link
 
-
-
  angular.module('coluApp', []);
 // angular.module('coluApp', ['angular-datepicker']);
 
-
+})();
 
 
 

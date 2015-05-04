@@ -1,20 +1,8 @@
 var coluApp = angular.module('coluApp');
 
-coluApp.service('sharedProperties', function() {
-    
-    var activeVoyage = "Default";
-    return {
-        getActive: function() {
-            return activeVoyage;
-        },
-        setActive: function(s) {
-            activeVoyage = s;
-        }
-    }
-});
+coluApp.controller('mainController', mainController);
 
-coluApp.controller('mainController', function($scope, $http, sharedProperties, formProperties){
-
+function mainController($scope, $http, sharedProperties, formProperties){
   function checkTimeStatus(i){
 
       //console.log("hej",i);
@@ -245,5 +233,4 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties, f
 
 
   }
-
-});
+}
