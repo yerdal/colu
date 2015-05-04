@@ -1,7 +1,7 @@
 var coluApp = angular.module('coluApp');
 /**
  * @ngdoc service
- * @name sharedProperties
+ * @name coluApp.sharedProperties
  * @description
  * # sharedProperties 
  * Service to share properties on the current active voyage on frontend.
@@ -13,9 +13,9 @@ coluApp.service('sharedProperties', function() {
     var activeVoyage = "Default";
     return {
         /**
-       * @ngdoc
-       * @name sharedProperties#getActive 
-       * @methodOf sharedProperties
+       * @ngdoc method
+       * @name coluApp.sharedProperties#getActive 
+       * @methodOf  coluApp.sharedProperties 
        *
        * @description
        * Method to get active voyage on scope
@@ -28,9 +28,9 @@ coluApp.service('sharedProperties', function() {
         },
 
         /**
-       * @ngdoc
-       * @name sharedProperties#setActive 
-       * @methodOf sharedProperties
+       * @ngdoc method
+       * @name coluApp.sharedProperties#setActive 
+       * @methodOf coluApp.sharedProperties
        *
        * @description
        * Method to set active voyage on scope
@@ -44,6 +44,7 @@ coluApp.service('sharedProperties', function() {
         }
     }
 });
+
 
 coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 

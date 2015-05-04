@@ -7,10 +7,10 @@ module.exports = function (grunt) {
   grunt.initConfig({
     ngdocs: {
       options: {
-        scripts: ['angular.js', '../scripts/main.controller.js'],
+        scripts: ['angular.js', '../scripts/app.js'],
         html5Mode: false,
         title: "Colu Frontend API Documentation",
-        titleLink: "/docs/api"
+        titleLink: "/docs/#/api"
       },
       all: ['scripts/**/*.js']
     },

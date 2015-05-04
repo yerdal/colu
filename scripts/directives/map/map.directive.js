@@ -1,8 +1,9 @@
 /**
  * @ngdoc directive
- * @name directive:map
+ * @name coluApp.directive:map
  * @restrict E
- * @function this is the function desc
+
+ * External Link -  {@link http://angular-ui.github.com/ng-grid/ ngGrid} 
  *
  * @description
  * Directive to represent a world map with ship, voyage and weather visualizations
