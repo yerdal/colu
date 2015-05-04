@@ -1,3 +1,4 @@
 Rest/target/*
 data/*
 .DS_Store
+test/javascript/npm-debug.log
