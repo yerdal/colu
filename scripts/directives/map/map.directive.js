@@ -1,3 +1,19 @@
+/**
+ * @ngdoc directive
+ * @name directive:map
+ * @restrict E
+ * @function this is the function desc
+ *
+ * @description
+ * Directive to represent a world map with ship, voyage and weather visualizations
+ *
+ * @example
+   <example module="coluApp">
+     <file name="index.html">
+         <map></map>
+     </file>
+   </example>
+ */
 
 var coluApp = angular.module('coluApp');
 coluApp.directive('map', function() {
