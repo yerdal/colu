@@ -71,6 +71,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
         // console.log("status", $scope.voyages[0].rangeParameters.time.status);
 
+
         checkTimeStatus(i);
 
         $scope.voyages[i].singleParameters = {
@@ -85,6 +86,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         flagVoyage($scope.voyages[i]);
       } 
 
+      console.log("dsfsdf", $scope.voyages[0]);
 
 
       //Where all the functionality is

@@ -4,7 +4,7 @@ coluApp.directive('map', function() {
   return {
     restrict: 'E',
     transclude: true,
-    templateUrl: 'scripts/directives/map/map.html',
+    templateUrl: 'colu/scripts/directives/map/map.html',
     link: function(scope, element){
       var map = new ol.Map({
         layers: [new ol.layer.Tile({ preload: 4, source: new ol.source.OSM()})],
@@ -34,6 +34,8 @@ coluApp.directive('map', function() {
           })
         });
 
+        
+
         iconFeature.setStyle(iconStyle);
         shipVectorSource.addFeature(iconFeature);
           
@@ -45,14 +47,50 @@ coluApp.directive('map', function() {
 
         map.addLayer(vectorLayer);
       }
+
+      var setLine = function()
+      {
+          var points = []; 
+
+        for(var a = 0; a < scope.activeVoyage.weatherWaypoints.length; a++){
+          points[a] = ol.proj.transform([scope.activeVoyage.weatherWaypoints[a].lon, scope.activeVoyage.weatherWaypoints[a].lat], 'EPSG:4326', 'EPSG:3857');
+          //console.log(points[a]);
+        }
+
+        var featureLine = new ol.Feature({
+            geometry: new ol.geom.LineString(points)
+        });
+
+        var shipRouteLine = new ol.source.Vector({});
+        shipRouteLine.addFeature(featureLine);
+
+        var shipRouteLineLayer = new ol.layer.Vector({
+              source: shipRouteLine,
+              style: new ol.style.Style({
+              fill: new ol.style.Fill({
+                  color: '#000000',
+                  weight: 4
+              }),
+              stroke: new ol.style.Stroke({
+                  color: '#FF00FF',
+                  width: 2
+              })
+              })
+        });
+       
+       map.addLayer(shipRouteLineLayer);  
+      }
+
       initPos();
+      setLine();
       
       scope.$watch('activeVoyage' , function(){
         setShipPosition();
+        setLine();
       });
       
       
-     
+      
       
       var setShipPosition = function(){
         map.getView().setCenter(ol.proj.transform([scope.activeVoyage.latestShipReport.lon, scope.activeVoyage.latestShipReport.lat], 'EPSG:4326', 'EPSG:3857'));
