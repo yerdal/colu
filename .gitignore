@@ -3,3 +3,4 @@ node_modules/*
 docs/*
 data/*
 .DS_Store
+test/javascript/npm-debug.log

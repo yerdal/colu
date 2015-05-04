@@ -7,5 +7,8 @@
     "grunt-ngdocs": "~0.1.1",
     "grunt-contrib-connect": "~0.3.0",
     "grunt-contrib-clean": "0.4.1"
+  },
+  "devDependencies": {
+    "grunt-karma": "^0.10.1"
   }
 }
