@@ -17,8 +17,6 @@ module.exports = function(config) {
     files: [
         'bower_components/angular/angular.min.js',
         'scripts/*',
-        'directives/map/map.directive.js',
-        
     ],
 
 
