@@ -13,7 +13,7 @@ coluApp.service('sharedProperties', function() {
     }
 });
 
-coluApp.controller('mainController', function($scope, $http, sharedProperties){
+coluApp.controller('mainController', function($scope, $http, sharedProperties, formProperties){
 
   function checkTimeStatus(i){
 
@@ -31,7 +31,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties){
             //console.log("higher ", higher);
 
 
-      if( estimated < higher && estimated > lower){
+      if(estimated < higher && estimated > lower){
         $scope.voyages[i].rangeParameters.time.status = 'GOOD';
       }
       else {
@@ -124,12 +124,40 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties){
           console.log('ERROR getting from backend' , status);
       });
     }
-
-  function main (){
-
-    //How the form works
-    formFunctionality();
     
+
+    /*$scope.testButton = function(){
+      console.log('forwm ' , $scope.formProps.returnEditor(1));
+      //$scope.formProps.enableEditor(1);
+    }*/
+    //console.log('formProperties',$scope.formProps.returnEditor());
+    
+    function saveIndex(id, index) {
+        $scope.formProps.disableEditor(id);
+        console.log('DISABLEEDITOR', $scope.formProps.disableEditor(id))
+        //("save", id);
+        //console.log("sadsad", index);
+        checkTimeStatus(index);
+
+    }
+
+    function save(id) {
+          $scope.formProps.disableEditor(id);
+          putData();
+      }
+
+
+    function main (){
+      $scope.formProps = formProperties;
+      
+   /* $scope.$watch('formProperties', function(){
+      console.log('changinge')
+    });
+    //How the form works
+    //$scope.editorEnabled = */
+    
+    
+
     //Shows the active Voyage in the detailed view 
     $scope.showActive = function(s){
       sharedProperties.setActive(s);
@@ -181,8 +209,13 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties){
 
     }
 
+    function isInArray(value, array) {
+      return array.indexOf(value) > -1;
+    }
+    
+
     //Functionality of the form
-    function formFunctionality(){
+    /*function formFunctionality(){
 
       $scope.editorEnabled = [false, false, false, false, false, false];
 
@@ -208,11 +241,9 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties){
         $scope.putData();
       };
 
-    }
+    }*/
 
-    function isInArray(value, array) {
-      return array.indexOf(value) > -1;
-    }
+
   }
 
 });

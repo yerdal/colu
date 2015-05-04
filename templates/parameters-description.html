@@ -23,13 +23,13 @@
       </li>
       
       <li>
-        <button type="button" class="btn btn-default btn-sm " ng-click="enableEditor(activeVoyage.rangeParameters.time.number)" ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
+        <button type="button" class="btn btn-default btn-sm " ng-click="formProps.enableEditor(activeVoyage.rangeParameters.time.number)" ng-hide="formProps.returnEditor(activeVoyage.rangeParameters.time.number)">
           <i class="glyphicon glyphicon-pencil"></i>
         </button>
       </li>
     </ul>
 
-    <div ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
+    <div ng-hide="formProps.returnEditor(activeVoyage.rangeParameters.time.number)">
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
 
       Undre gräns: {{activeVoyage.rangeParameters.time.lowerLimit}} {{activeVoyage.rangeParameters.time.unit}}. Övre gräns: {{activeVoyage.rangeParameters.time.upperLimit}} {{activeVoyage.rangeParameters.time.unit}}.
@@ -37,11 +37,11 @@
 
     </div>
 
-    <div ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">
+    <div ng-show="formProps.returnEditor(activeVoyage.rangeParameters.time.number)">
 
-      Undre gräns: <input ng-model="activeVoyage.rangeParameters.time.lowerLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]"> {{para.unit}}
-      Övre gräns: <input ng-model="activeVoyage.rangeParameters.time.upperLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">  {{para.unit}}
-      Ursprunglig ankomsttid: <input ng-model="activeVoyage.rangeParameters.time.required" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">
+      Undre gräns: <input ng-model="activeVoyage.rangeParameters.time.lowerLimit" ng-show="formProps.returnEditor(activeVoyage.rangeParameters.time.number)"> {{para.unit}}
+      Övre gräns: <input ng-model="activeVoyage.rangeParameters.time.upperLimit" ng-show="formProps.returnEditor(activeVoyage.rangeParameters.time.number)">  {{para.unit}}
+      Ursprunglig ankomsttid: <input ng-model="activeVoyage.rangeParameters.time.required" ng-show="formProps.returnEditor(activeVoyage.rangeParameters.time.number)">
 
       <button ng-click="saveIndex(activeVoyage.rangeParameters.time.number, activeVoyage.rangeParameters.time.index)" type="button" class="btn btn-default btn-sm">
         <i class="glyphicon glyphicon-floppy-disk"></i>
@@ -66,14 +66,14 @@
       </li>
       
       <li>
-        <button type="button" class="btn btn-default btn-sm " ng-click="enableEditor(activeVoyage.rangeParameters.velocity.number)" ng-hide="editorEnabled[activeVoyage.rangeParameters.velocity.number]">
+        <button type="button" class="btn btn-default btn-sm " ng-click="formProps.enableEditor(activeVoyage.rangeParameters.velocity.number)" ng-hide="formProps.returnEditor(activeVoyage.rangeParameters.velocity.number)">
           <i class="glyphicon glyphicon-pencil"></i>
         </button>
       </li>
     
     </ul>
 
-    <div ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
+    <div ng-hide="formProps.returnEditor(activeVoyage.rangeParameters.time.number)">
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
 
       Undre gräns: {{activeVoyage.rangeParameters.velocity.lowerLimit}} {{activeVoyage.rangeParameters.velocity.unit}}. Övre gräns: {{activeVoyage.rangeParameters.velocity.upperLimit}} {{activeVoyage.rangeParameters.velocity.unit}}.
@@ -81,10 +81,11 @@
 
     </div>
 
-    <div ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]">
 
-      Undre gräns: <input ng-model="activeVoyage.rangeParameters.velocity.lowerLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]"> {{para.unit}}
-      Övre gräns: <input ng-model="activeVoyage.rangeParameters.velocity.upperLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]">  {{para.unit}}
+    <div ng-show="formProps.returnEditor(activeVoyage.rangeParameters.velocity.number)">
+
+      Undre gräns: <input ng-model="activeVoyage.rangeParameters.velocity.lowerLimit" ng-show="formProps.returnEditor(activeVoyage.rangeParameters.velocity.number)"> {{para.unit}}
+      Övre gräns: <input ng-model="activeVoyage.rangeParameters.velocity.upperLimit" ng-show="formProps.returnEditor(activeVoyage.rangeParameters.velocity.number)">  {{para.unit}}
 
       <button ng-click="save(activeVoyage.rangeParameters.velocity.number)" type="button" class="btn btn-default btn-sm">
         <i class="glyphicon glyphicon-floppy-disk"></i>
@@ -110,22 +111,22 @@
         </li>
         
         <li>
-          <button type="button" class="btn btn-default btn-sm" ng-click="enableEditor($index + 2)" ng-hide="editorEnabled[$index + 2]">
+          <button type="button" class="btn btn-default btn-sm" ng-click="formProps.enableEditor($index + 2)" ng-hide="formProps.returnEditor($index + 2)">
             <i class="glyphicon glyphicon-pencil"></i>
           </button>
         </li>
       
       </ul>
 
-      <div ng-hide="editorEnabled[$index + 2]">
+      <div ng-hide="formProps.returnEditor($index + 2)">
 
         <!-- ng-class="{good: activeVoyage.combinedWave.status == true, bad: activeVoyage.combinedWave.status == false}"-->
         Maximalt värde: {{parameter.upperLimit}} {{parameter.unit}}. 
 
         </div>
 
-      <div ng-show="editorEnabled[$index + 2]">
-        Maximal värde: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[$index + 2]"> {{parameter.unit}}.
+      <div ng-show="formProps.returnEditor($index + 2)">
+        Maximal värde: <input ng-model="parameter.upperLimit" ng-show="formProps.returnEditor($index + 2)"> {{parameter.unit}}.
         <button ng-click="save($index + 2)" type="button" class="btn btn-default btn-sm">
           <i class="glyphicon glyphicon-floppy-disk"></i>
         </button>  

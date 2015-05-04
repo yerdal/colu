@@ -1,32 +1,19 @@
 coluApp.service('formProperties', function() {
 
     var editorEnabled = [false, false, false, false, false, false];
+   
+      this.enableEditor = function(id) {
+          editorEnabled[id] = true;
+          //console.log('hej')
+      }
 
-      editorEnabled.enableEditor = function(id) {
-        $scope.editorEnabled[id] = true;
-      };
+      this.disableEditor = function(id) {              
+          editorEnabled[id] = false;
+          return editorEnabled[id];
+      }
 
-
-      editorEnabled.disableEditor = function(id) {
-              
-        $scope.editorEnabled[id] = false;
-      };
-  
-      editorEnabled.saveIndex = function(id, index) {
-        $scope.disableEditor(id);
-        //("save", id);
-        //console.log("sadsad", index);
-        checkTimeStatus(index);
-
-      };
-
-      editorEnabled.save = function(id) {
-        $scope.disableEditor(id);
-        $scope.putData();
-      };
-
-      function isInArray(value, array) {
-        return array.indexOf(value) > -1;
+      this.returnEditor = function(id){
+        return editorEnabled[id];
       }
     
 });

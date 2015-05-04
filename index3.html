@@ -21,14 +21,16 @@
     <script src='scripts/app.js'></script>
     <script src='scripts/main.controller2.js'></script>    
     <!-- SERVICES -->
-    <script src='scripts/services/sharedproperties.service.js'></script> 
+    <script src='scripts/services/sharedproperties.service.js'></script>
+    <script src='scripts/services/formproperties.service.js'></script>  
     <base href="/"></base>
   </head>
 
   <body ng-app="coluApp">
      <div ng-controller="mainController" class="container"> 
        <div class="row" ng-if="voyages">
-
+          <!--<button ng-click="testButton()">Test</button>
+           <button ng-show="formProps.returnEditor(2)">BAJSSS</button> -->
           <div class="col-sm-3 list" ng-hide="(smallScreenSize() && showActive.shipTrue)" ng-include src="'templates/list-description.html'"></div>
         
           <div ng-if="(!smallScreenSize() || showActive.shipTrue)" class="col-sm-9 content" ng-include src="'templates/parameters-description.html'"></div>  
