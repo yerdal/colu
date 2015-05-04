@@ -10,7 +10,7 @@
 
       <td ng-click="showActive(voyage);">
 
-        {{voyage.voyageName.slice(7,15) | uppercase}}
+        {{voyage.ship.shipName | uppercase}}
           
           <i ng-class="{'glyphicon glyphicon-time': voyage.rangeParameters.time.status == 'BAD'}"></i>
   
@@ -32,7 +32,7 @@
   <tbody class="handled">
     <tr ng-repeat="voyage in voyagesHandled | filter:searchShip">
       <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
-        {{voyage.voyageName.slice(7,15) | uppercase}} 
+        {{voyage.ship.shipName | uppercase}} 
       </td>
     </tr>
   </tbody>
@@ -40,7 +40,7 @@
   <tbody class="good">
     <tr ng-repeat="voyage in voyagesGood | filter:searchShip">
       <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
-        {{voyage.voyageName.slice(7,15) | uppercase}}
+        {{voyage.ship.shipName | uppercase}}
       </td>
     </tr>
   </tbody>

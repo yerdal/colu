@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 
     <meta name="viewport" content="initial-scale=1">  
-    
+    <script src='scripts/ol.js'></script>
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css"> 
 
@@ -19,6 +19,7 @@
 
     <script src='scripts/app.js'></script>
     <script src='scripts/main.controller2.js'></script>    
+    <script src='scripts/directives/map/map.directive.js'></script>    
     <base href="/"></base>
   </head>
 
@@ -26,10 +27,18 @@
      <div ng-controller="mainController" class="container"> 
        <div class="row" ng-if="voyages">
 
-          <div class="col-sm-3 list" ng-hide="(smallScreenSize() && showActive.shipTrue)" ng-include src="'colu/templates/list-description.html'"></div>
+
+          <div class="col-sm-3 list" ng-hide="(smallScreenSize() && showActive.shipTrue)" ng-include src="'templates/list-description.html'"></div>
         
-          <div ng-if="(!smallScreenSize() || showActive.shipTrue)" class="col-sm-9 content" ng-include src="'colu/templates/parameters-description.html'"></div>  
-         </div>
+          <div ng-if="(!smallScreenSize() || showActive.shipTrue)" class="col-sm-4 content" ng-include src="'templates/parameters-description.html'">
+          </div>  
+
+          <map ng-if="!smallScreenSize()"></map> 
+         
+          
+
+        </div>
+        
       
        </div>
 

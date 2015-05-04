@@ -23,16 +23,29 @@ input {
 	 width: 15%;
 }
 
+.row{
+	margin: auto;
+}
+
+#map {
+	height: 100%;
+}
+
 .container {
-	min-height: 98%;
-    height: 98%;
+
+   table{
+		tr{
+			cursor: pointer;		
+		}
+	}
 
 }
 
 .list {
+
+	border-right: 10px solid transparent;
 	min-height: 100%;
     height: 100%;
-	background-color: @gray-base;
 	text-align: center;
 	overflow: scroll;
 }
@@ -44,8 +57,9 @@ input {
 	}
 	min-height: 100%;
     height: 100%;
-	background-color: @gray-base;
 	overflow: scroll;
+
+
 }
 
 
@@ -133,16 +147,26 @@ input {
 	width: 100%;
 }
 
+.col-sm-5 {
+	padding-left: 0 !important;
+}
 /*For margin between columns*/
 [class*="col-"] {
+	min-height: 98%;
+    height: 98%;
+	background-color: @gray-base;
     background-clip: padding-box;
-    border-right: 10px solid transparent;
     border-top: 10px solid transparent;
-    padding: 0 2%;
-
+    padding: 2%;
     .btn {
     	margin: 3% 0 0 0;
     }
+}
+
+@media (min-width: 992px){
+	.container {
+		width: 100%;
+	}
 }
 
 @media (max-width: 768px){

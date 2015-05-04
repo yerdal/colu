@@ -187,6 +187,9 @@ angular.module('coluApp')
         source: shipVectorSource,
         style: iconStyle
       });
+      shipVectorSource.getFeatureById(1).setGeometry(
+              new ol.geom.Point(ol.proj.transform([$scope.ships[i].satCPollPositions[nearestPosInd].lon, $scope.ships[i].satCPollPositions[nearestPosInd].lat], 'EPSG:4326',   'EPSG:3857'))
+          )
  
       map.addLayer(vectorLayer);
       

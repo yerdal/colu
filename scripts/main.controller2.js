@@ -61,11 +61,17 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
       {
-      
         $scope.voyages[i].rangeParameters = {
           time: { label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].eta, required: $scope.voyages[i].requiredMaxETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter", number: 0 },
           velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
         }
+
+
+        $scope.voyages[i].rangeParameters.time.status = 'BAD';
+
+        // console.log("status", $scope.voyages[0].rangeParameters.time.status);
+
+        checkTimeStatus(i);
 
         $scope.voyages[i].singleParameters = {
 
