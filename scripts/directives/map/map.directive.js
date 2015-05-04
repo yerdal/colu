@@ -7,10 +7,10 @@ coluApp.directive('map', function() {
     templateUrl: 'scripts/directives/map/map.html',
     link: function(scope, element){
       var map = new ol.Map({
-        layers: [new ol.layer.Tile({ source: new ol.source.OSM()})],
+        layers: [new ol.layer.Tile({ preload: 4, source: new ol.source.OSM()})],
         target: document.getElementById('map'),
         view: new ol.View({
-          zoom: 2.000
+          zoom: 6.000
           })
       });
       var shipVectorSource = new ol.source.Vector({});
