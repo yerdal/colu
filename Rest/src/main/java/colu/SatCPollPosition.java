@@ -1,5 +1,5 @@
 
-package ship;
+package colu;
 
 /**
  * Class to represent the Satelite positions from each ship

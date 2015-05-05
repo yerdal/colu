@@ -1,4 +1,4 @@
-package ship;
+package colu;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -19,7 +19,6 @@ public class ParsingXML{
 
   @Autowired
   ParametersRepository repository;
-
   public Ship getXMLShip(String id){
         Ship theShip = new Ship();
         try {

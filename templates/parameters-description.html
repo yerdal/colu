@@ -33,7 +33,7 @@
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
 
       Undre gräns: {{activeVoyage.rangeParameters.time.lowerLimit}} {{activeVoyage.rangeParameters.time.unit}}. Övre gräns: {{activeVoyage.rangeParameters.time.upperLimit}} {{activeVoyage.rangeParameters.time.unit}}.
-        Ursprunglig ankomsttid: {{activeVoyage.rangeParameters.time.required}}           
+      Ursprunglig ankomsttid: {{activeVoyage.rangeParameters.time.initial}}           
  
     </div>
 
@@ -41,7 +41,7 @@
 
       Undre gräns: <input ng-model="activeVoyage.rangeParameters.time.lowerLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]"> {{para.unit}}
       Övre gräns: <input ng-model="activeVoyage.rangeParameters.time.upperLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">  {{para.unit}}
-      Ursprunglig ankomsttid: <input ng-model="activeVoyage.rangeParameters.time.required" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">
+      <p> Ursprunglig ankomsttid: {{activeVoyage.rangeParameters.time.initial}}  </p>
 
       <button ng-click="save(activeVoyage.rangeParameters.time.number)" type="button" class="btn btn-default btn-sm">
         <i class="glyphicon glyphicon-floppy-disk"></i>
@@ -141,7 +141,7 @@
 
   <!-- *********************************************************** -->
 
-<button type="button" class="btn btn-default btn-lg handled" ng-if="isBad(activeVoyage)" ng-click="handel(activeVoyage); goBack();">
+<button type="button" class="btn btn-default btn-lg handled" ng-if="isBad(activeVoyage)" ng-click="handle(activeVoyage); goBack();">
   <i class="glyphicon glyphicon-ok"></i>
 </button>
 

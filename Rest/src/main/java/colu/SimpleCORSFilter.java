@@ -1,4 +1,4 @@
-package ship;
+package colu;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

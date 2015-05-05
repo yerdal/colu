@@ -1,4 +1,4 @@
-package ship;
+package colu;
 
 /**
  * Class to represent the fuil and oil performance of a ship

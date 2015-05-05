@@ -1,4 +1,4 @@
-package ship;
+package colu;
 
 
 import org.springframework.boot.SpringApplication;
