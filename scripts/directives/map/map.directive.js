@@ -74,11 +74,11 @@ coluApp.directive('map', function() {
               style: new ol.style.Style({
               fill: new ol.style.Fill({
                   color: '#000000',
-                  weight: 4
+                  weight: 1
               }),
               stroke: new ol.style.Stroke({
                   color: '#000000',
-                  width: 2
+                  width: 1
               })
               })
         });
@@ -111,6 +111,7 @@ coluApp.directive('map', function() {
           
         shipRouteLine.getFeatureById(2).setGeometry(
               new ol.geom.LineString(points)
+              
           );
       
       }

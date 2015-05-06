@@ -8,7 +8,7 @@
 
     <tr ng-repeat="voyage in voyagesBad | filter:searchShip">
 
-      <td ng-click="showActive(voyage);">
+      <td ng-click="showActive(voyage); disableEditor(0); disableEditor(1); disableEditor(2); disableEditor(3); disableEditor(4); disableEditor(5)">
 
         {{voyage.ship.shipName | uppercase}}
           
@@ -31,7 +31,7 @@
 
   <tbody class="handled">
     <tr ng-repeat="voyage in voyagesHandled | filter:searchShip">
-      <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
+      <td ng-click="showActive(voyage); disableEditor(0); disableEditor(1); disableEditor(2); disableEditor(3); disableEditor(4); disableEditor(5)">
         {{voyage.ship.shipName | uppercase}} 
       </td>
     </tr>
@@ -39,7 +39,7 @@
 
   <tbody class="good">
     <tr ng-repeat="voyage in voyagesGood | filter:searchShip">
-      <td ng-click="showActive(voyage); save(0); save(1); save(2); save(3); save(4); save(5)">
+      <td ng-click="showActive(voyage); disableEditor(0); disableEditor(1); disableEditor(2); disableEditor(3); disableEditor(4); disableEditor(5)">
         {{voyage.ship.shipName | uppercase}}
       </td>
     </tr>
