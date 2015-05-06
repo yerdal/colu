@@ -120,6 +120,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         $scope.voyages[i].rangeParameters.time.status = 'BAD';
 
         // console.log("status", $scope.voyages[0].rangeParameters.time.status);
+
+
         $scope.activeVoyage = $scope.voyages[i];
         checkTimeStatus();
         
@@ -136,6 +138,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         flagVoyage($scope.voyages[i]);
       } 
 
+      //console.log("dsfsdf", $scope.voyages[0]);
 
       $scope.activeVoyage = $scope.voyages[0];
       //Where all the functionality is
@@ -250,8 +253,11 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
             checkVelocityStatus();
             break;
           default:
+          console.log("JONKEN", $scope.activeVoyage.singleParameters);
             if($scope.activeVoyage.singleParameters[paramName].current < $scope.activeVoyage.singleParameters[paramName].upperLimit)
+            {
               $scope.activeVoyage.singleParameters[paramName].status = "GOOD";
+            }
             else
               $scope.activeVoyage.singleParameters[paramName].status = "BAD";
         }
@@ -268,6 +274,9 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
   //Add voyages to right array, if any status is BAD, place in voyagesBad.
   function flagVoyage(voyage){
+
+    if($scope.voyagesGood.indexOf(voyage) > -1) return;
+    
     if(voyage.rangeParameters.time.status == "BAD" || voyage.rangeParameters.velocity.status == "BAD" || voyage.singleParameters.fuel.status == "BAD" || voyage.singleParameters.combinedWave.status == "BAD" || voyage.singleParameters.current.status == "BAD"  || voyage.singleParameters.wind.status == "BAD")
     {
 
