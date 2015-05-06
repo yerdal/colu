@@ -29,7 +29,7 @@
 
   </tbody>
 
-  <tbody class="handled">
+  <tbody class="handled" ng-class="{'active': voyage == activeVoyage }">
     <tr ng-repeat="voyage in voyagesHandled | filter:searchShip">
       <td ng-click="showActive(voyage); disableEditor(0); disableEditor(1); disableEditor(2); disableEditor(3); disableEditor(4); disableEditor(5)">
         {{voyage.ship.shipName | uppercase}} 

@@ -1,9 +1,13 @@
 @base: #000;
 @red-base: #B93436;
+@darkred-base: #8F282A;
 @blue-base: #069DBF;
 @green-base: #009C73;
+@darkgreen-base: #006E51;
 @yellow-base: #F2EA72;
+@darkyellow-base: #BFB95A;
 @gray-base: #f5f5f5;
+@darkgray-base: #ADADAD;
 @lightgray-base: lighten(@gray-base, 33.5%);
 
 
@@ -36,9 +40,6 @@ input {
    table{
 		tr{
 			cursor: pointer;	
-			&:hover{
-				background: @gray-base;
-			}
 		}
 	}
 
@@ -79,6 +80,10 @@ input {
 
 	tr {
 		background-color: @red-base;
+		&:hover{
+				background: @darkred-base;
+			}
+
 	}
 }
 
@@ -90,13 +95,21 @@ input {
 
 	tr {
 		background-color: @green-base;
+		&:hover{
+				background: @darkgreen-base;
+			}
 	}
+
+
 }
 
 .handled {
 
 	tr {
 		background-color: @yellow-base;
+		&:hover{
+				background: @darkyellow-base;
+			}
 	}
 }
 
