@@ -1,4 +1,4 @@
-package ship;
+package colu;
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -94,8 +94,8 @@ public class Voyage
 		ship = new Ship(0, operator, "undefined");
 		departure = "undefined";
 		destination = "undefined";
-		etd = "undefined";
-		eta = "undefined";
+		etd = "2015-01-02 14:00";
+		eta = "2015-01-02 14:00";
 		requiredEta = "undefined";
 		loadingStatus = 0;
 		cargoWeight = 0.0;

@@ -1,4 +1,4 @@
-package ship;
+package colu;
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -208,7 +208,7 @@ public class ShipReport
 		try {
  			if(theEtaEarliest.equals(""))
  				theEtaEarliest = "00-00-00 00:00";
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			etaEarliest = formatter.parse(theEtaEarliest);
  
 		} catch (ParseException e) {
@@ -282,7 +282,7 @@ public class ShipReport
 		return cosp_eosp;
 	}
 	public String getEtaEarliest(){
-		SimpleDateFormat form = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		return form.format(etaEarliest);
 	}
 	public double getObsWindspeed(){

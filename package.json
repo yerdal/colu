@@ -1,0 +1,17 @@
+{
+  "name": "Colu",
+  "version": "0.0.0",
+  "description": "Colu frontend web application",
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "grunt-ngdocs": "~0.1.1",
+    "grunt-contrib-connect": "~0.3.0",
+    "grunt-contrib-clean": "0.4.1"
+  },
+  "devDependencies": {
+    "grunt-karma": "^0.10.1",
+    "karma": "^0.12.31",
+    "karma-chrome-launcher": "^0.1.8",
+    "karma-jasmine": "^0.3.5"
+  }
+}

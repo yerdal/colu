@@ -1,29 +1,64 @@
 var coluApp = angular.module('coluApp');
+/**
+ * @ngdoc service
+ * @name coluApp.sharedProperties
+ * @description
+ * # sharedProperties 
+ * Service to share properties on the current active voyage on frontend.
+ */
 
 coluApp.service('sharedProperties', function() {
-    
+      
+
     var activeVoyage = "Default";
     return {
+        /**
+       * @ngdoc method
+       * @name coluApp.sharedProperties#getActive 
+       * @methodOf  coluApp.sharedProperties 
+       *
+       * @description
+       * Method to get active voyage on scope
+       * @example
+       * sharedProperties.getActive();
+       * @returns {Voyage Object} returns the active voyage for the frontend representation
+       */
         getActive: function() {
             return activeVoyage;
         },
-        setActive: function(s) {
-            activeVoyage = s;
+
+        /**
+       * @ngdoc method
+       * @name coluApp.sharedProperties#setActive 
+       * @methodOf coluApp.sharedProperties
+       *
+       * @description
+       * Method to set active voyage on scope
+      * @param {Voyage Object} Voyage object representing a voyage 
+       * @example
+       * sharedProperties.setActive(Voyage);
+       * @returns {none} returns nothing
+       */
+        setActive: function(voyage) {
+            activeVoyage = voyage;
         }
     }
 });
+
 
 coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
   function checkTimeStatus(){
     var MINUTES_TO_MILLISEC = 60000;
 
-    var required = Date.parse($scope.activeVoyage.rangeParameters.time.required);
+    var required = Date.parse($scope.activeVoyage.rangeParameters.time.initial);
     var estimated = Date.parse($scope.activeVoyage.rangeParameters.time.current);
 
     var lower = required + $scope.activeVoyage.rangeParameters.time.lowerLimit*MINUTES_TO_MILLISEC;
     var higher = required + $scope.activeVoyage.rangeParameters.time.upperLimit*MINUTES_TO_MILLISEC;
 
+    $scope.lowerRequiredDate = new Date(lower).toISOString().slice(0,10).replace(/-/g,"-") + " " + new Date(lower).toLocaleTimeString('en-GB');
+    $scope.upperRequiredDate = new Date(higher).toISOString().slice(0,10).replace(/-/g,"-") + " " + new Date(higher).toLocaleTimeString('en-GB');
     if( estimated < higher && estimated > lower){
       $scope.activeVoyage.rangeParameters.time.status = 'GOOD';
     }
@@ -43,26 +78,41 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       $scope.activeVoyage.rangeParameters.velocity.status = 'BAD';
     }
   }
-
+  var milliToMinutes = function(milli){
+    var seconds = Math.floor(milli / 1000);
+    var minutes = Math.floor(seconds / 60);
+    return minutes;
+  }
   //Gets the Voyage-data
   $http.get('http://localhost:8090/voyages').success(function(data,status,headers,config)
     {
     
       //Delete some broken data, Einar Sanberg will solve it, sometime.
       data.splice(9, 1);  
+      data.splice(27,1);
+      data.splice(14,1);
     
       //Position 27 is broken, and I can´t manage to delete it, hehe.   
-      $scope.voyages = data.slice(1, 26);
-      $scope.activeVoyage = $scope.voyages[0];
+      $scope.voyages = data; //data.slice(1, 26);
+      
       $scope.voyagesBad = [];
       $scope.voyagesGood = [];    
       $scope.voyagesHandled = [];
 
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
-      {
+      { 
+
+        var upperEta =  new Date($scope.voyages[i].requiredMaxETA) - new Date($scope.voyages[i].eta);
+        var lowerEta =  new Date($scope.voyages[i].requiredMinETA) - new Date($scope.voyages[i].eta);
+        var lowerEtaMinutes = milliToMinutes(lowerEta);
+        var upperEtaMinutes = milliToMinutes(upperEta);
+        if(upperEtaMinutes < 0)
+          upperEtaMinutes = 0;
+        if(lowerEtaMinutes > 0)
+          lowerEtaMinutes = 0;
         $scope.voyages[i].rangeParameters = {
-          time: { label: "Tid", lowerLimit: '-30', upperLimit: '30', current: $scope.voyages[i].eta, required: $scope.voyages[i].requiredMaxETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter", number: 0 },
+          time: { label: "Tid", lowerLimit: lowerEtaMinutes , upperLimit: upperEtaMinutes, current: $scope.voyages[i].latestShipReport.etaEarliest, initial: $scope.voyages[i].eta, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter", number: 0 },
           velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
         }
 
@@ -72,7 +122,9 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         // console.log("status", $scope.voyages[0].rangeParameters.time.status);
 
 
-        checkTimeStatus(i);
+        $scope.activeVoyage = $scope.voyages[i];
+        checkTimeStatus();
+        
 
         $scope.voyages[i].singleParameters = {
 
@@ -88,7 +140,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
       //console.log("dsfsdf", $scope.voyages[0]);
 
-
+      $scope.activeVoyage = $scope.voyages[0];
       //Where all the functionality is
       main();   
       
@@ -98,15 +150,14 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       });
       
     $scope.putData = function(){
-        //console.log('hejje');
         parameters = {
           requiredCurrentSpeed: $scope.activeVoyage.singleParameters.current.upperLimit,
           requiredWindSpeed: $scope.activeVoyage.singleParameters.wind.upperLimit,
           requiredWindDir: 125,
           requiredSignWaveHeight: $scope.activeVoyage.singleParameters.combinedWave.upperLimit,
           requiredCurrentDir: 12,
-          requiredMinETA: "2015-05-20 00:00",
-          requiredMaxETA: "2015-05-21 02:00",
+          requiredMinETA: $scope.lowerRequiredDate,
+          requiredMaxETA: $scope.upperRequiredDate,
           requiredAvgSpeedMin: $scope.activeVoyage.rangeParameters.velocity.lowerLimit,
           requiredAvgSpeedMax: $scope.activeVoyage.rangeParameters.velocity.upperLimit
           //requiredFuelConsumption:
@@ -134,8 +185,10 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
     //Shows the active Voyage in the detailed view 
     $scope.showActive = function(s){
       sharedProperties.setActive(s);
+      
       $scope.activeVoyage = sharedProperties.getActive();
       $scope.showActive.shipTrue = true;
+      checkTimeStatus();
     }
 
     $scope.goBack = function(){
@@ -162,7 +215,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
     }
 
     //To "handle" voyages, and then put them in the handled-list
-    $scope.handel = function(s){
+    $scope.handle = function(s){
       if(!isInArray(s,$scope.voyagesHandled))
         $scope.voyagesHandled.push(s);
 

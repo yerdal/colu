@@ -1,3 +1,20 @@
+/**
+ * @ngdoc directive
+ * @name coluApp.directive:map
+ * @restrict E
+
+ * External Link -  {@link http://angular-ui.github.com/ng-grid/ ngGrid} 
+ *
+ * @description
+ * Directive to represent a world map with ship, voyage and weather visualizations
+ *
+ * @example
+   <example module="coluApp">
+     <file name="index.html">
+         <map></map>
+     </file>
+   </example>
+ */
 
 var coluApp = angular.module('coluApp');
 coluApp.directive('map', function() {

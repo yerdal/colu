@@ -1,4 +1,4 @@
-package ship;
+package colu;
 
 /**
  * Class to represent contact information

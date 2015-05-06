@@ -1,4 +1,4 @@
-package ship;
+package colu;
 import java.util.ArrayList;
 /**
  * Class to represent the Ship

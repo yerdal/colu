@@ -1,4 +1,4 @@
-package ship;
+package colu;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Handling the rest API 
  */
 @RestController
-public class ShipController extends ParsingXML{
+public class RESTController extends ParsingXML{
 
   @Autowired
   ParametersRepository repository;
