@@ -1,12 +1,12 @@
  <h3>SKEPP</h3>
 
-<table class="table table-hover table-str"> 
+<table class="table table-str"> 
 
   <tbody class="bad">
 
   <div><input id="search" placeholder="Sök.. "ng-model="searchShip.voyageName"></div>
 
-    <tr ng-repeat="voyage in voyagesBad | filter:searchShip">
+    <tr ng-repeat="voyage in voyagesBad | filter:searchShip" ng-class="{'active': voyage == activeVoyage }">
 
       <td ng-click="showActive(voyage);">
 
