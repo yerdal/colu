@@ -1,4 +1,4 @@
- <h3>SKEPP</h3>
+<h3>SKEPP</h3>
 
 <table class="table table-str"> 
 
@@ -30,7 +30,7 @@
   </tbody>
 
   <tbody class="handled" ng-class="{'active': voyage == activeVoyage }">
-    <tr ng-repeat="voyage in voyagesHandled | filter:searchShip">
+    <tr ng-repeat="voyage in voyagesHandled | filter:searchShip" ng-class="{'active': voyage == activeVoyage }">
       <td ng-click="showActive(voyage); disableEditor(0); disableEditor(1); disableEditor(2); disableEditor(3); disableEditor(4); disableEditor(5)">
         {{voyage.ship.shipName | uppercase}} 
       </td>
@@ -38,7 +38,7 @@
   </tbody>
 
   <tbody class="good">
-    <tr ng-repeat="voyage in voyagesGood | filter:searchShip">
+    <tr ng-repeat="voyage in voyagesGood | filter:searchShip" ng-class="{'active': voyage == activeVoyage }">
       <td ng-click="showActive(voyage); disableEditor(0); disableEditor(1); disableEditor(2); disableEditor(3); disableEditor(4); disableEditor(5)">
         {{voyage.ship.shipName | uppercase}}
       </td>

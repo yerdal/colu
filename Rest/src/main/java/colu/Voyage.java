@@ -221,9 +221,18 @@ public class Voyage
 
   	comment = theComment;
 	shipReports = theShipReports;
+	try{
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	  	requiredMinETA = formatter.parse(requiredEta);
+	  	requiredMaxETA = formatter.parse(requiredEta);
+	  	requiredMinETA.setTime(requiredMinETA.getTime() - 12*3600 * 1000);
+		requiredMaxETA.setTime(requiredMaxETA.getTime() + 12*3600 * 1000);
+	} catch (ParseException e) {
+			e.printStackTrace();
+	}
+	
+  	
 
-  	requiredMinETA = new Date();
-  	requiredMaxETA = new Date();
   	status = "undefined";
 	}
 	public int getVoyageId(){
@@ -240,6 +249,10 @@ public class Voyage
 	public Operator getOperator()
 	{
 		return operator;
+	}
+
+	public String getRequiredETA(){
+		return requiredEta;
 	}
 
 	public ArrayList<Waypoint> getWaypoints()
@@ -481,13 +494,18 @@ public class Voyage
 		
 		
 		//Set each required limits for a voyage
-		setRequiredMinMaxETA(savedParam.getRequiredMinETA(), savedParam.getRequiredMaxETA());
-    setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
-    setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
-    setRequiredWindDir(savedParam.getRequiredWindDir());
-    setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
-    setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
-    setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
+		if(savedParam.getRequiredMinETA().equals("")){
+			setRequiredMinMaxETA(getRequiredMinETA(), getRequiredMaxETA());
+		}else{
+			setRequiredMinMaxETA(savedParam.getRequiredMinETA(), savedParam.getRequiredMaxETA());
+		}
+		
+		setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
+		setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
+		setRequiredWindDir(savedParam.getRequiredWindDir());
+		setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
+		setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
+		setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
   //   System.out.println("VOyage ID on Object " + voyageID );
 		// System.out.println("Voyage ID from DB " +  savedParam.getId());
 		// System.out.println("savedParam PArams " +  savedParam.getRequiredMinETA() + "\n " +

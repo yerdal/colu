@@ -8,6 +8,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     karma: {
       options: {
+
         // point all tasks to karma config file
         configFile: 'test/javascript/karma.conf.js'
       },
@@ -27,7 +28,8 @@ module.exports = function (grunt) {
     },
     connect: {
       options: {
-        keepalive: true
+        keepalive: true,
+        hostname: '0.0.0.0'
       },
       server: {}
     },

@@ -70,7 +70,7 @@ public class ShipReport
 	private int legType; // repposition.legtype. Different types of legs. 1 eller 2. 1 == RL. 2 == GC.
 	private double lat; // latitude
 	private String date; // date of report
-
+	private String ovaCTA; //CAlculated time of arrival
 
 	//Our new vaiables!
 	private String requiredETAStatus; //OK = ontime / BAD 
@@ -140,6 +140,7 @@ public class ShipReport
 		legType = 0;
 		lat = 0.0;
 		date = "2000-01-01 00:00";
+		ovaCTA = "2000-01-01 00:00";
 	}
 
 	public ShipReport(int theReportID,
@@ -201,6 +202,7 @@ public class ShipReport
 						 double theLon,
 						 int theLegType,
 						 double theLat,
+						 String theOvaCta,
 						 String theDate)
 	{
 		reportID = theReportID;
@@ -272,6 +274,7 @@ public class ShipReport
 		legType = theLegType;
 		lat = theLat;
 		date = theDate;
+		ovaCTA = theOvaCta;
 		requiredETAStatus = "undefined";
 		requiredAvgSpeedStatus = "undefined";
 	}
@@ -455,6 +458,10 @@ public class ShipReport
 	}
 	public String getDate(){
 		return date;
+	}
+
+	public String getOvaCTA(){
+		return ovaCTA;
 	}
 
 

@@ -50,12 +50,13 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
   function checkTimeStatus(){
     var MINUTES_TO_MILLISEC = 60000;
+    var HOURS_TO_MILLISEC = 3600000;
 
     var required = Date.parse($scope.activeVoyage.rangeParameters.time.initial);
     var estimated = Date.parse($scope.activeVoyage.rangeParameters.time.current);
 
-    var lower = required + $scope.activeVoyage.rangeParameters.time.lowerLimit*MINUTES_TO_MILLISEC;
-    var higher = required + $scope.activeVoyage.rangeParameters.time.upperLimit*MINUTES_TO_MILLISEC;
+    var lower = required + $scope.activeVoyage.rangeParameters.time.lowerLimit*HOURS_TO_MILLISEC;
+    var higher = required + $scope.activeVoyage.rangeParameters.time.upperLimit*HOURS_TO_MILLISEC;
 
     $scope.lowerRequiredDate = new Date(lower).toISOString().slice(0,10).replace(/-/g,"-") + " " + new Date(lower).toLocaleTimeString('en-GB');
     $scope.upperRequiredDate = new Date(higher).toISOString().slice(0,10).replace(/-/g,"-") + " " + new Date(higher).toLocaleTimeString('en-GB');
@@ -78,11 +79,13 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       $scope.activeVoyage.rangeParameters.velocity.status = 'BAD';
     }
   }
-  var milliToMinutes = function(milli){
+  var milliToHours = function(milli){
+
     var seconds = Math.floor(milli / 1000);
-    var minutes = Math.floor(seconds / 60);
-    return minutes;
+    var hours = Math.floor(seconds / 3600);
+    return hours;
   }
+  $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
   //Gets the Voyage-data
   $http.get('http://localhost:8090/voyages').success(function(data,status,headers,config)
     {
@@ -93,8 +96,9 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       data.splice(14,1);
     
       //Position 27 is broken, and I can´t manage to delete it, hehe.   
-      $scope.voyages = data; //data.slice(1, 26);
-      
+      $scope.voyages = data; 
+   
+
       $scope.voyagesBad = [];
       $scope.voyagesGood = [];    
       $scope.voyagesHandled = [];
@@ -103,16 +107,16 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       for(var i = 0; i < $scope.voyages.length; i++)
       { 
 
-        var upperEta =  new Date($scope.voyages[i].requiredMaxETA) - new Date($scope.voyages[i].eta);
-        var lowerEta =  new Date($scope.voyages[i].requiredMinETA) - new Date($scope.voyages[i].eta);
-        var lowerEtaMinutes = milliToMinutes(lowerEta);
-        var upperEtaMinutes = milliToMinutes(upperEta);
-        if(upperEtaMinutes < 0)
-          upperEtaMinutes = 0;
-        if(lowerEtaMinutes > 0)
-          lowerEtaMinutes = 0;
+        var upperEta =  new Date($scope.voyages[i].requiredMaxETA) - new Date($scope.voyages[i].requiredETA);
+        var lowerEta =  new Date($scope.voyages[i].requiredMinETA) - new Date($scope.voyages[i].requiredETA);
+        var lowerEtaHours = milliToHours(lowerEta);
+        var upperEtaHours = milliToHours(upperEta);
+        if(upperEtaHours < 0)
+          upperEtaHours = 0;
+        if(lowerEtaHours > 0)
+          lowerEtaHours = 0;
         $scope.voyages[i].rangeParameters = {
-          time: { label: "Tid", lowerLimit: lowerEtaMinutes , upperLimit: upperEtaMinutes, current: $scope.voyages[i].latestShipReport.etaEarliest, initial: $scope.voyages[i].eta, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter", number: 0 },
+          time: { label: "Tid", lowerLimit: lowerEtaHours , upperLimit: upperEtaHours, current: $scope.voyages[i].latestShipReport.ovaCTA, initial: $scope.voyages[i].requiredETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "Timmar", number: 0 },
           velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
         }
 
