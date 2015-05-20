@@ -32,9 +32,18 @@
 
     <div ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
-      <!--<span class="glyphicon glyphicon-star" aria-hidden="true"></span>-->
-      Undre gräns: {{activeVoyage.rangeParameters.time.lowerLimit}} {{activeVoyage.rangeParameters.time.unit}}. Övre gräns: {{activeVoyage.rangeParameters.time.upperLimit}} {{activeVoyage.rangeParameters.time.unit}}.
-      Ursprunglig ankomsttid: {{activeVoyage.rangeParameters.time.initial}}           
+      <div class="parameter">
+        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+        Övre gräns: {{activeVoyage.rangeParameters.time.upperLimit}} {{activeVoyage.rangeParameters.time.unit}}
+      </div>
+      <div class="parameter">
+      <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+      Undre gräns: {{activeVoyage.rangeParameters.time.lowerLimit}} {{activeVoyage.rangeParameters.time.unit}}
+      </div>
+      <div class="parameter line-through">
+      <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+      Ursprunglig: {{activeVoyage.rangeParameters.time.initial}}     
+      </div>
  
     </div>
 
@@ -42,7 +51,7 @@
 
       Undre gräns: <input ng-model="activeVoyage.rangeParameters.time.lowerLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]"> {{para.unit}}
       Övre gräns: <input ng-model="activeVoyage.rangeParameters.time.upperLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">  {{para.unit}}
-      <p> Ursprunglig ankomsttid: {{activeVoyage.rangeParameters.time.initial}}  </p>
+      <p> Ursprunglig: {{activeVoyage.rangeParameters.time.initial}}  </p>
 
       <button ng-click="save(activeVoyage.rangeParameters.time.number)" type="button" class="btn btn-default btn-sm">
         <i class="glyphicon glyphicon-floppy-disk"></i>
@@ -50,8 +59,8 @@
 
     </div>
 
-    <div id="current" ng-class="{bad: activeVoyage.rangeParameters.time.status == 'BAD'}">
-      <p>Aktuell ankomsttid: {{activeVoyage.rangeParameters.time.label}} : {{activeVoyage.rangeParameters.time.current}}</p>
+    <div class="parameter" id="current" ng-class="{bad: activeVoyage.rangeParameters.time.status == 'BAD'}">
+      <p>Aktuell: {{activeVoyage.rangeParameters.time.current}}</p>
     </div>
 
 </div>
