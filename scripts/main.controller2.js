@@ -49,13 +49,13 @@ coluApp.service('sharedProperties', function() {
 coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
   function checkTimeStatus(){
-    var MINUTES_TO_MILLISEC = 60000;
+    var HOURS_TO_MILLISEC = 3600000;
 
     var required = Date.parse($scope.activeVoyage.rangeParameters.time.initial);
     var estimated = Date.parse($scope.activeVoyage.rangeParameters.time.current);
 
-    var lower = required + $scope.activeVoyage.rangeParameters.time.lowerLimit*MINUTES_TO_MILLISEC;
-    var higher = required + $scope.activeVoyage.rangeParameters.time.upperLimit*MINUTES_TO_MILLISEC;
+    var lower = required + $scope.activeVoyage.rangeParameters.time.lowerLimit*HOURS_TO_MILLISEC;
+    var higher = required + $scope.activeVoyage.rangeParameters.time.upperLimit*HOURS_TO_MILLISEC;
 
     $scope.lowerRequiredDate = new Date(lower).toISOString().slice(0,10).replace(/-/g,"-") + " " + new Date(lower).toLocaleTimeString('en-GB');
     $scope.upperRequiredDate = new Date(higher).toISOString().slice(0,10).replace(/-/g,"-") + " " + new Date(higher).toLocaleTimeString('en-GB');
@@ -78,11 +78,14 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       $scope.activeVoyage.rangeParameters.velocity.status = 'BAD';
     }
   }
-  var milliToMinutes = function(milli){
+
+  var milliToHours = function(milli){
     var seconds = Math.floor(milli / 1000);
     var minutes = Math.floor(seconds / 60);
-    return minutes;
+    var hours = Math.floor(minutes / 60);
+    return hours;
   }
+
   //Gets the Voyage-data
   $http.get('http://localhost:8090/voyages').success(function(data,status,headers,config)
     {
@@ -104,22 +107,26 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       { 
 
         var upperEta =  new Date($scope.voyages[i].requiredMaxETA) - new Date($scope.voyages[i].eta);
-        var lowerEta =  new Date($scope.voyages[i].requiredMinETA) - new Date($scope.voyages[i].eta);
-        var lowerEtaMinutes = milliToMinutes(lowerEta);
-        var upperEtaMinutes = milliToMinutes(upperEta);
-        if(upperEtaMinutes < 0)
-          upperEtaMinutes = 0;
-        if(lowerEtaMinutes > 0)
-          lowerEtaMinutes = 0;
+        var lowerEta =  new Date($scope.voyages[i].requiredMinETA) - new Date($scope.voyages[i].eta);       
+        var upperEtaHours = milliToHours(upperEta);
+        var lowerEtaHours = milliToHours(lowerEta);
+        if(upperEtaHours < 0)
+          upperEtaHours = 0;
+        if(lowerEtaHours > 0)
+          lowerEtaHours = 0;
+
+        console.log("upper: ", upperEta);
+        console.log("lower: ", lowerEta);
+
         $scope.voyages[i].rangeParameters = {
-          time: { label: "Tid", lowerLimit: lowerEtaMinutes , upperLimit: upperEtaMinutes, current: $scope.voyages[i].latestShipReport.etaEarliest, initial: $scope.voyages[i].eta, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "minuter", number: 0 },
+          time: { label: "Tid", lowerLimit: lowerEtaHours , upperLimit: upperEtaHours, current: $scope.voyages[i].latestShipReport.etaEarliest, initial: $scope.voyages[i].eta, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "timmar", number: 0 },
           velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
         }
 
 
         $scope.voyages[i].rangeParameters.time.status = 'BAD';
 
-        // console.log("status", $scope.voyages[0].rangeParameters.time.status);
+        console.log("status", $scope.voyages[0]);
 
 
         $scope.activeVoyage = $scope.voyages[i];
@@ -128,7 +135,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
         $scope.voyages[i].singleParameters = {
 
-          fuel: {name: "fuel", label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "L/mil",},
+          fuel: {name: "fuel", label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "m3/dygn",},
           combinedWave : {name: "combinedWave", label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
           current : {name: "current", label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
           wind : {name: "wind", label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, status: $scope.voyages[i].currentWeatherWaypoint.windSpeedStatus, unit: "m/s"}
