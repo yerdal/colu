@@ -31,7 +31,7 @@ public class Application extends ParsingXML implements CommandLineRunner{
         for(int i = 0; i < ongoingVoyages.size();i++){
             //System.out.println("Ongoning voyage ID " + ongoingVoyages.get(i).getVoyageId());
             //id , requiredCurrentSpeed, requiredWindSpee, requiredWindDir,requiredSignWaveHeight,requiredCurrentDir,requiredAvgSpeedMin,requiredAvgSpeedMax
-            repository.save(new SavedParameters((ongoingVoyages.get(i).getVoyageId()), 0.5 ,15.0, 120, 1.5, 26.2, 16.2, 18.0, "2000-01-01 00:00", "2020-01-01 00:00"));
+            repository.save(new SavedParameters((ongoingVoyages.get(i).getVoyageId()), 0.5 ,15.0, 120, 1.5, 26.2, 16.2, 18.0, "", "", 50));
         }
         //SHIPOperator inputs 
         

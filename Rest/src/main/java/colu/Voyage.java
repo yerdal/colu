@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Class to represent each Voyage
  */
 public class Voyage
-{	
+{
 
-	
+
 	//variabler från XML
 	private int voyageID;
 	private int worklistID;
@@ -26,12 +26,12 @@ public class Voyage
 	private Operator operator;
 	private String personName; //Name of master, Captain hook etc.
 	private Ship ship;
-	private String departure; 
+	private String departure;
 	private String destination;
-	private String etd; //Estimated Time of Departure format="yyyy-MM-dd HH:mm" "Voyage ETD in UTC" 
-	private String eta; //Estimated Time of arrival format="yyyy-MM-dd HH:mm" description="ETA in UTC" 
+	private String etd; //Estimated Time of Departure format="yyyy-MM-dd HH:mm" "Voyage ETD in UTC"
+	private String eta; //Estimated Time of arrival format="yyyy-MM-dd HH:mm" description="ETA in UTC"
 	private String requiredEta; //format="yyyy-MM-dd HH:mm" description="Required ETA in UTC"
-	private int loadingStatus; //Loaded/Ballast/Semiloaded  Loading 
+	private int loadingStatus; //Loaded/Ballast/Semiloaded  Loading
 	private double cargoWeight; // "Cargo weight as reported in Departure report
 	private int cargoSensitivStatus; //"Unknown/Normal/Sensitive/Extra sensitive"
 	private double gmHeight; //Metacentric height as reported in the Departure report
@@ -47,7 +47,7 @@ public class Voyage
 	private String nextMessageDate; //format="yyyy-MM-dd"HHext message date
 	private String priority; //Manual priority.
 	private String seaName;  //name of the Sea
-	private double seaSortOrder; //Sea sort order 
+	private double seaSortOrder; //Sea sort order
 	private String forecastModifiedDate; // format="yyyy-MM-dd HH:mm:ss" Modified date
 	private String forecastState; //State of forecast, new, changed, saved ,sent
 	private double foBrobDep; //Fuel Oil remaining on board , incl. IFO, LS, HS if any at departure
@@ -75,6 +75,7 @@ public class Voyage
 	//Ship
 	private double requiredAvgSpeedMin;
 	private double requiredAvgSpeedMax;
+	private double requiredTotalFuel;
 
 
 
@@ -131,7 +132,7 @@ public class Voyage
 		status = "undefined";
 	}
 	// private bool onGoing; //kanske?
-	public Voyage (int theVoyageID, int theWorklistID, String theSystemOnBoardStatus, 
+	public Voyage (int theVoyageID, int theWorklistID, String theSystemOnBoardStatus,
 									String theState,
 									String thePvadpfurl,
 									String theLastUpdate,
@@ -220,9 +221,18 @@ public class Voyage
 
   	comment = theComment;
 	shipReports = theShipReports;
+	try{
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	  	requiredMinETA = formatter.parse(requiredEta);
+	  	requiredMaxETA = formatter.parse(requiredEta);
+	  	requiredMinETA.setTime(requiredMinETA.getTime() - 12*3600 * 1000);
+		requiredMaxETA.setTime(requiredMaxETA.getTime() + 12*3600 * 1000);
+	} catch (ParseException e) {
+			e.printStackTrace();
+	}
 
-  	requiredMinETA = new Date();
-  	requiredMaxETA = new Date();
+
+
   	status = "undefined";
 	}
 	public int getVoyageId(){
@@ -239,6 +249,10 @@ public class Voyage
 	public Operator getOperator()
 	{
 		return operator;
+	}
+
+	public String getRequiredETA(){
+		return requiredEta;
 	}
 
 	public ArrayList<Waypoint> getWaypoints()
@@ -372,8 +386,8 @@ public class Voyage
 
 
 	// Bränsleåtgång → Bränsle kvar, OCH förbrukad bränsle sen senaste rapport?
-			
-	// Fart -> Definiera fartygets önskade hastighet. Spann? 
+
+	// Fart -> Definiera fartygets önskade hastighet. Spann?
 
 
 	//Get own defined variables
@@ -396,6 +410,9 @@ public class Voyage
 	public double getRequiredAvgSpeedMax(){
 		return requiredAvgSpeedMax;
 	}
+	public double getRequiredTotalFuel(){
+		return requiredTotalFuel;
+	}
 
 
 	public String getStatus(){
@@ -403,11 +420,11 @@ public class Voyage
 	}
 
 	public String getRequiredMinETA(){
-		String temp; 
+		String temp;
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
       temp = formatter.format(requiredMinETA);
-      }   
+      }
       catch (Exception e) {
       	// e.throw
          temp = "0000-00-00 00:00";
@@ -415,11 +432,11 @@ public class Voyage
 		return temp;
 	}
 	public String getRequiredMaxETA(){
-		String temp; 
+		String temp;
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         temp = formatter.format(requiredMaxETA);
-      }   
+      }
       catch (Exception e) {
       	// e.throw
          temp = "00-00-00 00:00";
@@ -472,22 +489,31 @@ public class Voyage
 	}
 	//Set parameters from DB
 	public void setRequiredParametersFromDB(SavedParameters savedParam){
-		
-		
+
+
 		//Set each required limits for a voyage
-		setRequiredMinMaxETA(savedParam.getRequiredMinETA(), savedParam.getRequiredMaxETA());
-    setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
-    setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
-    setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
-    setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
-    setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
+
+		if(savedParam.getRequiredMinETA().equals("")){
+			setRequiredMinMaxETA(getRequiredMinETA(), getRequiredMaxETA());
+		}else{
+			setRequiredMinMaxETA(savedParam.getRequiredMinETA(), savedParam.getRequiredMaxETA());
+		}
+
+		setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
+		setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
+
+		setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
+		setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
+		setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
+		setRequiredTotalFuel(savedParam.getRequiredTotalFuel());
+
   //   System.out.println("VOyage ID on Object " + voyageID );
 		// System.out.println("Voyage ID from DB " +  savedParam.getId());
 		// System.out.println("savedParam PArams " +  savedParam.getRequiredMinETA() + "\n " +
-		// 						"RequiredCurrentSpeed " + savedParam.getRequiredCurrentSpeed() + "\n " + 
-		// 						"RequiredWindSpeed " + savedParam.getRequiredWindSpeed() + " \n " + 
-		// 						"RequiredWindDir " + savedParam.getRequiredWindDir() + "  \n " + 
-		// 						"RequiredSignWaveHeight " + savedParam.getRequiredSignWaveHeight() + " \n " + 
+		// 						"RequiredCurrentSpeed " + savedParam.getRequiredCurrentSpeed() + "\n " +
+		// 						"RequiredWindSpeed " + savedParam.getRequiredWindSpeed() + " \n " +
+		// 						"RequiredWindDir " + savedParam.getRequiredWindDir() + "  \n " +
+		// 						"RequiredSignWaveHeight " + savedParam.getRequiredSignWaveHeight() + " \n " +
 		// 						"RequiredCurrentDir " + savedParam.getRequiredCurrentDir() + " \n " +
 		// 						"RequiredAvgSpeedMin " + savedParam.getRequiredAvgSpeedMin()  + " \n " +
 		// 						"RequiredAvgSpeedMax " + savedParam.getRequiredAvgSpeedMax());
@@ -497,9 +523,9 @@ public class Voyage
 
 	public void setRequiredParameters(SavedParameters savedParam){
 		System.out.println("Saved PArams " +  savedParam.getRequiredMinETA() + "\n " +
-								savedParam.getRequiredCurrentSpeed() + "\n " + 
-								savedParam.getRequiredWindSpeed() + " \n " + 
-								savedParam.getRequiredSignWaveHeight() + " \n " + 
+								savedParam.getRequiredCurrentSpeed() + "\n " +
+								savedParam.getRequiredWindSpeed() + " \n " +
+								savedParam.getRequiredSignWaveHeight() + " \n " +
 								savedParam.getRequiredCurrentDir() + " \n " +
 								savedParam.getRequiredAvgSpeedMin()  + " \n " +
 								savedParam.getRequiredAvgSpeedMax());
@@ -511,6 +537,7 @@ public class Voyage
     setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
     setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
     setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
+    setRequiredTotalFuel(savedParam.getRequiredTotalFuel());
 	}
 
 
@@ -520,14 +547,14 @@ public class Voyage
  				reqMinEta = "2000-01-01 00:00";
  			if(reqMaxEta.equals(""))
  				reqMaxEta = "2020-01-01 00:00";
- 			
+
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			requiredMinETA = formatter.parse(reqMinEta);
 			requiredMaxETA = formatter.parse(reqMaxEta);
 			for(int i = 0; i < shipReports.size(); i++){
 				shipReports.get(i).updateRequiredETAStatus(requiredMinETA, requiredMaxETA);
 			}
- 
+
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -543,6 +570,17 @@ public class Voyage
 			shipReports.get(i).updateAvgSpeedStatus(speedMin, speedMax);
 		}
 	}
+
+	public void setRequiredTotalFuel(double maxFuel){
+		requiredTotalFuel = maxFuel;
+		for (int i = 0; i < shipReports.size(); i++)
+		{
+			shipReports.get(i).updateTotalFuelStatus(maxFuel);
+		}
+	}
+
+
+
 	public void setRequiredWindSpeed(double chosenWindSpeed)
 	{
 		requiredMaxWindSpeed = chosenWindSpeed;
@@ -577,13 +615,13 @@ public class Voyage
 		{
 			weatherWaypoints.get(i).updateCurrentSpeedStatus(chosenCurrentSpeed);
 		}
-		
+
 	}
 	//return index 0 if size is 0
 	public int getLatesReportIndex(){
 		if(shipReports.size() > 0)
 			return shipReports.size() - 1;
-		else 
+		else
 			return 0;
 	}
 
@@ -621,7 +659,7 @@ public class Voyage
 	public WeatherWaypoint closestWeatherWaypoint()
 	{
 		int theCounter = checkClosestWeather();
-		
+
 		return weatherWaypoints.get(theCounter);
 	}
 
@@ -635,7 +673,7 @@ public class Voyage
 		ArrayList <String> weatherDatesString = new ArrayList <String>();
 		//latestReportDate format: yyyy-mm-dd hh:mm
 		String latestReportDate = shipReports.get(getLatesReportIndex()).getDate();
-		
+
 		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
 			weatherDatesString.add(weatherWaypoints.get(i).getETPDate());
@@ -650,7 +688,7 @@ public class Voyage
 		int currentYear = Integer.parseInt(parts[0]);
 		int currentMonth = Integer.parseInt(parts[1]);
 		int currentDay = Integer.parseInt(dayPart[0]);
-		
+
 		int currentHour = Integer.parseInt(timePart[0]);
 		int currentMin = Integer.parseInt(timePart[1]);
 		Date currentDate = new Date(currentYear, currentMonth, currentDay);
@@ -674,7 +712,7 @@ public class Voyage
 			weatherHours.add(Integer.parseInt(timePart[0]));
 			weatherMins.add(Integer.parseInt(timePart[1]));
 		}
-		 
+
 		long diffDate;
 		long closest = weatherDates.get(0).getTime(); // set to first
 		Date closestDate = new Date();
@@ -683,7 +721,7 @@ public class Voyage
 		int counter = 0;
 		for (int i = 1; i < weatherDates.size(); i++)
 		{
-			totalHourMin = ((weatherHours.get(i) * 60) + weatherMins.get(i)) * 1000; // 
+			totalHourMin = ((weatherHours.get(i) * 60) + weatherMins.get(i)) * 1000; //
 
 			diffDate = Math.abs((weatherDates.get(i).getTime() + totalHourMin) - (currentDate.getTime() + currentTotalTime)); // getTime returns the number of milliseconds since January 1, 1970, 00:00:00 GMT
 			if(diffDate < closest)
@@ -692,8 +730,8 @@ public class Voyage
 				closestDate = new Date(weatherDates.get(i).getTime() + totalHourMin); //using milliseconds constructor
 				counter = i;
 			}
-			
-			
+
+
 		}
 		return counter;
 

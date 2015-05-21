@@ -417,6 +417,13 @@ public class ParsingXML{
                                                                               baselinePva_cons_performance_rep_diff,
                                                                               baselinePva_cons_performance_rep_diff_prcnt);
 
+                      Node ovaNode = shipReportEl.getElementsByTagName("ova").item(0);
+                      Element ovaElement = (Element) ovaNode;
+                      String[] ovaValues = ovaElement.getAttribute("values").split(";",61);
+                      String ovaCTA = ovaValues[13];
+                      if(ovaCTA.equals(""))
+                        ovaCTA = "2020-01-01 00:00";
+
                       int shipReportID  = parseIntSafely(shipReportEl.getAttribute("id"));
                       double shipLon  = parseDoubleSafely(shipReportEl.getAttribute("lon"));
                       int legType = parseIntSafely(shipReportEl.getAttribute("legtype"));
@@ -542,6 +549,7 @@ public class ParsingXML{
                                                                   shipLon, 
                                                                   legType, 
                                                                   shipLat,
+                                                                  ovaCTA,
                                                                   date);
                       shipReportsArray.add(tempShipReport);
 
