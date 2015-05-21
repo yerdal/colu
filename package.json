@@ -4,9 +4,10 @@
   "description": "Colu frontend web application",
   "dependencies": {
     "grunt": "~0.4.1",
-    "grunt-ngdocs": "~0.1.1",
+    "grunt-contrib-clean": "0.4.1",
     "grunt-contrib-connect": "~0.3.0",
-    "grunt-contrib-clean": "0.4.1"
+    "grunt-ngdocs": "~0.1.1",
+    "openlayers": "^3.5.0"
   },
   "devDependencies": {
     "grunt-karma": "^0.10.1",
