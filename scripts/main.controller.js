@@ -117,7 +117,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         if(lowerEtaHours > 0)
           lowerEtaHours = 0;
         $scope.voyages[i].rangeParameters = {
-          time: { label: "Tid", lowerLimit: lowerEtaHours , upperLimit: upperEtaHours, current: $scope.voyages[i].latestShipReport.ovaCTA, initial: $scope.voyages[i].requiredETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "Timmar", number: 0 },
+          time: { label: "Ankomsttid", lowerLimit: lowerEtaHours , upperLimit: upperEtaHours, current: $scope.voyages[i].latestShipReport.ovaCTA, initial: $scope.voyages[i].requiredETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "timmar", number: 0 },
           velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
         }
 

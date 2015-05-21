@@ -45,9 +45,18 @@
 
     <div ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
-      <!--<span class="glyphicon glyphicon-star" aria-hidden="true"></span>-->
-      Undre gräns: {{activeVoyage.rangeParameters.time.lowerLimit}} {{activeVoyage.rangeParameters.time.unit}}. Övre gräns: {{activeVoyage.rangeParameters.time.upperLimit}} {{activeVoyage.rangeParameters.time.unit}}.
-      Ursprunglig ankomsttid: {{activeVoyage.rangeParameters.time.initial}}           
+      <div class="parameter">
+      <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+      {{activeVoyage.rangeParameters.time.lowerLimit}} {{activeVoyage.rangeParameters.time.unit}}
+      </div>
+      <div class="parameter">
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+        Övre gräns: {{activeVoyage.rangeParameters.time.upperLimit}} {{activeVoyage.rangeParameters.time.unit}}
+      </div>
+      <div class="parameter">
+      <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+      Schemalagd: {{activeVoyage.rangeParameters.time.initial}}     
+      </div>
  
     </div>
 
@@ -55,7 +64,7 @@
 
       Undre gräns: <input ng-model="activeVoyage.rangeParameters.time.lowerLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]"> {{para.unit}}
       Övre gräns: <input ng-model="activeVoyage.rangeParameters.time.upperLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">  {{para.unit}}
-      <p> Ursprunglig ankomsttid: {{activeVoyage.rangeParameters.time.initial}}  </p>
+      <p> Ursprunglig: {{activeVoyage.rangeParameters.time.initial}}  </p>
 
       <button ng-click="save(activeVoyage.rangeParameters.time.number)" type="button" class="btn btn-default btn-sm">
         <i class="glyphicon glyphicon-floppy-disk"></i>
@@ -63,8 +72,9 @@
 
     </div>
 
-    <div id="current" ng-class="{bad: activeVoyage.rangeParameters.time.status == 'BAD'}">
-      <p>Aktuell ankomsttid: {{activeVoyage.rangeParameters.time.label}} : {{activeVoyage.rangeParameters.time.current}}</p>
+    <div class="parameter" id="current" ng-class="{bad: activeVoyage.rangeParameters.time.status == 'BAD'}">
+      <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+      <p>Aktuell: {{activeVoyage.rangeParameters.time.current}}</p>
     </div>
 
 </div>
@@ -89,9 +99,13 @@
 
     <div ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
-
-      Undre gräns: {{activeVoyage.rangeParameters.velocity.lowerLimit}} {{activeVoyage.rangeParameters.velocity.unit}}. Övre gräns: {{activeVoyage.rangeParameters.velocity.upperLimit}} {{activeVoyage.rangeParameters.velocity.unit}}.
+      <div class="parameter">
+        Undre gräns: {{activeVoyage.rangeParameters.velocity.lowerLimit}} {{activeVoyage.rangeParameters.velocity.unit}}. 
+      </div>
+      <div class="parameter">
+        Övre gräns: {{activeVoyage.rangeParameters.velocity.upperLimit}} {{activeVoyage.rangeParameters.velocity.unit}}.
                    {{activeVoyage.rangeParameters.velocity.required}} 
+      </div>
 
     </div>
 
@@ -131,10 +145,10 @@
       
       </ul>
 
-      <div ng-hide="editorEnabled[$index + 2]">
+      <div class="parameter" ng-hide="editorEnabled[$index + 2]">
 
         <!-- ng-class="{good: activeVoyage.combinedWave.status == true, bad: activeVoyage.combinedWave.status == false}"-->
-        Maximalt värde: {{parameter.upperLimit}} {{parameter.unit}}. 
+          Maximalt värde: {{parameter.upperLimit}} {{parameter.unit}}. 
 
         </div>
 
@@ -146,7 +160,7 @@
       </div>
 
       <div id="current" ng-class="{bad: parameter.status == 'BAD'}">
-        <p>Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.</p>
+        <p class="parameter">Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.</p>
     </div>
 
   </div>

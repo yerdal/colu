@@ -26,12 +26,19 @@ coluApp.directive('map', ['$http', function($http) {
         map.getView().setCenter(ol.proj.transform([Number(scope.searchDestLocation.lon), Number(scope.searchDestLocation.lon)],'EPSG:4326', 'EPSG:3857'));
       };
       var map = new ol.Map({
-        layers: [new ol.layer.Tile({ preload: 4, source: new ol.source.OSM()})],
-        target: document.getElementById('map'),
-        view: new ol.View({
-          zoom: 6.000,
-          minZoom: 2
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.XYZ({
+              url: 'http://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiam9oYW5oZW5yaWtzc29uIiwiYSI6IjZkZmZkNDQ2N2EzYmRhYjBhMzUzYjNiNzgwMWRhOWYwIn0.mI8Pclywhn9DD3t9_YaADg'
+            })
           })
+        ],
+        target: 'map',
+        view: new ol.View({
+          center: [0, 0],
+          zoom: 6,
+          minZoom: 2
+        })
       });
       console.log('scope.search ', scope.search);
       var shipVectorSource = new ol.source.Vector({});

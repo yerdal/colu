@@ -1,6 +1,7 @@
 @base: #000;
 @red-base: #B93436;
 @darkred-base: #8F282A;
+@lightred-base: #dc999a;
 @blue-base: #069DBF;
 @green-base: #009C73;
 @darkgreen-base: #006E51;
@@ -14,6 +15,7 @@
 
 body {
 	font:15px/1.1 'Open Sans', sans-serif;
+	color: #000000;
 	font-weight: lighter;
 }
 
@@ -33,6 +35,14 @@ input {
 
 #map {
 	height: 100%;
+}
+
+.parameter {
+	margin: 10 0 0 20px;	
+}
+
+.line-through {
+	text-decoration: line-through;
 }
 
 .container {
@@ -73,7 +83,7 @@ input {
 		margin-right: 2px;
 	}
 	p {
-		padding: 5px;
+		padding: 0px;
 		border: solid 2px @red-base;
 		border-radius: 5px;
 	}
@@ -83,7 +93,6 @@ input {
 		&:hover{
 				background: @darkred-base;
 			}
-
 	}
 }
 
@@ -219,6 +228,11 @@ h4.margin-left{
     .btn {
     	margin: 3% 0 0 0;
     }
+}
+
+
+.table > tbody > tr.active > td {
+  background-color: @lightred-base;
 }
 
 @media (min-width: 992px){
