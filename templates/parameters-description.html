@@ -33,16 +33,16 @@
     <div ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
       <div class="parameter">
-        <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+      <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+      {{activeVoyage.rangeParameters.time.lowerLimit}} {{activeVoyage.rangeParameters.time.unit}}
+      </div>
+      <div class="parameter">
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
         Övre gräns: {{activeVoyage.rangeParameters.time.upperLimit}} {{activeVoyage.rangeParameters.time.unit}}
       </div>
       <div class="parameter">
-      <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-      Undre gräns: {{activeVoyage.rangeParameters.time.lowerLimit}} {{activeVoyage.rangeParameters.time.unit}}
-      </div>
-      <div class="parameter line-through">
       <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-      Ursprunglig: {{activeVoyage.rangeParameters.time.initial}}     
+      Schemalagd: {{activeVoyage.rangeParameters.time.initial}}     
       </div>
  
     </div>
@@ -60,6 +60,7 @@
     </div>
 
     <div class="parameter" id="current" ng-class="{bad: activeVoyage.rangeParameters.time.status == 'BAD'}">
+      <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
       <p>Aktuell: {{activeVoyage.rangeParameters.time.current}}</p>
     </div>
 
@@ -85,9 +86,13 @@
 
     <div ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
-
-      Undre gräns: {{activeVoyage.rangeParameters.velocity.lowerLimit}} {{activeVoyage.rangeParameters.velocity.unit}}. Övre gräns: {{activeVoyage.rangeParameters.velocity.upperLimit}} {{activeVoyage.rangeParameters.velocity.unit}}.
+      <div class="parameter">
+        Undre gräns: {{activeVoyage.rangeParameters.velocity.lowerLimit}} {{activeVoyage.rangeParameters.velocity.unit}}. 
+      </div>
+      <div class="parameter">
+        Övre gräns: {{activeVoyage.rangeParameters.velocity.upperLimit}} {{activeVoyage.rangeParameters.velocity.unit}}.
                    {{activeVoyage.rangeParameters.velocity.required}} 
+      </div>
 
     </div>
 
@@ -127,10 +132,10 @@
       
       </ul>
 
-      <div ng-hide="editorEnabled[$index + 2]">
+      <div class="parameter" ng-hide="editorEnabled[$index + 2]">
 
         <!-- ng-class="{good: activeVoyage.combinedWave.status == true, bad: activeVoyage.combinedWave.status == false}"-->
-        Maximalt värde: {{parameter.upperLimit}} {{parameter.unit}}. 
+          Maximalt värde: {{parameter.upperLimit}} {{parameter.unit}}. 
 
         </div>
 
@@ -142,7 +147,7 @@
       </div>
 
       <div id="current" ng-class="{bad: parameter.status == 'BAD'}">
-        <p>Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.</p>
+        <p class="parameter">Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.</p>
     </div>
 
   </div>
