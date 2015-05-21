@@ -28,13 +28,11 @@ coluApp.controller('mainController', function($scope, $http, $location){
   $scope.activeShip = "Default";
  
  $scope.showActive = function(s){
- 
     $scope.activeShip = s;  
     $scope.activeShip.shipTrue = true;
     console.log('active shipname ', $scope.activeShip.shipName);
-    
-
   }
+
   $scope.goBack = function(){
     $scope.activeShip = "Default";
   }
