@@ -6,8 +6,9 @@ An app for ship operators to handle ship fleets and their voyages. It's designed
 
 With npm installed run:
 
-	npm install -g grunt
+	npm install -g grunt bower
 	npm install
+	bower install
 	grunt
 
 To run backend with maven run `mvn -f Rest/xml.pom spring-boot:run`.
