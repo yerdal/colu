@@ -70,7 +70,6 @@ public class Voyage
 	//Weather
 	private double requiredMaxWindSpeed;
 	private double requiredMaxSignWaveHeight;
-	private double requiredCurrentDir;
 	private double requiredMaxCurrentSpeed;
 	//Ship
 	private double requiredAvgSpeedMin;
@@ -398,9 +397,6 @@ public class Voyage
 	public double getRequiredMaxSignWaveHeight(){
 		return requiredMaxSignWaveHeight;
 	}
-	public double getRequiredCurrentDir(){
-		return requiredCurrentDir;
-	}
 	public double getRequiredMaxCurrentSpeed(){
 		return requiredMaxCurrentSpeed;
 	}
@@ -448,8 +444,7 @@ public class Voyage
 		System.out.println("Requested PArams " +  body.getRequiredMinETA() +
 								body.getRequiredCurrentSpeed() +
 								body.getRequiredWindSpeed() +
-								body.getRequiredSignWaveHeight() +
-								body.getRequiredCurrentDir());
+								body.getRequiredSignWaveHeight());
 
 		// SavedParameters savedParam = repository.findOne(voyageID);
 		// savedParam.setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
@@ -474,7 +469,6 @@ public class Voyage
 		savedParam.setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
 		savedParam.setRequiredWindSpeed(body.getRequiredWindSpeed());
 		savedParam.setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
-		savedParam.setRequiredCurrentDir(body.getRequiredCurrentDir());
 		savedParam.setRequiredMinETA(body.getRequiredMinETA());
 		savedParam.setRequiredMaxETA(body.getRequiredMaxETA());
 		savedParam.setRequiredAvgSpeedMin(body.getRequiredAvgSpeedMin());
@@ -484,7 +478,6 @@ public class Voyage
     setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
     setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
     setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
-    setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
     setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
 	}
 	//Set parameters from DB
@@ -503,7 +496,6 @@ public class Voyage
 		setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
 
 		setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
-		setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
 		setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
 		setRequiredTotalFuel(savedParam.getRequiredTotalFuel());
 
@@ -526,7 +518,6 @@ public class Voyage
 								savedParam.getRequiredCurrentSpeed() + "\n " +
 								savedParam.getRequiredWindSpeed() + " \n " +
 								savedParam.getRequiredSignWaveHeight() + " \n " +
-								savedParam.getRequiredCurrentDir() + " \n " +
 								savedParam.getRequiredAvgSpeedMin()  + " \n " +
 								savedParam.getRequiredAvgSpeedMax());
 
@@ -535,7 +526,6 @@ public class Voyage
     setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
     setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
     setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
-    setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
     setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
     setRequiredTotalFuel(savedParam.getRequiredTotalFuel());
 	}
@@ -598,22 +588,13 @@ public class Voyage
 			weatherWaypoints.get(i).updateSignWaveHeightStatus(chosenSignWaveHeight);
 		}
 	}
-	public void setRequiredCurrentDir(double chosenCurrentDir)
-	{
-		requiredCurrentDir = chosenCurrentDir;
-		for (int i = 0; i < weatherWaypoints.size(); i++)
-		{
-			weatherWaypoints.get(i).updateCurrentDirStatus(chosenCurrentDir);
-		}
-	}
-
 
 	public void setRequiredCurrentSpeed(double chosenCurrentSpeed)
 	{
 		requiredMaxCurrentSpeed = chosenCurrentSpeed;
 		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
-			weatherWaypoints.get(i).updateCurrentSpeedStatus(chosenCurrentSpeed);
+			weatherWaypoints.get(i).updateCurrentStatus(chosenCurrentSpeed);
 		}
 
 	}
@@ -643,7 +624,7 @@ public class Voyage
 		// System.out.println("STATUS AvgSpeedStatus " + shipreport.getAvgSpeedStatus());
 
 		if (waypoint.getWindStatus() == "BAD"
-			|| waypoint.getSignWaveHeightStatus() == "BAD" || waypoint.getCurrentSpeedStatus() == "BAD"
+			|| waypoint.getSignWaveHeightStatus() == "BAD" || waypoint.getCurrentStatus() == "BAD"
 			|| shipreport.getAvgSpeedStatus() == "BAD")
 		{
 			status = "BAD";

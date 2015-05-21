@@ -92,7 +92,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
           if ($scope.activeVoyage.singleParameters.wind.current <= $scope.activeVoyage.singleParameters.wind.upperLimit)
           {
               console.log("TJO");
-              $scope.activeVoyage.singleParameters.wind.status = "GOOD"; // its ok with some motwind
+              $scope.activeVoyage.singleParameters.wind.status = "GOOD"; // its ok with some motvind
           }
           else
           {
@@ -105,6 +105,28 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       {
           console.log("TJUUU");
           $scope.activeVoyage.singleParameters.wind.status = "GOOD";  // medvind is always ok
+      }
+
+  }
+  function checkCurrentStatus() // current==ström
+  {
+      var lowerLimit = 180;
+      var upperLimit = 360;
+      if ($scope.activeVoyage.singleParameters.current.direction > lowerLimit && $scope.activeVoyage.singleParameters.current.direction < upperLimit)
+      {
+          if ($scope.activeVoyage.singleParameters.current.current <= $scope.activeVoyage.singleParameters.current.upperLimit)
+          {
+              $scope.activeVoyage.singleParameters.current.status = "GOOD"; // its ok with some motström
+          }
+          else
+          {
+              $scope.activeVoyage.singleParameters.current.status = "BAD"; // too much motström
+          }
+      }
+      
+      else
+      {
+          $scope.activeVoyage.singleParameters.current.status = "GOOD";  // medström is always ok
       }
 
   }
@@ -167,13 +189,15 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
           fuel: {name: "fuel", label: "Bränsle", upperLimit: $scope.voyages[i].requiredTotalFuel, current: $scope.voyages[i].latestShipReport.totalFuel, status: $scope.voyages[i].latestShipReport.requiredTotalFuelStatus, unit: "kubikmeter/dygn"},
           combinedWave : {name: "combinedWave", label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
-          current : {name: "current", label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
+          current : {name: "current", label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, direction: $scope.voyages[i].currentWeatherWaypoint.currentDir, status: $scope.voyages[i].currentWeatherWaypoint.currentStatus, unit: "m/s"},
           wind : {name: "wind", label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, direction: $scope.voyages[i].currentWeatherWaypoint.windDir, status: $scope.voyages[i].currentWeatherWaypoint.windStatus, unit: "m/s"}
 
         }
 
         flagVoyage($scope.voyages[i]);
       }
+     console.log("first", $scope.voyages[1].currentWeatherWaypoint);
+
 
 
       //console.log("dsfsdf", $scope.voyages[0]);
@@ -290,10 +314,12 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
           case 1:
             checkVelocityStatus();
             break;
-
+          case 3:
+            checkCurrentStatus();
+            console.log("updated", $scope.voyages[1].currentWeatherWaypoint);
+            break;
           case 5:
             checkWindStatus();
-            //console.log("updated", $scope.voyages[0].currentWeatherWaypoint);
             break;
 
           default:

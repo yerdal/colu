@@ -32,8 +32,7 @@ public class WeatherWaypoint
 	//våra variabler
 	private String windStatus; 
 	private String signWaveHeightStatus;
-	private String currentSpeedStatus;
-	private String currentDirStatus;
+	private String currentStatus;
 
 	public WeatherWaypoint(){
 		windSpeed = 0.0;
@@ -58,8 +57,7 @@ public class WeatherWaypoint
 		dateETP = "2000-01-01 00:00";
 		windStatus = "undefined";
 		signWaveHeightStatus = "undefined";
-		currentSpeedStatus = "undefined";
-		currentDirStatus = "undefined";
+		currentStatus = "undefined";
 	}
 	
 
@@ -106,8 +104,7 @@ public class WeatherWaypoint
 		dateETP = theDate;
 		windStatus = "undefined";
 		signWaveHeightStatus = "undefined";
-		currentSpeedStatus = "undefined";
-		currentDirStatus = "undefined";
+		currentStatus = "undefined";
 	}
 
 	public double getWindSpeed()
@@ -183,13 +180,9 @@ public class WeatherWaypoint
 	{
 		return signWaveHeightStatus;
 	}
-	public String getCurrentDirStatus()
+	public String getCurrentStatus()
 	{
-		return currentDirStatus;
-	}
-	public String getCurrentSpeedStatus()
-	{
-		return currentSpeedStatus;
+		return currentStatus;
 	}
 	public void setWindStatus(String status)
 	{
@@ -199,13 +192,9 @@ public class WeatherWaypoint
 	{
 		signWaveHeightStatus = status;
 	}
-	public void setCurrentSpeedStatus(String status)
+	public void setCurrentStatus(String status)
 	{
-		currentSpeedStatus = status;
-	}
-	public void setCurrentDirStatus(String status)
-	{
-		currentDirStatus = status;
+		currentStatus = status;
 	}
 
 	public void updateWindStatus(double chosenWindSpeed)
@@ -241,25 +230,23 @@ public class WeatherWaypoint
 		}
 	}
 
-	public void updateCurrentDirStatus(double chosenCurrentDir){
-		if (currentDir < chosenCurrentDir)
+
+	public void updateCurrentStatus(double chosenCurrentSpeed){
+		if (currentDir > 180 && currentDir < 360)
+		{
+			if (currentSpeed <= chosenCurrentSpeed) // its ok with some motström
 			{
-				setCurrentDirStatus("GOOD");
+				setCurrentStatus("GOOD");
 			}
 			else
 			{
-				setCurrentDirStatus("BAD");
+				setCurrentStatus("BAD"); //too much motström
 			}
-	}
-	public void updateCurrentSpeedStatus(double chosenCurrentSpeed){
-		if (currentSpeed < chosenCurrentSpeed)
-		{
-				setCurrentSpeedStatus("GOOD");
+			
 		}
-
 		else
 		{
-				setCurrentSpeedStatus("BAD");
+			setCurrentStatus("GOOD"); //medström is always ok
 		}
 	}
 }
