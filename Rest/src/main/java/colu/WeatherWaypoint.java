@@ -30,8 +30,7 @@ public class WeatherWaypoint
 	private String dateETP; // Estimated Time of Passage in UTC format="yyyy-M-dd HH:mm:ss"
 
 	//våra variabler
-	private String windSpeedStatus; 
-	private String windDirStatus;
+	private String windStatus; 
 	private String signWaveHeightStatus;
 	private String currentSpeedStatus;
 	private String currentDirStatus;
@@ -57,8 +56,7 @@ public class WeatherWaypoint
 		legType = "undefined";
 		lat = 0.0;
 		dateETP = "2000-01-01 00:00";
-		windSpeedStatus = "undefined";
-		windDirStatus = "undefined";
+		windStatus = "undefined";
 		signWaveHeightStatus = "undefined";
 		currentSpeedStatus = "undefined";
 		currentDirStatus = "undefined";
@@ -106,8 +104,7 @@ public class WeatherWaypoint
 		legType = theLegType;
 		lat = theLat;
 		dateETP = theDate;
-		windSpeedStatus = "undefined";
-		windDirStatus = "undefined";
+		windStatus = "undefined";
 		signWaveHeightStatus = "undefined";
 		currentSpeedStatus = "undefined";
 		currentDirStatus = "undefined";
@@ -178,13 +175,9 @@ public class WeatherWaypoint
 	public String getETPDate(){
 		return dateETP;
 	}
-	public String getWindSpeedStatus()
+	public String getWindStatus()
 	{
-		return windSpeedStatus;	
-	}
-	public String getWindDirStatus()
-	{
-		return windDirStatus;
+		return windStatus;	
 	}
 	public String getSignWaveHeightStatus()
 	{
@@ -198,13 +191,9 @@ public class WeatherWaypoint
 	{
 		return currentSpeedStatus;
 	}
-	public void setWindSpeedStatus(String status)
+	public void setWindStatus(String status)
 	{
-		windSpeedStatus = status;
-	}
-	public void setWindDirStatus(String status)
-	{
-		windDirStatus = status;
+		windStatus = status;
 	}
 	public void setSignWaveHeightStatus(String status)
 	{
@@ -219,29 +208,26 @@ public class WeatherWaypoint
 		currentDirStatus = status;
 	}
 
-	public void updateWindSpeedStatus(double chosenWindSpeed)
+	public void updateWindStatus(double chosenWindSpeed)
 	{
-		if (windSpeed <= chosenWindSpeed)
+		if (windDir > 180 && windDir < 360)
 		{
-			setWindSpeedStatus("GOOD");
+			if (windSpeed <= chosenWindSpeed) // its ok with some motvind
+			{
+				setWindStatus("GOOD");
+			}
+			else
+			{
+				setWindStatus("BAD"); //too much motvind
+			}
+			
 		}
-		else  
-		{	
-			setWindSpeedStatus("BAD");
+		else
+		{
+			setWindStatus("GOOD"); //medvind is always ok
 		}
-		
 	}
 
-	public void updateWindDirStatus(double chosenWindDir){
-
-		if (windDir < chosenWindDir)
-		{
-			setWindDirStatus("GOOD");
-		}
-		else 
-		{		
-			setWindDirStatus("BAD");
-	}	}
 
 	public void updateSignWaveHeightStatus(double chosenSignWaveHeight){
 		if (signWaveHeight < chosenSignWaveHeight)

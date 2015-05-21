@@ -3,19 +3,19 @@ var coluApp = angular.module('coluApp');
  * @ngdoc service
  * @name coluApp.sharedProperties
  * @description
- * # sharedProperties 
+ * # sharedProperties
  * Service to share properties on the current active voyage on frontend.
  */
 
 coluApp.service('sharedProperties', function() {
-      
+
 
     var activeVoyage = "Default";
     return {
         /**
        * @ngdoc method
-       * @name coluApp.sharedProperties#getActive 
-       * @methodOf  coluApp.sharedProperties 
+       * @name coluApp.sharedProperties#getActive
+       * @methodOf  coluApp.sharedProperties
        *
        * @description
        * Method to get active voyage on scope
@@ -29,12 +29,12 @@ coluApp.service('sharedProperties', function() {
 
         /**
        * @ngdoc method
-       * @name coluApp.sharedProperties#setActive 
+       * @name coluApp.sharedProperties#setActive
        * @methodOf coluApp.sharedProperties
        *
        * @description
        * Method to set active voyage on scope
-      * @param {Voyage Object} Voyage object representing a voyage 
+      * @param {Voyage Object} Voyage object representing a voyage
        * @example
        * sharedProperties.setActive(Voyage);
        * @returns {none} returns nothing
@@ -49,14 +49,17 @@ coluApp.service('sharedProperties', function() {
 coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
   function checkTimeStatus(){
-    var MINUTES_TO_MILLISEC = 60000;
+
     var HOURS_TO_MILLISEC = 3600000;
+
 
     var required = Date.parse($scope.activeVoyage.rangeParameters.time.initial);
     var estimated = Date.parse($scope.activeVoyage.rangeParameters.time.current);
 
+
     var lower = required + $scope.activeVoyage.rangeParameters.time.lowerLimit*HOURS_TO_MILLISEC;
     var higher = required + $scope.activeVoyage.rangeParameters.time.upperLimit*HOURS_TO_MILLISEC;
+
 
     $scope.lowerRequiredDate = new Date(lower).toISOString().slice(0,10).replace(/-/g,"-") + " " + new Date(lower).toLocaleTimeString('en-GB');
     $scope.upperRequiredDate = new Date(higher).toISOString().slice(0,10).replace(/-/g,"-") + " " + new Date(higher).toLocaleTimeString('en-GB');
@@ -69,8 +72,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
   }
 
   function checkVelocityStatus(){
-    var withinLowerLimit = $scope.activeVoyage.rangeParameters.velocity.current > $scope.activeVoyage.rangeParameters.velocity.lowerLimit; 
-    var withinUpperLimit = $scope.activeVoyage.rangeParameters.velocity.current < $scope.activeVoyage.rangeParameters.velocity.upperLimit; 
+    var withinLowerLimit = $scope.activeVoyage.rangeParameters.velocity.current > $scope.activeVoyage.rangeParameters.velocity.lowerLimit;
+    var withinUpperLimit = $scope.activeVoyage.rangeParameters.velocity.current < $scope.activeVoyage.rangeParameters.velocity.upperLimit;
 
     if(withinLowerLimit && withinUpperLimit){
       $scope.activeVoyage.rangeParameters.velocity.status = 'GOOD';
@@ -79,6 +82,33 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       $scope.activeVoyage.rangeParameters.velocity.status = 'BAD';
     }
   }
+
+  function checkWindStatus()
+  {
+      var lowerLimit = 180;
+      var upperLimit = 360;
+      if ($scope.activeVoyage.singleParameters.wind.direction > lowerLimit && $scope.activeVoyage.singleParameters.wind.direction < upperLimit)
+      {
+          if ($scope.activeVoyage.singleParameters.wind.current <= $scope.activeVoyage.singleParameters.wind.upperLimit)
+          {
+              console.log("TJO");
+              $scope.activeVoyage.singleParameters.wind.status = "GOOD"; // its ok with some motwind
+          }
+          else
+          {
+            console.log("TJOHEJ");
+              $scope.activeVoyage.singleParameters.wind.status = "BAD"; // too much motvind
+          }
+      }
+      //jävla pissjavascript
+      else
+      {
+          console.log("TJUUU");
+          $scope.activeVoyage.singleParameters.wind.status = "GOOD";  // medvind is always ok
+      }
+
+  }
+
   var milliToHours = function(milli){
     var seconds = Math.floor(milli / 1000);
     var minutes = Math.floor(seconds / 60);
@@ -86,26 +116,28 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
     return hours;
   }
   $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+
   //Gets the Voyage-data
   $http.get('http://localhost:8090/voyages').success(function(data,status,headers,config)
     {
-    
+
       //Delete some broken data, Einar Sanberg will solve it, sometime.
-      data.splice(9, 1);  
+      data.splice(9, 1);
       data.splice(27,1);
       data.splice(14,1);
-    
-      //Position 27 is broken, and I can´t manage to delete it, hehe.   
-      $scope.voyages = data; 
-   
+
+      //Position 27 is broken, and I can´t manage to delete it, hehe.
+
+      $scope.voyages = data; //data.slice(1, 26);
 
       $scope.voyagesBad = [];
-      $scope.voyagesGood = [];    
+      $scope.voyagesGood = [];
       $scope.voyagesHandled = [];
 
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
-      { 
+      {
+
 
         var upperEta =  new Date($scope.voyages[i].requiredMaxETA) - new Date($scope.voyages[i].requiredETA);
         var lowerEta =  new Date($scope.voyages[i].requiredMinETA) - new Date($scope.voyages[i].requiredETA);
@@ -117,6 +149,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
           lowerEtaHours = 0;
         $scope.voyages[i].rangeParameters = {
           time: { label: "Tid", lowerLimit: lowerEtaHours , upperLimit: upperEtaHours, current: $scope.voyages[i].latestShipReport.ovaCTA, initial: $scope.voyages[i].requiredETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "Timmar", number: 0 },
+
           velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
         }
 
@@ -128,35 +161,37 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
         $scope.activeVoyage = $scope.voyages[i];
         checkTimeStatus();
-        
+
 
         $scope.voyages[i].singleParameters = {
+
           fuel: {name: "fuel", label: "Bränsle", upperLimit: $scope.voyages[i].requiredTotalFuel, current: $scope.voyages[i].latestShipReport.totalFuel, status: $scope.voyages[i].latestShipReport.requiredTotalFuelStatus, unit: "kubikmeter/dygn"},
           combinedWave : {name: "combinedWave", label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
           current : {name: "current", label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
-          wind : {name: "wind", label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, status: $scope.voyages[i].currentWeatherWaypoint.windSpeedStatus, unit: "m/s"}
+          wind : {name: "wind", label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, direction: $scope.voyages[i].currentWeatherWaypoint.windDir, status: $scope.voyages[i].currentWeatherWaypoint.windStatus, unit: "m/s"}
 
         }
 
         flagVoyage($scope.voyages[i]);
-      } 
+      }
+
 
       //console.log("dsfsdf", $scope.voyages[0]);
 
       $scope.activeVoyage = $scope.voyages[0];
       //Where all the functionality is
-      main();   
-      
+      main();
+
       }).error(function(data,status,headers,config){
         console.log('ERROR getting from backend' , status);
 
       });
-      
+
     $scope.putData = function(){
         parameters = {
           requiredCurrentSpeed: $scope.activeVoyage.singleParameters.current.upperLimit,
           requiredWindSpeed: $scope.activeVoyage.singleParameters.wind.upperLimit,
-          requiredWindDir: 125,
+
           requiredSignWaveHeight: $scope.activeVoyage.singleParameters.combinedWave.upperLimit,
           requiredCurrentDir: 12,
           requiredMinETA: $scope.lowerRequiredDate,
@@ -165,7 +200,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
           requiredAvgSpeedMax: $scope.activeVoyage.rangeParameters.velocity.upperLimit
           //requiredFuelConsumption:
         }
-       
+
        //var vID = $scope.activeVoyage.voyageId;
       $http.put('http://localhost:8090/voyages/'+ $scope.activeVoyage.voyageId + '/updatelimits', parameters).success(function(data,status,headers,config)
       {
@@ -184,11 +219,11 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
     //How the form works
     formFunctionality();
-    
-    //Shows the active Voyage in the detailed view 
+
+    //Shows the active Voyage in the detailed view
     $scope.showActive = function(s){
       sharedProperties.setActive(s);
-      
+
       $scope.activeVoyage = sharedProperties.getActive();
       $scope.showActive.shipTrue = true;
       checkTimeStatus();
@@ -207,10 +242,10 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       }
       if(screenSize < 1000){
         //console.log('Small screen');
-        return true;  
+        return true;
       }
 
-    } 
+    }
 
     //Used to only show handle-button on Bad-voyages
     $scope.isBad = function(s){
@@ -223,11 +258,11 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         $scope.voyagesHandled.push(s);
 
       var index = $scope.voyagesBad.indexOf(s);
-      
+
 
       if (index > -1) {
         $scope.voyagesBad.splice(index, 1);
-      } 
+      }
 
     }
 
@@ -247,7 +282,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
       $scope.save = function(paramId, paramName) {
         $scope.disableEditor(paramId);
-          
+
         switch(paramId){
           case 0:
             checkTimeStatus();
@@ -255,8 +290,16 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
           case 1:
             checkVelocityStatus();
             break;
+
+          case 5:
+            checkWindStatus();
+            //console.log("updated", $scope.voyages[0].currentWeatherWaypoint);
+            break;
+
           default:
+
           console.log("JONKEN", $scope.activeVoyage.singleParameters);
+
             if($scope.activeVoyage.singleParameters[paramName].current < $scope.activeVoyage.singleParameters[paramName].upperLimit)
             {
               $scope.activeVoyage.singleParameters[paramName].status = "GOOD";
@@ -264,7 +307,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
             else
               $scope.activeVoyage.singleParameters[paramName].status = "BAD";
         }
-        
+
         flagVoyage($scope.activeVoyage);
         $scope.putData();
       };
@@ -279,7 +322,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
   function flagVoyage(voyage){
 
     if($scope.voyagesGood.indexOf(voyage) > -1) return;
-    
+
     if(voyage.rangeParameters.time.status == "BAD" || voyage.rangeParameters.velocity.status == "BAD" || voyage.singleParameters.fuel.status == "BAD" || voyage.singleParameters.combinedWave.status == "BAD" || voyage.singleParameters.current.status == "BAD"  || voyage.singleParameters.wind.status == "BAD")
     {
 
@@ -287,12 +330,12 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         if (index == -1)
           $scope.voyagesBad.push(voyage);
 
-    } 
+    }
     else
     {
       $scope.voyagesGood.push(voyage)
       var index = $scope.voyagesBad.indexOf(voyage);
-        if (index > -1) 
+        if (index > -1)
           $scope.voyagesBad.splice(index, 1);
     }
   }
