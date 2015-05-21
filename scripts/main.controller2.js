@@ -94,6 +94,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
     
       //Position 27 is broken, and I can´t manage to delete it, hehe.   
       $scope.voyages = data; //data.slice(1, 26);
+      console.log("TEST: ", $scope.voyages[4]);
       
       $scope.voyagesBad = [];
       $scope.voyagesGood = [];    
@@ -128,7 +129,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
         $scope.voyages[i].singleParameters = {
 
-          fuel: {name: "fuel", label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "L/mil",},
+          fuel: {name: "fuel", label: "Bränsle", upperLimit: $scope.voyages[i].requiredTotalFuel, current: $scope.voyages[i].latestShipReport.totalFuel, status: $scope.voyages[i].latestShipReport.requiredTotalFuelStatus, unit: "kubikmeter/dygn",},
           combinedWave : {name: "combinedWave", label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
           current : {name: "current", label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
           wind : {name: "wind", label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, status: $scope.voyages[i].currentWeatherWaypoint.windSpeedStatus, unit: "m/s"}
@@ -253,7 +254,6 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
             checkVelocityStatus();
             break;
           default:
-          console.log("JONKEN", $scope.activeVoyage.singleParameters);
             if($scope.activeVoyage.singleParameters[paramName].current < $scope.activeVoyage.singleParameters[paramName].upperLimit)
             {
               $scope.activeVoyage.singleParameters[paramName].status = "GOOD";

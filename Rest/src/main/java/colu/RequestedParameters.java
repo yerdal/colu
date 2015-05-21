@@ -18,9 +18,7 @@ public class RequestedParameters{
   private String requiredMaxETA;
   private double requiredAvgSpeedMin;
   private double requiredAvgSpeedMax;
-
-
-
+  private double requiredTotalFuel;
 
   public String getRequiredMinETA(){
     return requiredMinETA;
@@ -48,6 +46,10 @@ public class RequestedParameters{
   }
   public double getRequiredAvgSpeedMax(){
     return requiredAvgSpeedMax;
+  }
+
+  public double getRequiredTotalFuel(){
+    return requiredTotalFuel;
   }
 
 

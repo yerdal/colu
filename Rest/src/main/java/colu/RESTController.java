@@ -146,7 +146,7 @@ public class RESTController extends ParsingXML{
              
       repository.save(new SavedParameters(savedParam.getId(), body.getRequiredCurrentSpeed(),body.getRequiredWindSpeed(), 
         body.getRequiredWindDir(), body.getRequiredSignWaveHeight(), body.getRequiredCurrentDir(),
-         body.getRequiredAvgSpeedMin(), body.getRequiredAvgSpeedMax(), body.getRequiredMinETA(),body.getRequiredMaxETA()));
+         body.getRequiredAvgSpeedMin(), body.getRequiredAvgSpeedMax(), body.getRequiredMinETA(),body.getRequiredMaxETA(), body.getRequiredTotalFuel()));
 
 
       System.out.println("THE ID"  + savedParam.getId());
