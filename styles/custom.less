@@ -1,6 +1,7 @@
 @base: #000;
 @red-base: #B93436;
 @darkred-base: #8F282A;
+@lightred-base: #dc999a;
 @blue-base: #069DBF;
 @green-base: #009C73;
 @darkgreen-base: #006E51;
@@ -91,7 +92,6 @@ input {
 		&:hover{
 				background: @darkred-base;
 			}
-
 	}
 }
 
@@ -185,6 +185,11 @@ input {
     .btn {
     	margin: 3% 0 0 0;
     }
+}
+
+
+.table > tbody > tr.active > td {
+  background-color: @lightred-base;
 }
 
 @media (min-width: 992px){
