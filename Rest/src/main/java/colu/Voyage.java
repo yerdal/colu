@@ -69,7 +69,6 @@ public class Voyage
 
 	//Weather
 	private double requiredMaxWindSpeed;
-	private double requiredWindDir;
 	private double requiredMaxSignWaveHeight;
 	private double requiredCurrentDir;
 	private double requiredMaxCurrentSpeed;
@@ -381,9 +380,7 @@ public class Voyage
 	public double getRequiredMaxWindSpeed(){
 		return requiredMaxWindSpeed;
 	}
-	public double getRequiredWindDir(){
-		return requiredWindDir;
-	}
+
 	public double getRequiredMaxSignWaveHeight(){
 		return requiredMaxSignWaveHeight;
 	}
@@ -434,7 +431,6 @@ public class Voyage
 		System.out.println("Requested PArams " +  body.getRequiredMinETA() +
 								body.getRequiredCurrentSpeed() +
 								body.getRequiredWindSpeed() +
-								body.getRequiredWindDir() +
 								body.getRequiredSignWaveHeight() +
 								body.getRequiredCurrentDir());
 
@@ -460,7 +456,6 @@ public class Voyage
 	public void setRequiredParametersToDB(SavedParameters savedParam, RequestedParameters body){
 		savedParam.setRequiredCurrentSpeed(body.getRequiredCurrentSpeed());
 		savedParam.setRequiredWindSpeed(body.getRequiredWindSpeed());
-		savedParam.setRequiredWindDir(body.getRequiredWindDir());
 		savedParam.setRequiredSignWaveHeight(body.getRequiredSignWaveHeight());
 		savedParam.setRequiredCurrentDir(body.getRequiredCurrentDir());
 		savedParam.setRequiredMinETA(body.getRequiredMinETA());
@@ -471,7 +466,6 @@ public class Voyage
 		setRequiredMinMaxETA(savedParam.getRequiredMinETA(), savedParam.getRequiredMaxETA());
     setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
     setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
-    setRequiredWindDir(savedParam.getRequiredWindDir());
     setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
     setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
     setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
@@ -484,7 +478,6 @@ public class Voyage
 		setRequiredMinMaxETA(savedParam.getRequiredMinETA(), savedParam.getRequiredMaxETA());
     setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
     setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
-    setRequiredWindDir(savedParam.getRequiredWindDir());
     setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
     setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
     setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
@@ -506,7 +499,6 @@ public class Voyage
 		System.out.println("Saved PArams " +  savedParam.getRequiredMinETA() + "\n " +
 								savedParam.getRequiredCurrentSpeed() + "\n " + 
 								savedParam.getRequiredWindSpeed() + " \n " + 
-								savedParam.getRequiredWindDir() + "  \n " + 
 								savedParam.getRequiredSignWaveHeight() + " \n " + 
 								savedParam.getRequiredCurrentDir() + " \n " +
 								savedParam.getRequiredAvgSpeedMin()  + " \n " +
@@ -516,7 +508,6 @@ public class Voyage
 		setRequiredMinMaxETA(savedParam.getRequiredMinETA(),savedParam.getRequiredMaxETA());
     setRequiredCurrentSpeed(savedParam.getRequiredCurrentSpeed());
     setRequiredWindSpeed(savedParam.getRequiredWindSpeed());
-    setRequiredWindDir(savedParam.getRequiredWindDir());
     setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
     setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
     setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
@@ -557,18 +548,10 @@ public class Voyage
 		requiredMaxWindSpeed = chosenWindSpeed;
 		for (int i = 0; i < weatherWaypoints.size(); i++)
 		{
-			weatherWaypoints.get(i).updateWindSpeedStatus(chosenWindSpeed);
+			weatherWaypoints.get(i).updateWindStatus(chosenWindSpeed);
 		}
 	}
-	public void setRequiredWindDir(double chosenWindDir)
-	{
-		requiredWindDir = chosenWindDir;
-		for (int i = 0; i < weatherWaypoints.size(); i++)
-		{
-			weatherWaypoints.get(i).updateWindDirStatus(chosenWindDir);
-		}
 
-	}
 	public void setRequiredSignWaveHeight(double chosenSignWaveHeight)
 	{
 		requiredMaxSignWaveHeight = chosenSignWaveHeight;
@@ -614,14 +597,14 @@ public class Voyage
 		ShipReport shipreport = shipReports.get(getLatesReportIndex());
 
 		//FIXA DENNA FUNKTION EFTER DATEGREJ
-		// System.out.println("STATUS WIND Speed" + waypoint.getWindSpeedStatus());
+		// System.out.println("STATUS WIND Speed" + waypoint.getwindStatus());
 		// System.out.println("STATUS Wind Dir " + waypoint.getWindDirStatus());
 		// System.out.println("STATUS Current SPeed " + waypoint.getCurrentSpeedStatus());
 		// System.out.println("STATUS Sign Wave Height " + waypoint.getSignWaveHeightStatus());
 		// System.out.println("STATUS Current Dir " + waypoint.getCurrentDirStatus());
 		// System.out.println("STATUS AvgSpeedStatus " + shipreport.getAvgSpeedStatus());
 
-		if (waypoint.getWindSpeedStatus() == "BAD"
+		if (waypoint.getWindStatus() == "BAD"
 			|| waypoint.getSignWaveHeightStatus() == "BAD" || waypoint.getCurrentSpeedStatus() == "BAD"
 			|| shipreport.getAvgSpeedStatus() == "BAD")
 		{
