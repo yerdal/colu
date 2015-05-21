@@ -48,6 +48,7 @@ coluApp.service('sharedProperties', function() {
 
 coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
+
   function checkTimeStatus(){
     var MINUTES_TO_MILLISEC = 60000;
     var HOURS_TO_MILLISEC = 3600000;
@@ -151,6 +152,15 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         console.log('ERROR getting from backend' , status);
 
       });
+
+    // $scope.$watch('searchLocation', function(){
+    //   console.log('loool');
+    // });
+    $scope.findLocation = function(location){
+      //updates the value in directive and searches
+      $scope.searchLocation = location;
+
+    }
       
     $scope.putData = function(){
         parameters = {

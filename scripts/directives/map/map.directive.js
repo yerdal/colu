@@ -17,10 +17,10 @@
  */
 
 var coluApp = angular.module('coluApp');
-coluApp.directive('map', function() {
+coluApp.directive('map', ['$http', function($http) {
   return {
     restrict: 'E',
-    transclude: true,
+    transclude: false,
     templateUrl: 'scripts/directives/map/map.html',
     link: function(scope, element){
       var map = new ol.Map({
@@ -31,7 +31,7 @@ coluApp.directive('map', function() {
           minZoom: 2
           })
       });
-
+      console.log('scope.search ', scope.search);
       var shipVectorSource = new ol.source.Vector({});
       var shipRouteLine = new ol.source.Vector({});
       var points = []; 
@@ -112,6 +112,8 @@ coluApp.directive('map', function() {
         setShipPosition();
         setLinePosition();
       });
+
+
       
       
       var setShipPosition = function(){
@@ -133,7 +135,29 @@ coluApp.directive('map', function() {
       
       }
 
+    scope.$watch('searchLocation' , function(){
+      if(scope.searchLocation){
+        var srcStr = scope.searchLocation.replace(" ", "%20");
+        srcStr = srcStr.replace(/"/g, "").replace(/'/g, "").replace(/\([\s\S]*?\)/g, "");
+        console.log(srcStr)
+        $http.get('http://nominatim.openstreetmap.org/search/'+srcStr+'?format=json&addressdetails=1&limit=1').success(function(data,status,headers,config)
+        {
+          map.getView().setCenter(ol.proj.transform([Number(data[0].lon), Number(data[0].lat)],'EPSG:4326', 'EPSG:3857'));
+          console.log('data', data)
+        }).error(function(data,status,headers,config){
+          console.log('ERROR getting from find locaiton' , status);
+
+        });
+      }
+      console.log('scope. search in map dire ', scope.searchLocation );
+    });
+    scope.findLocation = function(locationName){
+      console.log('hahsah');
+        // http://nominatim.openstreetmap.org/search?q=santa+barbara
+        
+    }
+
 
     }
-  };
-});
+  }; //link return bracket
+}]);

@@ -10,14 +10,26 @@
 
   <li>
     <h2>{{activeVoyage.voyageName | uppercase}}</h2> <br>
-    <h4> {{activeVoyage.ship.shipName | uppercase}} </h4>
+
+    <h4> {{activeVoyage.ship.shipName | uppercase}}</h4>
+
   </li>
 </ul>
+<div class="wrap-location">
+<div class="departure"><h4> Avgångshamn </h4> <h4 ng-click="findLocation(activeVoyage.departure)" > <i  class="glyphicon glyphicon-map-marker"></i> <a> {{activeVoyage.departure}}</a> </h4> </div>
+<div class="destination">
+  <h4> Ankomsthamn </h4>
+ <h4 ng-click="findLocation(activeVoyage.destination)" >  <i class="glyphicon glyphicon-map-marker"></i>   <a> {{activeVoyage.destination}} </a> </h4>
+</div>
+</div>
 
 <!--***************************************************-->
 <!-- Time -->
   <div class="detail-box" >
-    
+  <!--   <ul class="list-inline">
+      <li> Avgångshamn {{activeVoyage.departure}}</li>
+      <li> Destination {{activeVoyage.destination}}</li>
+      </ul> -->
     <ul class="list-inline">
       <li>
         <h4>{{activeVoyage.rangeParameters.time.label | uppercase}}</h4>
@@ -29,6 +41,7 @@
         </button>
       </li>
     </ul>
+
 
     <div ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
