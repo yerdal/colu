@@ -16,10 +16,10 @@
   </li>
 </ul>
 <div class="wrap-location">
-<div class="departure"><h4> Avgångshamn </h4> <h4 ng-click="findLocation(activeVoyage.departure)" > <i  class="glyphicon glyphicon-map-marker"></i> <a> {{activeVoyage.departure}}</a> </h4> </div>
+<div class="departure"><h4> Avgångshamn </h4> <h4 class="dep" ng-click="updateMap('dep')" > <i  class="glyphicon glyphicon-map-marker"></i> <a> {{activeVoyage.departure}}</a> </h4> </div>
 <div class="destination">
   <h4> Ankomsthamn </h4>
- <h4 ng-click="findLocation(activeVoyage.destination)" >  <i class="glyphicon glyphicon-map-marker"></i>   <a> {{activeVoyage.destination}} </a> </h4>
+ <h4 class="dest" ng-click="updateMap('dest')" >  <i class="glyphicon glyphicon-map-marker"></i>   <a> {{activeVoyage.destination}} </a> </h4>
 </div>
 </div>
 

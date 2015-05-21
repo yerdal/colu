@@ -145,6 +145,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       //console.log("dsfsdf", $scope.voyages[0]);
 
       $scope.activeVoyage = $scope.voyages[0];
+      $scope.searchDestLocation = $scope.activeVoyage.destination;
+      $scope.searchDepLocation = $scope.activeVoyage.departure;
       //Where all the functionality is
       main();   
       
@@ -153,13 +155,18 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
       });
 
-    // $scope.$watch('searchLocation', function(){
-    //   console.log('loool');
-    // });
-    $scope.findLocation = function(location){
-      //updates the value in directive and searches
-      $scope.searchLocation = location;
+    $scope.findDestLocation = function(destLocation){
+      //updates the value in mapdirective and searches
+      $scope.searchDestLocation = destLocation;
+    }
+    $scope.findDepLocation = function(depLocation){
+      //updates the value in mapdirective and searches
+      $scope.searchDepLocation = depLocation;
+    }
 
+    $scope.updateMap = function(location){
+
+      $scope.locationFocus = location;
     }
       
     $scope.putData = function(){
@@ -201,6 +208,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       
       $scope.activeVoyage = sharedProperties.getActive();
       $scope.showActive.shipTrue = true;
+      $scope.searchDestLocation = $scope.activeVoyage.destination;
+      $scope.searchDepLocation = $scope.activeVoyage.departure;
       checkTimeStatus();
     }
 
@@ -266,7 +275,6 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
             checkVelocityStatus();
             break;
           default:
-          console.log("JONKEN", $scope.activeVoyage.singleParameters);
             if($scope.activeVoyage.singleParameters[paramName].current < $scope.activeVoyage.singleParameters[paramName].upperLimit)
             {
               $scope.activeVoyage.singleParameters[paramName].status = "GOOD";
