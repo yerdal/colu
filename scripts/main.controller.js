@@ -131,7 +131,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         
 
         $scope.voyages[i].singleParameters = {
-          fuel: {name: "fuel", label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "m3/dygn",},
+          fuel: {name: "fuel", label: "Bränsle", upperLimit: $scope.voyages[i].requiredTotalFuel, current: $scope.voyages[i].latestShipReport.totalFuel, status: $scope.voyages[i].latestShipReport.requiredTotalFuelStatus, unit: "kubikmeter/dygn"},
           combinedWave : {name: "combinedWave", label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
           current : {name: "current", label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
           wind : {name: "wind", label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, status: $scope.voyages[i].currentWeatherWaypoint.windSpeedStatus, unit: "m/s"}

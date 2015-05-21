@@ -26,6 +26,7 @@ public class SavedParameters {
   private String requiredMaxETA;
   private double requiredAvgSpeedMin;
   private double requiredAvgSpeedMax;
+  private double requiredTotalFuel;
 
   protected SavedParameters(){} //So it works with JPA
   
@@ -38,7 +39,8 @@ public class SavedParameters {
                         double theRequiredAvgSpeedMin,
                         double theRequiredAvgSpeedMax,
                         String theRequiredMinETA,
-                        String theRequiredMaxETA) {
+                        String theRequiredMaxETA,
+                        double theRequiredTotalFuel) {
         id = theId;
         requiredCurrentSpeed = theRequiredCurrentSpeed;
         requiredWindSpeed = theRequiredWindSpeed;
@@ -49,6 +51,7 @@ public class SavedParameters {
         requiredAvgSpeedMax = theRequiredAvgSpeedMax;
         requiredMinETA = theRequiredMinETA;
         requiredMaxETA = theRequiredMaxETA;
+        requiredTotalFuel = theRequiredTotalFuel;
     }
   public int getId(){
     return id;
@@ -79,6 +82,10 @@ public class SavedParameters {
   }
   public double getRequiredAvgSpeedMax(){
     return requiredAvgSpeedMax;
+  }
+
+  public double getRequiredTotalFuel(){
+    return requiredTotalFuel;
   }
   //Setters
   public void setRequiredCurrentSpeed(double theRequiredCurrentSpeed){

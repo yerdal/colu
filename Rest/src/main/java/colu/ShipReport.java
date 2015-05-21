@@ -75,6 +75,10 @@ public class ShipReport
 	//Our new vaiables!
 	private String requiredETAStatus; //OK = ontime / BAD 
 	private String requiredAvgSpeedStatus;
+	private double totalFuel;
+	
+	private String requiredTotalFuelStatus;
+	
 
 
 
@@ -277,6 +281,8 @@ public class ShipReport
 		ovaCTA = theOvaCta;
 		requiredETAStatus = "undefined";
 		requiredAvgSpeedStatus = "undefined";
+		totalFuel = meHfoSLR + meLsfoSLR + memDoSLR + memGoSLR;
+		requiredTotalFuelStatus = "undefined";
 	}
 	public int getReportID(){
 		return reportID;
@@ -473,6 +479,16 @@ public class ShipReport
 	public String getAvgSpeedStatus(){
 		return requiredAvgSpeedStatus;
 	}
+	public double getTotalFuel(){
+		return totalFuel;
+	}
+
+	
+
+	public String getRequiredTotalFuelStatus(){
+		return requiredTotalFuelStatus;
+	}
+
 
 	//Update
 	public void updateRequiredETAStatus(Date reqMinEta, Date reqMaxEta){
@@ -494,6 +510,13 @@ public class ShipReport
 		}else{
 			requiredAvgSpeedStatus = "BAD";
 		}
+	}
+
+	public void updateTotalFuelStatus(double max){
+		if(max > totalFuel)
+			requiredTotalFuelStatus = "GOOD";
+		else
+			requiredTotalFuelStatus = "BAD";
 	}
 
 

@@ -76,6 +76,7 @@ public class Voyage
 	//Ship
 	private double requiredAvgSpeedMin;
 	private double requiredAvgSpeedMax;
+	private double requiredTotalFuel;
 
 
 
@@ -412,6 +413,9 @@ public class Voyage
 	public double getRequiredAvgSpeedMax(){
 		return requiredAvgSpeedMax;
 	}
+	public double getRequiredTotalFuel(){
+		return requiredTotalFuel;
+	}
 
 
 	public String getStatus(){
@@ -506,6 +510,7 @@ public class Voyage
 		setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
 		setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
 		setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
+		setRequiredTotalFuel(savedParam.getRequiredTotalFuel());
   //   System.out.println("VOyage ID on Object " + voyageID );
 		// System.out.println("Voyage ID from DB " +  savedParam.getId());
 		// System.out.println("savedParam PArams " +  savedParam.getRequiredMinETA() + "\n " +
@@ -538,6 +543,7 @@ public class Voyage
     setRequiredSignWaveHeight(savedParam.getRequiredSignWaveHeight());
     setRequiredCurrentDir(savedParam.getRequiredCurrentDir());
     setRequiredAvgSpeed(savedParam.getRequiredAvgSpeedMin() , savedParam.getRequiredAvgSpeedMax());
+    setRequiredTotalFuel(savedParam.getRequiredTotalFuel());
 	}
 
 
@@ -570,6 +576,17 @@ public class Voyage
 			shipReports.get(i).updateAvgSpeedStatus(speedMin, speedMax);
 		}
 	}
+
+	public void setRequiredTotalFuel(double maxFuel){
+		requiredTotalFuel = maxFuel;
+		for (int i = 0; i < shipReports.size(); i++)
+		{
+			shipReports.get(i).updateTotalFuelStatus(maxFuel);
+		}
+	}
+
+	
+
 	public void setRequiredWindSpeed(double chosenWindSpeed)
 	{
 		requiredMaxWindSpeed = chosenWindSpeed;
