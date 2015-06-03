@@ -48,6 +48,7 @@ coluApp.service('sharedProperties', function() {
 
 coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
+
   function checkTimeStatus(){
     var MINUTES_TO_MILLISEC = 60000;
     var HOURS_TO_MILLISEC = 3600000;
@@ -69,8 +70,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
   }
 
   function checkVelocityStatus(){
-    var withinLowerLimit = $scope.activeVoyage.rangeParameters.velocity.current > $scope.activeVoyage.rangeParameters.velocity.lowerLimit; 
-    var withinUpperLimit = $scope.activeVoyage.rangeParameters.velocity.current < $scope.activeVoyage.rangeParameters.velocity.upperLimit; 
+    var withinLowerLimit = $scope.activeVoyage.rangeParameters.velocity.current >= $scope.activeVoyage.rangeParameters.velocity.lowerLimit; 
+    var withinUpperLimit = $scope.activeVoyage.rangeParameters.velocity.current <= $scope.activeVoyage.rangeParameters.velocity.upperLimit; 
 
     if(withinLowerLimit && withinUpperLimit){
       $scope.activeVoyage.rangeParameters.velocity.status = 'GOOD';
@@ -94,7 +95,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       data.splice(9, 1);  
       data.splice(27,1);
       data.splice(14,1);
-    
+
+
       //Position 27 is broken, and I can´t manage to delete it, hehe.   
       $scope.voyages = data; 
    
@@ -106,7 +108,15 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
       { 
-
+        //For the presentation, the locations of departure and destination are invalid, therefore the map pin will show wrong 
+        if($scope.voyages[i].ship.shipId == 1126 || $scope.voyages[i].ship.shipId == 3104 || $scope.voyages[i].ship.shipId == 1723 
+          || $scope.voyages[i].ship.shipId == 1409 || $scope.voyages[i].ship.shipId == 1459 || $scope.voyages[i].ship.shipId == 1251
+          ||  $scope.voyages[i].ship.shipId == 5161)
+        {
+          $scope.voyages.splice(i, 1);
+          if(i != 0)
+            i--;
+        }
         var upperEta =  new Date($scope.voyages[i].requiredMaxETA) - new Date($scope.voyages[i].requiredETA);
         var lowerEta =  new Date($scope.voyages[i].requiredMinETA) - new Date($scope.voyages[i].requiredETA);
         var lowerEtaHours = milliToHours(lowerEta);
@@ -130,6 +140,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         checkTimeStatus();
         
 
+
         $scope.voyages[i].singleParameters = {
           fuel: {name: "fuel", label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "m3/dygn",},
           combinedWave : {name: "combinedWave", label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
@@ -139,11 +150,15 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         }
 
         flagVoyage($scope.voyages[i]);
+
+
       } 
 
       //console.log("dsfsdf", $scope.voyages[0]);
 
       $scope.activeVoyage = $scope.voyages[0];
+      $scope.searchDestLocation = $scope.activeVoyage.destination;
+      $scope.searchDepLocation = $scope.activeVoyage.departure;
       //Where all the functionality is
       main();   
       
@@ -151,6 +166,20 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         console.log('ERROR getting from backend' , status);
 
       });
+
+    $scope.findDestLocation = function(destLocation){
+      //updates the value in mapdirective and searches
+      $scope.searchDestLocation = destLocation;
+    }
+    $scope.findDepLocation = function(depLocation){
+      //updates the value in mapdirective and searches
+      $scope.searchDepLocation = depLocation;
+    }
+
+    $scope.updateMap = function(location){
+
+      $scope.locationFocus = location;
+    }
       
     $scope.putData = function(){
         parameters = {
@@ -191,6 +220,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       
       $scope.activeVoyage = sharedProperties.getActive();
       $scope.showActive.shipTrue = true;
+      $scope.searchDestLocation = $scope.activeVoyage.destination;
+      $scope.searchDepLocation = $scope.activeVoyage.departure;
       checkTimeStatus();
     }
 
@@ -256,8 +287,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
             checkVelocityStatus();
             break;
           default:
-          console.log("JONKEN", $scope.activeVoyage.singleParameters);
-            if($scope.activeVoyage.singleParameters[paramName].current < $scope.activeVoyage.singleParameters[paramName].upperLimit)
+            if($scope.activeVoyage.singleParameters[paramName].current <$scope.activeVoyage.singleParameters[paramName].upperLimit)
             {
               $scope.activeVoyage.singleParameters[paramName].status = "GOOD";
             }
@@ -274,7 +304,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       return array.indexOf(value) > -1;
     }
   }
-
+ 
   //Add voyages to right array, if any status is BAD, place in voyagesBad.
   function flagVoyage(voyage){
 

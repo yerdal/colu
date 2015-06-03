@@ -7,8 +7,10 @@
     <meta name="viewport" content="initial-scale=1">  
     <script src='scripts/ol.js'></script>
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+     
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.css"> 
+
 
     <!-- LESS -->
     <link rel="stylesheet/less" type="text/css" href="styles/custom.less">
@@ -36,7 +38,7 @@
           <div ng-if="(!smallScreenSize() || showActive.shipTrue)" class="col-sm-4 content" ng-include src="'templates/parameters-description.html'">
           </div>  
 
-          <map ng-if="!smallScreenSize()"></map> 
+          <map ng-if="!smallScreenSize()" ></map> 
          
           
 

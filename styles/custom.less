@@ -5,7 +5,9 @@
 @blue-base: #069DBF;
 @green-base: #009C73;
 @darkgreen-base: #006E51;
+@lightgreen-base: #92D0C0;
 @yellow-base: #F2EA72;
+@lightyellow-base:#F5F1AE;
 @darkyellow-base: #BFB95A;
 @gray-base: #f5f5f5;
 @darkgray-base: #ADADAD;
@@ -27,7 +29,9 @@ tbody {
 
 input {
 	 width: 15%;
+
 }
+
 
 .row{
 	margin: auto;
@@ -39,6 +43,19 @@ input {
 
 .parameter {
 	margin: 10 0 0 35px;	
+	padding: 3px;	
+	box-sizing: border-box;
+}
+
+.time_parameter {
+	padding: 5px;
+	margin: 10 0 10 0;	
+	box-sizing: border-box;
+}
+
+#time_input{
+		margin: 5% 0 15% 0;
+		width: 40%;
 }
 
 .line-through {
@@ -72,18 +89,28 @@ input {
 	min-height: 100%;
     height: 100%;
 	overflow: scroll;
+}
 
+i.bad{
+	color: @darkred-base;
+	margin: 0 5px;
+	top: 0px !important;
+}
 
+.right {
+	text-align: right;
 }
 
 
+
 .bad {
+
 
 	i {
 		margin-right: 2px;
 	}
 	p {
-		padding: 0px;
+		padding: 5px;
 		border: solid 2px @red-base;
 		border-radius: 5px;
 	}
@@ -131,6 +158,34 @@ input {
 	}
 }
 
+.wrap-location{
+	overflow:auto;
+	text-align: center;	
+	.departure{
+		display:inline-block;
+		float:left;
+		max-width: 50%;
+		h4.dep{
+			cursor: pointer;
+			text-align: center;
+			a{
+				text-decoration: none;
+			}
+		}
+	}
+	.destination{
+		display:inline-block;
+		// float:right;
+		h4.dest{	
+			cursor: pointer;
+			text-align: center;
+			a{
+				text-decoration: none;
+			}
+		}
+
+	}
+}
 .list-inline {
 
 	margin: 3% 0 1% 0;
@@ -143,23 +198,25 @@ input {
 			vertical-align: baseline;
 
 			&:hover {
-				color: @gray-base;
+				color: @darkgray-base;
 				background-color: transparent;
 		}
 	}
 
 	h3, h4 {
-			margin: 0;
+			margin:0;
 			padding: 0;
 		}
 
 	li {
 		padding: 0;
+
 	}
 
 	.glyphicon {
 		top: -2px;
-		left: 5px;
+		margin: 0 5px;
+		// left: 5px;
 	}
 
 	.test {
@@ -168,9 +225,24 @@ input {
 	}
 }
 
+h4.inline{
+	display:inline;
+	
+}
+h4.left{
+	float:left;
+}
+h4.right{
+	float:right;
+}
+h4.margin-left{
+	margin-left: 10px;
+
+
+}
 #current {
-	margin-top: 10px;
 	display: inline-block;
+
 }
 
 #search {
@@ -180,8 +252,12 @@ input {
 .col-sm-5 {
 	padding-left: 0 !important;
 }
+
+.col-xs-6{
+	margin-top: 3%;
+}
 /*For margin between columns*/
-[class*="col-"] {
+[class*="col-sm"] {
 	min-height: 98%;
     height: 98%;
 	background-color: @gray-base;
@@ -197,6 +273,15 @@ input {
 .table > tbody > tr.active > td {
   background-color: @lightred-base;
 }
+.table > tbody.good > tr.active > td {
+  background-color: @lightgreen-base;
+}
+.table > tbody.handled > tr.active > td {
+  background-color: @lightyellow-base;
+}
+
+
+
 
 @media (min-width: 992px){
 	.container {
