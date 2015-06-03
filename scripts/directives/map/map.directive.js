@@ -156,7 +156,7 @@ coluApp.directive('map', ['$http', function($http) {
         // console.log('cksck', pointsarr);
         for(var i = 0; i < pointsarr.length; i++){
           if(i%5==0)
-            color = '#FF0000';
+            color = '#000000';
             // console.log('changinge color ')
           
           styles.push(new ol.style.Style(({
