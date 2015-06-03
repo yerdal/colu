@@ -27,6 +27,11 @@
         <button type="button" class="btn btn-default btn-sm " ng-click="enableEditor(activeVoyage.rangeParameters.time.number)" ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
           <i class="glyphicon glyphicon-pencil"></i>
         </button>
+
+        <button ng-click="save(activeVoyage.rangeParameters.time.number)" type="button" class="btn btn-default btn-sm" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">
+        <i class="glyphicon glyphicon-floppy-disk"></i>
+      </button>  
+      
       </li>
     </ul>
 
@@ -57,11 +62,7 @@
         <input id="time_input" ng-model="activeVoyage.rangeParameters.time.upperLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.time.number]">  {{para.unit}}
         <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
         
-      </div>
-
-      <button ng-click="save(activeVoyage.rangeParameters.time.number)" type="button" class="btn btn-default btn-sm">
-        <i class="glyphicon glyphicon-floppy-disk"></i>
-      </button>     
+      </div>   
 
     </div>
 
@@ -87,11 +88,16 @@
         <button type="button" class="btn btn-default btn-sm " ng-click="enableEditor(activeVoyage.rangeParameters.velocity.number)" ng-hide="editorEnabled[activeVoyage.rangeParameters.velocity.number]">
           <i class="glyphicon glyphicon-pencil"></i>
         </button>
+
+        <button ng-click="save(activeVoyage.rangeParameters.velocity.number)" type="button" class="btn btn-default btn-sm" ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]">
+        <i class="glyphicon glyphicon-floppy-disk"></i>
+        </button>
+
       </li>
     
     </ul>
 
-    <div ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
+    <div ng-hide="editorEnabled[activeVoyage.rangeParameters.velocity.number]">
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
       <div class="parameter">
         Undre gräns: {{activeVoyage.rangeParameters.velocity.lowerLimit}} {{activeVoyage.rangeParameters.velocity.unit}}. 
@@ -105,12 +111,13 @@
 
     <div ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]">
 
-      Undre gräns: <input ng-model="activeVoyage.rangeParameters.velocity.lowerLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]"> {{para.unit}}
-      Övre gräns: <input ng-model="activeVoyage.rangeParameters.velocity.upperLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]">  {{para.unit}}
-
-      <button ng-click="save(activeVoyage.rangeParameters.velocity.number)" type="button" class="btn btn-default btn-sm">
-        <i class="glyphicon glyphicon-floppy-disk"></i>
-      </button>
+      <div class="parameter">
+        Undre gräns: <input ng-model="activeVoyage.rangeParameters.velocity.lowerLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]"> {{activeVoyage.rangeParameters.velocity.unit}}.
+      </div>
+       
+      <div class="parameter">
+        Övre gräns: <input ng-model="activeVoyage.rangeParameters.velocity.upperLimit" ng-show="editorEnabled[activeVoyage.rangeParameters.velocity.number]">  {{activeVoyage.rangeParameters.velocity.unit}}.
+      </div>
 
     </div>
 
@@ -135,22 +142,23 @@
           <button type="button" class="btn btn-default btn-sm" ng-click="enableEditor($index + 2)" ng-hide="editorEnabled[$index + 2]">
             <i class="glyphicon glyphicon-pencil"></i>
           </button>
+
+          <button ng-click="save($index + 2, parameter.name)" type="button" class="btn btn-default btn-sm" ng-show="editorEnabled[$index + 2]">
+            <i class="glyphicon glyphicon-floppy-disk" ></i>
+          </button>  
+
         </li>
       
       </ul>
 
       <div class="parameter" ng-hide="editorEnabled[$index + 2]">
 
-        <!-- ng-class="{good: activeVoyage.combinedWave.status == true, bad: activeVoyage.combinedWave.status == false}"-->
           Maximalt värde: {{parameter.upperLimit}} {{parameter.unit}}. 
 
-        </div>
+      </div>
 
-      <div ng-show="editorEnabled[$index + 2]">
+      <div class ="parameter" ng-show="editorEnabled[$index + 2]">
         Maximal värde: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[$index + 2]"> {{parameter.unit}}.
-        <button ng-click="save($index + 2, parameter.name)" type="button" class="btn btn-default btn-sm">
-          <i class="glyphicon glyphicon-floppy-disk"></i>
-        </button>  
       </div>
 
       <div id="current" ng-class="{bad: parameter.status == 'BAD'}">
