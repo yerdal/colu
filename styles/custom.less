@@ -29,6 +29,10 @@ input {
 	 width: 15%;
 }
 
+h4{
+	margin-top: 10%;
+}
+
 .row{
 	margin: auto;
 }
@@ -38,7 +42,20 @@ input {
 }
 
 .parameter {
+	padding: 5px;
 	margin: 10 0 0 20px;	
+	box-sizing: border-box;
+}
+
+.time_parameter {
+	padding: 5px;
+	margin: 10 0 10 0;	
+	box-sizing: border-box;
+}
+
+#time_input{
+		margin-top: 5%;
+		width: 40%;
 }
 
 .line-through {
@@ -76,6 +93,10 @@ input {
 
 }
 
+.right {
+	text-align: right;
+}
+
 
 .bad {
 
@@ -83,7 +104,6 @@ input {
 		margin-right: 2px;
 	}
 	p {
-		padding: 0px;
 		border: solid 2px @red-base;
 		border-radius: 5px;
 	}
@@ -164,7 +184,6 @@ input {
 }
 
 #current {
-	margin-top: 10px;
 	display: inline-block;
 }
 
@@ -175,8 +194,12 @@ input {
 .col-sm-5 {
 	padding-left: 0 !important;
 }
+
+.col-xs-6{
+	margin-top: 3%;
+}
 /*For margin between columns*/
-[class*="col-"] {
+[class*="col-sm"] {
 	min-height: 98%;
     height: 98%;
 	background-color: @gray-base;
