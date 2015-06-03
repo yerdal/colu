@@ -32,7 +32,7 @@
       </ul> -->
     <ul class="list-inline">
       <li>
-        <h4>{{activeVoyage.rangeParameters.time.label | uppercase}}</h4>
+        <h4> {{activeVoyage.rangeParameters.time.label | uppercase}} <i  ng-class="{'glyphicon glyphicon-warning-sign bad': activeVoyage.rangeParameters.time.status == 'BAD'}" ></i></h4>
       </li>
       
       <li>
@@ -72,9 +72,9 @@
 
     </div>
 
-    <div class="parameter" id="current" ng-class="{bad: activeVoyage.rangeParameters.time.status == 'BAD'}">
-      <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-      <p>Aktuell: {{activeVoyage.rangeParameters.time.current}}</p>
+    <div class="parameter" id="current" ng-class="{'bad': activeVoyage.rangeParameters.time.status == 'BAD'}" >
+      
+      <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>Aktuell: {{activeVoyage.rangeParameters.time.current}}</p>
     </div>
 
 </div>
@@ -86,7 +86,7 @@
 
   <ul class="list-inline">
       <li>
-        <h4>{{activeVoyage.rangeParameters.velocity.label | uppercase}}</h4>
+        <h4> {{activeVoyage.rangeParameters.velocity.label | uppercase}} <i  ng-class="{'glyphicon glyphicon-warning-sign bad': activeVoyage.rangeParameters.velocity.status == 'BAD'}" ></i></h4>
       </li>
       
       <li>
@@ -95,9 +95,11 @@
         </button>
       </li>
     
-    </ul>
+  </ul>
 
     <div ng-hide="editorEnabled[activeVoyage.rangeParameters.time.number]">
+      
+     <!-- <vds-multirange ng-model="rangeArray" view="viewIndex"></vds-multirange> -->
     <!-- ng-class="{good: parameter.status == true, bad: paramameter.status == false}" -->
       <div class="parameter">
         Undre gräns: {{activeVoyage.rangeParameters.velocity.lowerLimit}} {{activeVoyage.rangeParameters.velocity.unit}}. 
@@ -119,9 +121,8 @@
       </button>
 
     </div>
-
-    <div id="current" ng-class="{bad: activeVoyage.rangeParameters.velocity.status == 'BAD'}">
-      <p>Aktuell {{activeVoyage.rangeParameters.velocity.label}} : {{activeVoyage.rangeParameters.velocity.current}} {{activeVoyage.rangeParameters.velocity.unit}}.</p>
+    <div id="current" ng-class="{'bad': activeVoyage.rangeParameters.velocity.status == 'BAD'}" >
+      <p class="parameter"> Aktuell {{activeVoyage.rangeParameters.velocity.label}} : {{activeVoyage.rangeParameters.velocity.current}} {{activeVoyage.rangeParameters.velocity.unit}}.</p> 
     </div>
 
 </div>
@@ -134,7 +135,7 @@
     <div class="detail-box">
       <ul class="list-inline">
         <li>
-          <h4 >{{parameter.label | uppercase}}</h4>
+          <h4 >  {{parameter.label | uppercase}} <i ng-class="{'glyphicon glyphicon-warning-sign bad': parameter.status == 'BAD'}" ></i></h4>
         </li>
         
         <li>
@@ -159,8 +160,8 @@
         </button>  
       </div>
 
-      <div id="current" ng-class="{bad: parameter.status == 'BAD'}">
-        <p class="parameter">Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.</p>
+      <div id="current" ng-class="{bad: parameter.status == 'BAD'}" >
+        <p class="parameter">  Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.</p>
     </div>
 
   </div>

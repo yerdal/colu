@@ -5,7 +5,9 @@
 @blue-base: #069DBF;
 @green-base: #009C73;
 @darkgreen-base: #006E51;
+@lightgreen-base: #92D0C0;
 @yellow-base: #F2EA72;
+@lightyellow-base:#F5F1AE;
 @darkyellow-base: #BFB95A;
 @gray-base: #f5f5f5;
 @darkgray-base: #ADADAD;
@@ -72,18 +74,21 @@ input {
 	min-height: 100%;
     height: 100%;
 	overflow: scroll;
-
-
 }
 
-
+i.bad{
+	color: @darkred-base;
+	margin: 0 5px;
+	top: 0px !important;
+}
 .bad {
+
 
 	i {
 		margin-right: 2px;
 	}
 	p {
-		padding: 0px;
+		padding: 5px;
 		border: solid 2px @red-base;
 		border-radius: 5px;
 	}
@@ -133,9 +138,11 @@ input {
 
 .wrap-location{
 	overflow:auto;
+	text-align: center;	
 	.departure{
 		display:inline-block;
 		float:left;
+		max-width: 50%;
 		h4.dep{
 			cursor: pointer;
 			text-align: center;
@@ -146,7 +153,7 @@ input {
 	}
 	.destination{
 		display:inline-block;
-		float:right;
+		// float:right;
 		h4.dest{	
 			cursor: pointer;
 			text-align: center;
@@ -186,7 +193,8 @@ input {
 
 	.glyphicon {
 		top: -2px;
-		left: 5px;
+		margin: 0 5px;
+		// left: 5px;
 	}
 }
 
@@ -208,6 +216,7 @@ h4.margin-left{
 #current {
 	margin-top: 10px;
 	display: inline-block;
+
 }
 
 #search {
@@ -234,6 +243,15 @@ h4.margin-left{
 .table > tbody > tr.active > td {
   background-color: @lightred-base;
 }
+.table > tbody.good > tr.active > td {
+  background-color: @lightgreen-base;
+}
+.table > tbody.handled > tr.active > td {
+  background-color: @lightyellow-base;
+}
+
+
+
 
 @media (min-width: 992px){
 	.container {

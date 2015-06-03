@@ -36,11 +36,11 @@ coluApp.directive('map', ['$http', function($http) {
         target: 'map',
         view: new ol.View({
           center: [0, 0],
-          zoom: 6,
+          zoom: 2.5,
           minZoom: 2
         })
       });
-      console.log('scope.search ', scope.search);
+      // console.log('scope.search ', scope.search);
       var shipVectorSource = new ol.source.Vector({});
       var shipRouteLine = new ol.source.Vector({});
       var points = []; 
@@ -89,7 +89,7 @@ coluApp.directive('map', ['$http', function($http) {
         updatePoints();
 
         var featureLine = new ol.Feature({
-            geometry: new ol.geom.LineString(points),
+            geometry: new ol.geom.MultiLineString(points)
             // style:new ol.style.Style({
             //     fill: new ol.style.Fill({
             //         color: '#FFFFFF',
@@ -99,13 +99,14 @@ coluApp.directive('map', ['$http', function($http) {
             //         width: 1
             //     })
             //   })
+
         });
 
         featureLine.setId(2); 
         shipRouteLine.addFeature(featureLine);
 
         var shipRouteLineLayer = new ol.layer.Vector({
-              source: shipRouteLine,
+              source: shipRouteLine
               // style: new ol.style.Style({
               //   fill: new ol.style.Fill({
               //       color: '#000000',
@@ -147,15 +148,17 @@ coluApp.directive('map', ['$http', function($http) {
       }
 
       var setLinePosition = function(){
+        shipRouteLine.getFeatureById(2).setGeometry(new ol.geom.LineString(points));
+
+      
         pointsarr = shipRouteLine.getFeatureById(2).getGeometry().getCoordinates();
         var styles = [];
         // console.log('cksck', pointsarr);
         for(var i = 0; i < pointsarr.length; i++){
-          color = '#000000';
-          if(i % 2 == 0){
-            color = '#FF00FF';
+          if(i%5==0)
+            color = '#FF0000';
             // console.log('changinge color ')
-          }
+          
           styles.push(new ol.style.Style(({
                 fill: new ol.style.Fill({
                     color: color,
@@ -179,7 +182,7 @@ coluApp.directive('map', ['$http', function($http) {
         //         })
         //       }));
         shipRouteLine.getFeatureById(2).setStyle(styles);
-        shipRouteLine.getFeatureById(2).setGeometry(new ol.geom.LineString(points));
+        
       }
 
    
@@ -189,9 +192,11 @@ coluApp.directive('map', ['$http', function($http) {
           shipVectorSource.removeFeature(shipVectorSource.getFeatureById(3));
         var srcStr = scope.searchDestLocation.replace(" ", "%20");
         srcStr = srcStr.replace(/"/g, "").replace(/'/g, "").replace(/\([\s\S]*?\)/g, "");
-        console.log(srcStr)
+        // console.log(srcStr)
         $http.get('http://nominatim.openstreetmap.org/search/'+srcStr+'?format=json&addressdetails=1&limit=1').success(function(data,status,headers,config)
         {
+          if(shipVectorSource.getFeatureById(3))
+            shipVectorSource.removeFeature(shipVectorSource.getFeatureById(3));
           scope.searchDestLocationlon = data[0].lon;
           scope.searchDestLocationlat = data[0].lat;
          
@@ -236,7 +241,7 @@ coluApp.directive('map', ['$http', function($http) {
         iconFeature.setId(3);
         shipVectorSource.addFeature(iconFeature);
  
-          console.log('data', data)
+          // console.log('data', data)
         }).error(function(data,status,headers,config){
           console.log('ERROR getting from find locaiton' , status);
 
@@ -246,15 +251,17 @@ coluApp.directive('map', ['$http', function($http) {
     scope.$watch('searchDepLocation' , function(){
      if(scope.searchDepLocation){
         if(shipVectorSource.getFeatureById(4))
-          shipVectorSource.removeFeature(shipVectorSource.getFeatureById(4));
+            shipVectorSource.removeFeature(shipVectorSource.getFeatureById(4));
         var srcStr = scope.searchDepLocation.replace(" ", "%20");
         srcStr = srcStr.replace(/"/g, "").replace(/'/g, "").replace(/\([\s\S]*?\)/g, "");
-        console.log(srcStr)
+        // console.log(srcStr)
         $http.get('http://nominatim.openstreetmap.org/search/'+srcStr+'?format=json&addressdetails=1&limit=1').success(function(data,status,headers,config)
         {
+          if(shipVectorSource.getFeatureById(4))
+            shipVectorSource.removeFeature(shipVectorSource.getFeatureById(4));
           scope.searchDepLocationlon = data[0].lon;
           scope.searchDepLocationlat = data[0].lat;
-          console.log('search lon', scope.searchDepLocationlon )
+        
           var iconFeature = new ol.Feature({
           geometry: new                         //LON , LAT 
             ol.geom.Point(ol.proj.transform([Number(data[0].lon), Number(data[0].lat)], 'EPSG:4326',   'EPSG:3857')),

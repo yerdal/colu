@@ -95,7 +95,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       data.splice(9, 1);  
       data.splice(27,1);
       data.splice(14,1);
-    
+
+
       //Position 27 is broken, and I can´t manage to delete it, hehe.   
       $scope.voyages = data; 
    
@@ -107,7 +108,15 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
       { 
-
+        //For the presentation, the locations of departure and destination are invalid, therefore the map pin will show wrong 
+        if($scope.voyages[i].ship.shipId == 1126 || $scope.voyages[i].ship.shipId == 3104 || $scope.voyages[i].ship.shipId == 1723 
+          || $scope.voyages[i].ship.shipId == 1409 || $scope.voyages[i].ship.shipId == 1459 || $scope.voyages[i].ship.shipId == 1251
+          ||  $scope.voyages[i].ship.shipId == 5161)
+        {
+          $scope.voyages.splice(i, 1);
+          if(i != 0)
+            i--;
+        }
         var upperEta =  new Date($scope.voyages[i].requiredMaxETA) - new Date($scope.voyages[i].requiredETA);
         var lowerEta =  new Date($scope.voyages[i].requiredMinETA) - new Date($scope.voyages[i].requiredETA);
         var lowerEtaHours = milliToHours(lowerEta);
@@ -131,6 +140,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         checkTimeStatus();
         
 
+
         $scope.voyages[i].singleParameters = {
           fuel: {name: "fuel", label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "m3/dygn",},
           combinedWave : {name: "combinedWave", label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
@@ -140,6 +150,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         }
 
         flagVoyage($scope.voyages[i]);
+
+
       } 
 
       //console.log("dsfsdf", $scope.voyages[0]);
@@ -292,7 +304,12 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       return array.indexOf(value) > -1;
     }
   }
-
+  $scope.rangeArray = [
+  { value: 0.2, name: 'Min knop' },
+  { value: 0.4, name: 'Aktuell knop' },
+  { value: 0.6, name: 'Max knop' }
+  // { value: 0.8, name: 'Clock Out' }
+]
   //Add voyages to right array, if any status is BAD, place in voyagesBad.
   function flagVoyage(voyage){
 
