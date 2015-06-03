@@ -70,8 +70,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
   }
 
   function checkVelocityStatus(){
-    var withinLowerLimit = $scope.activeVoyage.rangeParameters.velocity.current > $scope.activeVoyage.rangeParameters.velocity.lowerLimit; 
-    var withinUpperLimit = $scope.activeVoyage.rangeParameters.velocity.current < $scope.activeVoyage.rangeParameters.velocity.upperLimit; 
+    var withinLowerLimit = $scope.activeVoyage.rangeParameters.velocity.current >= $scope.activeVoyage.rangeParameters.velocity.lowerLimit; 
+    var withinUpperLimit = $scope.activeVoyage.rangeParameters.velocity.current <= $scope.activeVoyage.rangeParameters.velocity.upperLimit; 
 
     if(withinLowerLimit && withinUpperLimit){
       $scope.activeVoyage.rangeParameters.velocity.status = 'GOOD';
@@ -126,7 +126,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
         if(lowerEtaHours > 0)
           lowerEtaHours = 0;
         $scope.voyages[i].rangeParameters = {
-          time: { label: "Ankomsttid", lowerLimit: lowerEtaHours , upperLimit: upperEtaHours, current: $scope.voyages[i].latestShipReport.ovaCTA, initial: $scope.voyages[i].requiredETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "timmar", number: 0 },
+          time: { label: "Ankomsttid", lowerLimit: lowerEtaHours , upperLimit: upperEtaHours, current: $scope.voyages[i].latestShipReport.ovaCTA, initial: $scope.voyages[i].requiredETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "h", number: 0 },
           velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
         }
 
@@ -287,7 +287,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
             checkVelocityStatus();
             break;
           default:
-            if($scope.activeVoyage.singleParameters[paramName].current < $scope.activeVoyage.singleParameters[paramName].upperLimit)
+            if($scope.activeVoyage.singleParameters[paramName].current <$scope.activeVoyage.singleParameters[paramName].upperLimit)
             {
               $scope.activeVoyage.singleParameters[paramName].status = "GOOD";
             }
@@ -304,12 +304,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       return array.indexOf(value) > -1;
     }
   }
-  $scope.rangeArray = [
-  { value: 0.2, name: 'Min knop' },
-  { value: 0.4, name: 'Aktuell knop' },
-  { value: 0.6, name: 'Max knop' }
-  // { value: 0.8, name: 'Clock Out' }
-]
+ 
   //Add voyages to right array, if any status is BAD, place in voyagesBad.
   function flagVoyage(voyage){
 

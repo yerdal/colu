@@ -96,7 +96,7 @@ public class Voyage
 		destination = "undefined";
 		etd = "2015-01-02 14:00";
 		eta = "2015-01-02 14:00";
-		requiredEta = "2014-03-01 13:00";
+		requiredEta = "2015-01-02 14:40";
 		loadingStatus = 0;
 		cargoWeight = 0.0;
 		cargoSensitivStatus = 0;
