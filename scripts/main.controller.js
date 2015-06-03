@@ -123,11 +123,14 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
           {
               $scope.activeVoyage.singleParameters.current.status = "BAD"; // too much motström
           }
+          
+
       }
       
       else
       {
           $scope.activeVoyage.singleParameters.current.status = "GOOD";  // medström is always ok
+          $scope.activeVoyage.singleParameters.current.currentCurDir = "medström";
       }
 
   }
@@ -190,14 +193,15 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
           $scope.activeVoyage = $scope.voyages[i];
           checkTimeStatus();
+         
 
           $scope.voyages[i].singleParameters = {
             fuel: {name: "fuel", label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "m3/dygn",},
             combinedWave : {name: "combinedWave", label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
-            current : {name: "current", label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
+            current : {name: "current", label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, currentCurDir:"motström", current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, direction:$scope.voyages[i].currentWeatherWaypoint.currentDir, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
             wind : {name: "wind", label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, status: $scope.voyages[i].currentWeatherWaypoint.windSpeedStatus, unit: "m/s"}
           }
-
+           checkCurrentStatus();
           flagVoyage($scope.voyages[i]);
         }
       } 
@@ -342,7 +346,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
           default:
 
-            if($scope.activeVoyage.singleParameters[paramName].current <$scope.activeVoyage.singleParameters[paramName].upperLimit)
+            if($scope.activeVoyage.singleParameters[paramName].current < $scope.activeVoyage.singleParameters[paramName].upperLimit)
             {
               $scope.activeVoyage.singleParameters[paramName].status = "GOOD";
             }
