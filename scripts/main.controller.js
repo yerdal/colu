@@ -48,6 +48,7 @@ coluApp.service('sharedProperties', function() {
 
 coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
+
   function checkTimeStatus(){
 
     var HOURS_TO_MILLISEC = 3600000;
@@ -72,8 +73,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
   }
 
   function checkVelocityStatus(){
-    var withinLowerLimit = $scope.activeVoyage.rangeParameters.velocity.current > $scope.activeVoyage.rangeParameters.velocity.lowerLimit;
-    var withinUpperLimit = $scope.activeVoyage.rangeParameters.velocity.current < $scope.activeVoyage.rangeParameters.velocity.upperLimit;
+    var withinLowerLimit = $scope.activeVoyage.rangeParameters.velocity.current >= $scope.activeVoyage.rangeParameters.velocity.lowerLimit; 
+    var withinUpperLimit = $scope.activeVoyage.rangeParameters.velocity.current <= $scope.activeVoyage.rangeParameters.velocity.upperLimit; 
 
     if(withinLowerLimit && withinUpperLimit){
       $scope.activeVoyage.rangeParameters.velocity.status = 'GOOD';
@@ -158,51 +159,52 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
       //Sets some hardcoded parameters
       for(var i = 0; i < $scope.voyages.length; i++)
-      {
+      { 
+        //For the presentation, the locations of departure and destination are invalid, therefore the map pin will show wrong 
+        if($scope.voyages[i].ship.shipId == 1126 || $scope.voyages[i].ship.shipId == 3104 || $scope.voyages[i].ship.shipId == 1723 
+          || $scope.voyages[i].ship.shipId == 1409 || $scope.voyages[i].ship.shipId == 1459 || $scope.voyages[i].ship.shipId == 1251
+          ||  $scope.voyages[i].ship.shipId == 5161 || $scope.voyages[i].ship.shipId == 906)
+        {
+          $scope.voyages.splice(i, 1);
+          if(i != 0)
+            i--;
 
+          
+        }else{
+          var upperEta =  new Date($scope.voyages[i].requiredMaxETA) - new Date($scope.voyages[i].requiredETA);
+          var lowerEta =  new Date($scope.voyages[i].requiredMinETA) - new Date($scope.voyages[i].requiredETA);
+          var lowerEtaHours = milliToHours(lowerEta);
+          var upperEtaHours = milliToHours(upperEta);
+          if(upperEtaHours < 0)
+            upperEtaHours = 0;
+          if(lowerEtaHours > 0)
+            lowerEtaHours = 0;
+          $scope.voyages[i].rangeParameters = {
+            time: { label: "Ankomsttid", lowerLimit: lowerEtaHours , upperLimit: upperEtaHours, current: $scope.voyages[i].latestShipReport.ovaCTA, initial: $scope.voyages[i].requiredETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "h", number: 0 },
+            velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
+          }
 
-        var upperEta =  new Date($scope.voyages[i].requiredMaxETA) - new Date($scope.voyages[i].requiredETA);
-        var lowerEta =  new Date($scope.voyages[i].requiredMinETA) - new Date($scope.voyages[i].requiredETA);
-        var lowerEtaHours = milliToHours(lowerEta);
-        var upperEtaHours = milliToHours(upperEta);
-        if(upperEtaHours < 0)
-          upperEtaHours = 0;
-        if(lowerEtaHours > 0)
-          lowerEtaHours = 0;
-        $scope.voyages[i].rangeParameters = {
-          time: { label: "Tid", lowerLimit: lowerEtaHours , upperLimit: upperEtaHours, current: $scope.voyages[i].latestShipReport.ovaCTA, initial: $scope.voyages[i].requiredETA, status: $scope.voyages[i].latestShipReport.requiredETAStatus, unit: "Timmar", number: 0 },
+          $scope.voyages[i].rangeParameters.time.status = 'BAD';
 
-          velocity: {label: "Hastighet", lowerLimit: $scope.voyages[i].requiredAvgSpeedMin, upperLimit: $scope.voyages[i].requiredAvgSpeedMax, current: $scope.voyages[i].latestShipReport.speedAvg, status: $scope.voyages[i].latestShipReport.avgSpeedStatus, unit: "knop", number: 1}
+          // console.log("status", $scope.voyages[0].rangeParameters.time.status);
+
+          $scope.activeVoyage = $scope.voyages[i];
+          checkTimeStatus();
+
+          $scope.voyages[i].singleParameters = {
+            fuel: {name: "fuel", label: "Bränsle", upperLimit: '250', current: '200', status: "GOOD", unit: "m3/dygn",},
+            combinedWave : {name: "combinedWave", label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
+            current : {name: "current", label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, status: $scope.voyages[i].currentWeatherWaypoint.currentSpeedStatus, unit: "m/s"},
+            wind : {name: "wind", label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, status: $scope.voyages[i].currentWeatherWaypoint.windSpeedStatus, unit: "m/s"}
+          }
+
+          flagVoyage($scope.voyages[i]);
         }
+      } 
 
-
-        $scope.voyages[i].rangeParameters.time.status = 'BAD';
-
-        // console.log("status", $scope.voyages[0].rangeParameters.time.status);
-
-
-        $scope.activeVoyage = $scope.voyages[i];
-        checkTimeStatus();
-
-
-        $scope.voyages[i].singleParameters = {
-
-          fuel: {name: "fuel", label: "Bränsle", upperLimit: $scope.voyages[i].requiredTotalFuel, current: $scope.voyages[i].latestShipReport.totalFuel, status: $scope.voyages[i].latestShipReport.requiredTotalFuelStatus, unit: "kubikmeter/dygn"},
-          combinedWave : {name: "combinedWave", label: "Våghöjd", upperLimit: $scope.voyages[i].requiredMaxSignWaveHeight, current: $scope.voyages[i].currentWeatherWaypoint.signWaveHeight, status: $scope.voyages[i].currentWeatherWaypoint.signWaveHeightStatus, unit: "m"},
-          current : {name: "current", label: "Ström", upperLimit: $scope.voyages[i].requiredMaxCurrentSpeed, current: $scope.voyages[i].currentWeatherWaypoint.currentSpeed, direction: $scope.voyages[i].currentWeatherWaypoint.currentDir, status: $scope.voyages[i].currentWeatherWaypoint.currentStatus, unit: "m/s"},
-          wind : {name: "wind", label: "Vind", upperLimit: $scope.voyages[i].requiredMaxWindSpeed, current: $scope.voyages[i].currentWeatherWaypoint.windSpeed, direction: $scope.voyages[i].currentWeatherWaypoint.windDir, status: $scope.voyages[i].currentWeatherWaypoint.windStatus, unit: "m/s"}
-
-        }
-
-        flagVoyage($scope.voyages[i]);
-      }
-     console.log("first", $scope.voyages[1].currentWeatherWaypoint);
-
-
-
-      //console.log("dsfsdf", $scope.voyages[0]);
-
-      $scope.activeVoyage = $scope.voyages[0];
+      $scope.activeVoyage = $scope.voyages[1];
+      $scope.searchDestLocation = $scope.activeVoyage.destination;
+      $scope.searchDepLocation = $scope.activeVoyage.departure;
       //Where all the functionality is
       main();
 
@@ -211,6 +213,20 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
       });
 
+    $scope.findDestLocation = function(destLocation){
+      //updates the value in mapdirective and searches
+      $scope.searchDestLocation = destLocation;
+    }
+    $scope.findDepLocation = function(depLocation){
+      //updates the value in mapdirective and searches
+      $scope.searchDepLocation = depLocation;
+    }
+
+    $scope.updateMap = function(location){
+
+      $scope.locationFocus = location;
+    }
+      
     $scope.putData = function(){
         parameters = {
           requiredCurrentSpeed: $scope.activeVoyage.singleParameters.current.upperLimit,
@@ -250,6 +266,8 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
       $scope.activeVoyage = sharedProperties.getActive();
       $scope.showActive.shipTrue = true;
+      $scope.searchDestLocation = $scope.activeVoyage.destination;
+      $scope.searchDepLocation = $scope.activeVoyage.departure;
       checkTimeStatus();
     }
 
@@ -324,9 +342,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
 
           default:
 
-          console.log("JONKEN", $scope.activeVoyage.singleParameters);
-
-            if($scope.activeVoyage.singleParameters[paramName].current < $scope.activeVoyage.singleParameters[paramName].upperLimit)
+            if($scope.activeVoyage.singleParameters[paramName].current <$scope.activeVoyage.singleParameters[paramName].upperLimit)
             {
               $scope.activeVoyage.singleParameters[paramName].status = "GOOD";
             }
@@ -343,7 +359,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
       return array.indexOf(value) > -1;
     }
   }
-
+ 
   //Add voyages to right array, if any status is BAD, place in voyagesBad.
   function flagVoyage(voyage){
 
@@ -365,4 +381,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
           $scope.voyagesBad.splice(index, 1);
     }
   }
+
+  $scope.icons = ['glyphicon glyphicon-tint', 'glyphicon glyphicon-refresh', 'glyphicon glyphicon-scale', 'glyphicon glyphicon-cloud'];
+ 
 });
