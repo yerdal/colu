@@ -19,6 +19,7 @@
   <div class="detail-box" >
     
     <ul class="list-inline">
+      <i class="glyphicon glyphicon-time test"></i>
       <li>
         <h4>{{activeVoyage.rangeParameters.time.label | uppercase}}</h4>
       </li>
@@ -72,6 +73,7 @@
 <div class="detail-box" >
 
   <ul class="list-inline">
+      <i class="glyphicon glyphicon-dashboard test"></i>
       <li>
         <h4>{{activeVoyage.rangeParameters.velocity.label | uppercase}}</h4>
       </li>
@@ -108,7 +110,7 @@
     </div>
 
     <div id="current" ng-class="{bad: activeVoyage.rangeParameters.velocity.status == 'BAD'}">
-      <p>Aktuell {{activeVoyage.rangeParameters.velocity.label}} : {{activeVoyage.rangeParameters.velocity.current}} {{activeVoyage.rangeParameters.velocity.unit}}.</p>
+      <p class="parameter">Aktuell {{activeVoyage.rangeParameters.velocity.label}} : {{activeVoyage.rangeParameters.velocity.current}} {{activeVoyage.rangeParameters.velocity.unit}}.</p>
     </div>
 
 </div>
@@ -120,8 +122,9 @@
     
     <div class="detail-box">
       <ul class="list-inline">
+      <i ng-class="icons[$index]" class="test"></i>
         <li>
-          <h4 >{{parameter.label | uppercase}}</h4>
+          <h4 >  {{parameter.label | uppercase}}</h4>
         </li>
         
         <li>
@@ -140,14 +143,16 @@
         </div>
 
       <div ng-show="editorEnabled[$index + 2]">
-        Maximal värde: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[$index + 2]"> {{parameter.unit}}.
+        Maximalt värde: <input ng-model="parameter.upperLimit" ng-show="editorEnabled[$index + 2]"> {{parameter.unit}}.
         <button ng-click="save($index + 2, parameter.name)" type="button" class="btn btn-default btn-sm">
           <i class="glyphicon glyphicon-floppy-disk"></i>
         </button>  
       </div>
 
       <div id="current" ng-class="{bad: parameter.status == 'BAD'}">
-        <p class="parameter">Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.</p>
+        <p class="parameter">
+          Aktuell {{parameter.label}} : {{parameter.current}} {{parameter.unit}}.
+        </p>
       </div>
 
   </div>

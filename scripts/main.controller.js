@@ -296,4 +296,7 @@ coluApp.controller('mainController', function($scope, $http, sharedProperties ){
           $scope.voyagesBad.splice(index, 1);
     }
   }
+
+  $scope.icons = ['glyphicon glyphicon-tint', 'glyphicon glyphicon-refresh', 'glyphicon glyphicon-scale', 'glyphicon glyphicon-cloud'];
+ 
 });
