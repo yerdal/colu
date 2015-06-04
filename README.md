@@ -2,8 +2,8 @@
 
 An app for ship operators to handle ship fleets and their voyages. It's designed to easy notice potential ship warnings during voyages.
 
-![Alt text](https://github.com/yerdal/colu/tree/master/styles/images/ipadview.png "")
-![Alt text](https://github.com/yerdal/colu/tree/master/styles/images/iphoneview.png "")
+![Alt text](https://github.com/yerdal/colu/tree/master/styles/images/ipadview.png "Ipad view")
+![Alt text](https://github.com/yerdal/colu/tree/master/styles/images/iphoneview.png "Iphone view")
 
 
 ## Build and run
