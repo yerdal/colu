@@ -3,8 +3,8 @@
 An app for ship operators to handle ship fleets and their voyages. It's designed to easy notice potential ship warnings during voyages.
 
 <p align="center">
-![Alt text](/styles/images/ipadview.png?raw=true "Ipad view")
-![Alt text](/styles/images/iphoneview.png?raw=true "Iphone view")
+<img src="/styles/images/ipadview.png?raw=true"/>
+<img src="/styles/images/iphoneview.png?raw=true"/>
 </p>
 
 
